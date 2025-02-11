@@ -1,0 +1,279 @@
+<header class="mb-5 mb-sm-0">
+  <div class="container bg-white">
+      <div class="d-flex justify-content-between p-2">
+          <div class="">
+             <a routerLink="/main"> <img src="assets/logo-mtfp.png" class="img-fluid h100" style="height: 7vw;" alt="..."></a>
+          </div>
+          <div class=" align-self-center">
+              <div *ngIf="!isLogin && linkCurrent==false" class="mb-4 d-flex justify-content-around">
+                  <div class="">
+                     <a [routerLink]="['/main']" fragment="loginBlock"  (click)="gotoHashtag('loginBlock')" class="btn btn-sm btn-light">Se connecter</a>
+                  </div>
+                  <div class=" d-none d-sm-block mx-1">
+                    <a routerLink="/register" class="btn btn-sm blueColor text-white">S'inscrire</a>
+                  </div>
+
+              </div>
+                <div *ngIf="isLogin && linkCurrent==false" class="mb-4 d-flex justify-content-around">
+                    <div class="">
+                        <a routerLink="/home" class="btn btn-sm btn-light" >Mon espace</a>
+                    </div>
+                    <div class=" d-none d-sm-block mx-1">
+                        <div ngbDropdown class="d-inline-block">
+                            <button class="btn btn-sm text-white blueColor" id="dropdownBasic1" ngbDropdownToggle>Mon compte</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <a routerLink="/profile" ngbDropdownItem >Mon profil</a>
+                                <a (click)="logout()" style="cursor:pointer" ngbDropdownItem >Déconnexion</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="linkCurrent==true" class="mb-4 d-flex justify-content-around">
+                    <div class="">
+                        <a routerLink="/homepfc" class="btn btn-sm btn-light" >Mon espace</a>
+                    </div>
+                    <!-- <div class="">
+                        <a (click)="logoutPfc()" class="btn btn-sm text-white blueColor" >Déconnexion</a>
+                    </div> -->
+                    <div class=" d-none d-sm-block mx-1">
+                        <div ngbDropdown class="d-inline-block">
+                            <button class="btn btn-sm text-white blueColor" id="dropdownBasic1" ngbDropdownToggle>Mon compte</button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <a routerLink="/profilepfc" ngbDropdownItem >Changer mon mot de passe</a>
+                                <a (click)="logoutPfc()" style="cursor:pointer" ngbDropdownItem >Déconnexion</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          </div>
+      </div>
+  </div>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-N5EPX0W3H9"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-N5EPX0W3H9');
+    </script>
+</header>
+<nav *ngIf="linkCurrent==false" class="navbar navbar-expand-lg  blueColor sticky">
+  <div class="container-fluid">
+      <!--a class="navbar-brand font-weight-bold" href="#">MTFP</a-->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fas fa-bars droper"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/main">ACCUEIL</a>
+            </li>
+
+            <li class="nav-item dropdown">
+                    <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">CATALOGUE DES PRESTATIONS</a>
+                    <div class="dropdown-menu  fade-down" role="menu" aria-labelledby="navbarDropdownMenuLink1">
+                        <div class="container">
+                            <ul class="list-unstyled">
+                                <li><a  style="font-size: 13px" routerLink="/prestations-par-structure">PRESTATIONS PAR STRUCTURE</a></li>
+                                <li><a style="font-size: 13px" routerLink="/prestations-par-thematique">PRESTATIONS PAR THEMATIQUE</a></li>
+                               
+                            </ul>
+                        </div>
+                    </div>
+
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link"[routerLink]="['/main']" fragment="loginBlock"  (click)="gotoHashtag('loginBlock')">ESPACE USAGER</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/allo-retraite">ALLÔ RETRAITE</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="/question">A VOTRE ECOUTE</a>
+                </li>
+                <li class="nav-item">
+                        <a class="nav-link" routerLink="/je-denonce">JE DENONCE</a>
+                </li>
+          </ul>
+      </div>
+  </div>
+</nav>
+
+  
+  <router-outlet></router-outlet>
+
+  <footer>
+        <div class="d-flex justify-content-center pt-5 pb-3">
+            <img src="assets/logo-mtfp-benin1.png" alt="">
+        </div>
+      
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-3">
+                    <h4 class="text-white mb-3">MTFP</h4>
+                    <ul class="list-unstyled">
+                        <li class="text-white">
+                            <p>Le Ministère du Travail et de la Fonction Publique</p>
+                        </li>
+                        <li class="text-white">
+                                <ul class="list-unstyled list-inline ">
+                                        <li class="list-inline-item "><a href="https://web.facebook.com/pages/BENIN-Minist%C3%A8re-du-Travail-et-de-la-Fonction-Publique/467476996720696?_rdc=1&_rdr" class="fab fa-facebook text-white"
+                                                target="blank"></a></li>
+                                        <li class="list-inline-item "><a href="https://twitter.com/gouvbenin" class="fab fa-twitter text-white"
+                                                target="blank"></a></li>
+                                        <li class="list-inline-item "><a href="https://www.youtube.com/playlist?list=PLh3-Uo-mLBzJVI7lrWZ0fCDo4nFNkNVTf" class="fab fa-youtube text-white"
+                                                target="blank"></a></li>
+                                        <li class="list-inline-item "><a href="https://www.flickr.com/photos/149181393@N05/albums" class="fab fa-flickr text-white"
+                                                target="blank"></a></li>
+                                    </ul>
+                        </li>
+                     
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3">
+                    <h4 class="text-white mb-3">Liens</h4>
+                    <ul class="list-unstyled">
+                            <li><a routerLink="/main" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Accueil</a></li>
+                            <li><a routerLink="/prestations-par-thematique" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Prestations par thématique</a></li>
+                            <li><a routerLink="/prestations-par-structure" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Prestations par structure</a></li>
+                            <li><a routerLink="/evenements-declencheur" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Evènement déclencheur</a></li>
+                           
+                            <li><a routerLink="/faq" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>FAQ</a></li>
+                            <!---li><a routerLink="/structures" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Toutes nos structures.</a></li-->
+
+                    </ul>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3">
+                    <h4 class="text-white mb-3">Services</h4>
+                    <ul class="list-unstyled ">
+                            <li><a  routerLink="/prendre-rendezvous" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Prise de rendez-vous</a></li>
+                            <li><a routerLink="/allo-retraite" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Allô retraite</a></li>
+                            <li><a routerLink="/je-denonce" class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Je dénonce</a></li>
+                            <li><a routerLink="/question" class="text-white " style="text-decoration:none"><span class="icon icon-question mr-2"></span>A votre écoute </a></li>
+                            <li><a routerLink="/demande-info"  class="text-white " style="text-decoration:none"><span class="icon-long-arrow-right mr-2"></span>Demande d'information</a></li>
+                           
+                        </ul>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3">
+                    <h4 class="text-white mb-3">Avez vous des préoccupations?</h4>
+                    <ul class="list-unstyled">
+                            <li><a routerLink="/about" class="text-white " style="text-decoration:none"><span class="icon icon-info"></span><span class="text">  A propos				</span></a></li>
+                            <li><a routerLink="/plan" class="text-white " style="text-decoration:none"><span class="icon icon-map"></span><span class="text"> Plan de la plateforme					</span></a></li>
+                            <li class="text-white " style="text-decoration:none"><span class="icon icon-map-marker"></span><span class="text">Adresse : Cadjèhoun - Cotonou 					</span></li>
+                            <li><a href="#" class="text-white " style="text-decoration:none"><span class="icon icon-phone"></span><span class="text">Tél : (00229) 21 33 23 30</span></a></li>
+                            <li><a href="#" class="text-white " style="text-decoration:none"><span class="icon icon-envelope"></span><span class="text">travail@gouv.bj</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+            <div class="text-center my-3">
+                <a routerLink="mentions-legales">Politique de confidentialité</a>
+            </div>
+            
+        <p class="text-center text-white">République du Bénin - Ministère du Travail et de la Fonction Publique - Direction des Systèmes d'Information (DSI) </p>
+        <p class="text-center text-white">© Tous Droits Reservés 2021</p>
+
+        <div class="d-flex">
+            <div class="green" style="height:5px; width:33%"></div>
+            <div class="yellow" style="height:5px;width:34%"></div>
+            <div class="red" style="height:5px;width:33%"></div>
+        </div>
+</footer>
+
+<!--  -->
+
+  <div class="my-cookie" *ngIf="!isConsented">
+        <div class="container text-left mb-3">
+        <img src="assets/logo-mtfp.png" class="img-fluid h100" style="height: 3vw;" alt="..." >
+        </div>
+        <div class="container" style="font-size:15px">
+            <p>Ce site utilise des cookies pour collecter des données auprès de nos internautes. Cette collecte a pour finalité de vous fournir des contenues plus riche et adaptés à vos recherches. Les données collectées sont conservées pendant 1 an.</p>
+            <p>Visitez notre <a routerLink="/mentions-legales">politique de protection des données personnelles </a></p>
+        </div>
+        <div class="container text-center">
+            <button type="button" (click)="consent()" class="btn btn-sm blueColor text-white mr-2">TOUT REFUSER</button>
+            <!-- <button type="button" class="btn btn-sm blueColor text-white mr-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">PLUS D'OPTION</button> -->
+            <button type="button" (click)="consent()" class="btn btn-sm blueColor text-white mr-2">TOUT ACCEPTER</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+     
+      <div class="modal-body">
+      <div class="container p-5">
+  <div class="block-1 blueColor p-5">
+  <h5 class='text-center text-white'>Panneau de gestion des cookies</h5>
+  <hr class="mb-3 text-white">
+  <p class="p-3 text-center text-white">En autorisant ces services tiers, vous acceptez le dépôt et la lecture de cookies et l'utilisation de technologies de suivi nécessaires à  leur bon fonctionnement.</p> 
+  <div class="text-center">
+  <a routerLink="/mentions-legales" class="btn btn-light btn-sm text-center">Politique de confidentialité</a>
+
+  </div> 
+  <hr class="mb-3 text-white">
+  <div class="row text-white">
+    <div class="col-6">Préférence pour tous les services</div>
+    <div class="col-6 d-flex justify-content-between">
+      <button class="btn btn-gray btn-sm text-white accepted-all"><i class="fa fa-check"></i>Autoriser tous les cookies</button>
+      <button class="btn btn-gray btn-sm text-white rejected-all"><i class="fa fa-times"></i>Interdire tous les cookies</button>
+    </div>
+  </div>
+  </div>
+<div class="bloc-2 py-3 mb-3">
+    <div class="opt-title pt-2 ">
+        <p class="text-center"><i class="fa fa-plus fa-1x mr-2"></i> Mesures d'audience</p>
+    </div>
+    <div class="opt-bloc p-3">
+        <div class="row">
+            <div class="col-6">
+                <h4 class="" style="color:black">Google analytics</h4>
+                <p>
+                Une mesure est également réalisée grâce aux solutions Google Analytics y compris dans le cadre de campagnes d'informations. Si vous ne souhaitez pas être audité, vous pouvez vous reporter aux règles de confidentialité
+                </p>
+            </div>
+            <div class="col-6 d-flex justify-content-end ">
+                <div class="">
+                       <button class="btn btn-gray btn-sm text-white mr-3 accepted" id="accepted1"><i class="fa fa-check mr-2"></i>Autoriser</button>
+                <button class="btn btn-gray btn-sm text-white rejected" id="rejected1"><i class="fa fa-times mr-2"></i>Interdire</button>
+                
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+
+<div class="bloc-2 py-3">
+    <div class="opt-title pt-2 ">
+        <p class="text-center"><i class="fa fa-plus fa-1x mr-2"></i> Mesures d'audience</p>
+    </div>
+    <div class="opt-bloc p-3">
+        <div class="row">
+            <div class="col-6">
+                <h4 class="" style="color:black">Google analytics</h4>
+                <p>
+                Une mesure est également réalisée grâce aux solutions Google Analytics y compris dans le cadre de campagnes d'informations. Si vous ne souhaitez pas être audité, vous pouvez vous reporter aux règles de confidentialité
+                </p>
+            </div>
+            <div class="col-6 d-flex justify-content-end ">
+                <div class="">
+                       <button class="btn btn-gray btn-sm text-white mr-3 accepted" id="accepted2"><i class="fa fa-check mr-2"></i>Autoriser</button>
+                <button class="btn btn-gray btn-sm text-white rejected" id="rejected2"><i class="fa fa-times mr-2"></i>Interdire</button>
+                
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-danger btn-sm" data-bs-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

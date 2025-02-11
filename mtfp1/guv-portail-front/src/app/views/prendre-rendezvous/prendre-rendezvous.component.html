@@ -1,0 +1,198 @@
+<section class="o-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+        <div class="card-img-overlay">
+
+            <div class="text container">
+                <h2 class="card-title text-center">JE PRENDS UN RENDEZ-VOUS</h2>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p class="text-center">
+                </p>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <p class="">
+                Le MTFP vous remercie pour la confiance. Prière remplir le formulaire ci-dessous pour un traitement diligent.
+            </p>
+            <div class="card" style="border: 2px solid #0A3764">
+                <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à renseigner</strong></h2>
+                <div class="card-body">
+
+                    <form #formRDV="ngForm" (ngSubmit)="save(formRDV.value)">
+
+                       
+
+                        <div class="row mt-2">
+                            <div class="form-group col-md-6">
+                                <label for="lastname">Nom *</label>
+                                <input type="text" class="form-control" #lastname="ngModel" ngModel id="lastname" name="lastname"
+                                    required>
+                                <span *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                                    <small *ngIf="lastname.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                <label for="firstname">Prénoms *</label>
+                                <input type="text" class="form-control" #firstname="ngModel" ngModel id="firstname"
+                                    name="firstname" required>
+                                <span *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                                    <small *ngIf="firstname.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="phone">Contact *</label>
+                                    <input type="tel" class="form-control" #contact="ngModel" ngModel id="phone" name="contact"
+                                        required>
+                                    <span *ngIf="contact.invalid && (contact.dirty || contact.touched)" class="text-danger">
+                                        <small *ngIf="contact.errors?.required" class="form-text text-danger">Ce champs
+                                            est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                <label for="email">Email *</label>
+                                <input type="email" class="form-control" #email="ngModel" required ngModel id="email"
+                                    name="email">
+                                <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                    <small *ngIf="email.errors?.required" class="form-text text-danger">Ce champs est
+                                        requis
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="objet">Objet *</label>
+                                <input type="text" class="form-control" id="objet" #objet="ngModel" required ngModel
+                                    name="objet">
+                                <span *ngIf="objet.invalid && (objet.dirty || objet.touched)" class="text-danger">
+                                    <small *ngIf="objet.errors?.required" class="form-text text-danger">Ce champs est
+                                        requis
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                    <label for="prestation">Structure *</label>
+                                    <select name="idStructure" #idStructure="ngModel" ngModel id="idStructure" class="form-control"
+                                        required>
+                                        <option [value]="el.id" *ngFor="let el of structures">{{el.libelle}}</option>
+                                    </select>
+                                    <span *ngIf="idStructure.invalid && (idStructure.dirty || idStructure.touched)" class="text-danger">
+                                        <small *ngIf="idStructure.errors?.required" class="form-text text-danger">Ce champs
+                                            est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            
+                        </div>
+                        <div class="row">
+                                <div class="form-group col-6">
+                                        <label for="out_year">Date de rendez-vous souhaitée *</label>
+                                        <input type="date" class="form-control" #dateRdv="ngModel" id="dateRdv" ngModel name="dateRdv"
+                                            required>
+                                        <span *ngIf="dateRdv.invalid && (dateRdv.dirty || dateRdv.touched)" class="text-danger">
+                                            <small *ngIf="dateRdv.errors?.required" class="form-text text-danger">Ce champs est
+                                                requis
+                                            </small>
+                                        </span>
+                                </div>
+                           
+                            <div class="form-group col-md-6">
+                                <label for="idRdvCreneau">Crénaux *</label>
+                                <select name="idRdvCreneau" #idRdvCreneau="ngModel" ngModel id="idRdvCreneau" class="form-control"
+                                    required>
+                                    <option [value]="el.id" *ngFor="let el of crenaux">{{el.heureDebut}} -
+                                        {{el.heureFin}}</option>
+                                </select>
+                                <span *ngIf="idRdvCreneau.invalid && (idRdvCreneau.dirty || idRdvCreneau.touched)"
+                                    class="text-danger">
+                                    <small *ngIf="idRdvCreneau.errors?.required" class="form-text text-danger">Ce
+                                        champs est requis
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="attente">Vos attentes *</label>
+                            <textarea name="attente" id="attente" #attente="ngModel" class="form-control" ngModel
+                                required cols="30" rows="7"></textarea>
+                            <span *ngIf="attente.invalid && (attente.dirty || attente.touched)" class="text-danger">
+                                <small *ngIf="attente.errors?.required" class="form-text text-danger">Ce champs est
+                                    requis
+                                </small>
+                            </span>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox"  class="form-check-input" ngModel  name="confidfor" required id="confidfor">
+                            <label  class="form-check-label" for="confidfor">Je donne librement mon consentement pour la collecte de mes données personnelles</label>
+                        </div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button type="submit" class="btn btn-success" [disabled]="formRDV.invalid || loading">Envoyer</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">DEMANDE DE RENDEZ-VOUS</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>
+                Demandeur : {{recup_data.lastname}} {{recup_data.firstname}}
+            </p>
+            <p>
+                Email : {{recup_data.email}}
+            </p>
+            <p>
+                Contact(s) : {{recup_data.contact}} 
+            </p>
+            <p>
+               Date rendez-vous : {{recup_data.dateRdv}}
+            </p>
+            <p>
+                Heure rendez-vous : {{showCreneaux(recup_data.idRdvCreneau)}}
+             </p>
+             <p>
+                Structure : {{showStructure(recup_data.idStructure)}}
+             </p>
+            
+            <p>
+                Objet : {{recup_data.objet}}
+            </p>
+            <p>
+                Attentes : {{recup_data.attente}}
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="validate()">Envoyer</button>
+        </div>
+    </ng-template>
+
+</div>

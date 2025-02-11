@@ -1,0 +1,809 @@
+    <div style="background-color: #0A3764">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs justify-content-center">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Administration du travail</a>
+                <ng-template ngbNavContent>
+                    <div class="row p-3">
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/attestation-de-non-litige"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Attestation
+                                                        de non-litige</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/attestation-de-non-litige"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/autorisation-de-licenciement-pour-motif-economique-ou-motif-personnel"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Autorisation
+                                                        de licenciement pour motif économique ou motif personnel</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/autorisation-de-licenciement-pour-motif-economique-ou-motif-personnel"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="#" class="text-dark  text-decoration-none h6 align-self-center "><strong>Attestation
+                                                        d'existence</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/declaration-etablissement"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Déclaration
+                                                        d'établissement</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/declaration-etablissement"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="" class="text-dark  text-decoration-none h6 align-self-center "><strong>Permis
+                                                        de travail</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="" class="text-dark  text-decoration-none h6 align-self-center "><strong>Visa
+                                                        de contrats des nationaux</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="" class="text-dark  text-decoration-none h6 align-self-center "><strong>Visa
+                                                        de contrats des expatriés</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/visa-contrat-contrat-apprentisage"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Visa
+                                                        de contrats d’apprentissage</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/visa-contrat-contrat-apprentisage"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/visa-reglement-interieur-entreprise"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Visa
+                                                        de règlements intérieurs d’entreprises </strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/visa-reglement-interieur-entreprise"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/decision-agrement-exercice-medecin"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Décision
+                                                        d'agrément d'exercice de médecin </strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/decision-agrement-exercice-medecin"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink> Fonction publique</a>
+                <ng-template ngbNavContent class="bg-white">
+                    <div class="row p-3">
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="#" class="text-dark  text-decoration-none h6 align-self-center "><strong>Attestation
+                                                        de non-agent</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="#" class="text-dark  text-decoration-none h6 align-self-center "><strong>Soumission
+                                                        de dossier à un concours</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="#" class="text-dark  text-decoration-none h6 align-self-center "><strong>Consultation
+                                                        de carrière ou de situation administrative</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+
+            <li [ngbNavItem]="3">
+                <a ngbNavLink>Espace formation</a>
+                <ng-template ngbNavContent>
+                    <div class="row p-3">
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="#" class="text-dark  text-decoration-none h6 align-self-center "><strong>Notification
+                                                        de retour de stage</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="#" class="text-dark  text-decoration-none h6 align-self-center "><strong>Sollicitation
+                                                        d’information sur une formation</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="4">
+                <a ngbNavLink>Administration centrale</a>
+                <ng-template ngbNavContent>
+                    <div class="row p-3">
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="#" class="text-dark  text-decoration-none h6 align-self-center "><strong>Attestation
+                                                        de présence au poste</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/attestation-de-stage"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Attestation
+                                                        de stage</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/attestation-de-stage"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="" class="text-dark  text-decoration-none h6 align-self-center "><strong>Délivrance
+                                                        de certificat de prise de service</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/attestation-de-service-fait"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Attestation
+                                                        de service fait</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/attestation-de-service-fait"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="" class="text-dark  text-decoration-none h6 align-self-center "><strong>Dépôt
+                                                        de requêtes et de plaintes</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="" style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="http://sollicitation.hebergeappli.bj/e-services/mtfp/autorisation-de-stage"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Soumission
+                                                        de demande de stage</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="http://sollicitation.hebergeappli.bj/e-services/mtfp/autorisation-de-stage"
+                                                        style="font-size:15px; border:none;">ACCEDER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </li>
+
+            <li [ngbNavItem]="5">
+                <a ngbNavLink>Téléchargement</a>
+                <ng-template ngbNavContent>
+                    <div class="row p-3">
+
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="assets/supports/Proc_autorisation_de_stage.pdfe" class="text-dark  text-decoration-none h6 align-self-center "><strong>AProcédure
+                                                        de sollicitation de stage</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="assets/supports/Proc_autorisation_de_stage.pdf"
+                                                        style="font-size:15px; border:none;">TELECHARGER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="assets/supports/Proc_attestation_de_stage.pdf" class="text-dark  text-decoration-none h6 align-self-center "><strong>Procédure
+                                                        de sollicitation d'attestation de stage</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="assets/supports/Proc_attestation_de_stage.pdf "
+                                                        style="font-size:15px; border:none;">TELECHARGER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="assets/supports/Proc_attestation_de_service_fait.pdf" class="text-dark  text-decoration-none h6 align-self-center "><strong>Procédure
+                                                        de sollicitation d'attestation de service fait</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="assets/supports/Proc_attestation_de_service_fait.pdf"
+                                                        style="font-size:15px; border:none;">TELECHARGER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="assets/supports/Proc_visa_de_contrat_apprentissage.pdf" class="text-dark  text-decoration-none h6 align-self-center "><strong>Procédure
+                                                        de sollicitation de visa de contrat d'apprentissage</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="assets/supports/Proc_visa_de_contrat_apprentissage.pdff"
+                                                        style="font-size:15px; border:none;">TELECHARGER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="assets/supports/Proc_visa_de_reglement_interieur.pdf" class="text-dark  text-decoration-none h6 align-self-center "><strong>Procédure
+                                                        de sollicitation de visa de reglement intérieur</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="assets/supports/Proc_visa_de_reglement_interieur.pdf"
+                                                        style="font-size:15px; border:none;">TELECHARGER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation">
+                                <div class="card-body">
+                                    <div class="d-flex flex-column justify-content-around">
+                                        <div class="align-self-center text-center text-sm-start">
+                                            <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                        <div class="p-2 text-center">
+                                            <div class="block-sollicitation-title d-flex justify-content-center ">
+                                                <a href="assets/supports/Proc_demande_de_déclaration _d'établissement.pdf"
+                                                    class="text-dark  text-decoration-none h6 align-self-center "><strong>Procédure
+                                                        de sollicitation de déclaration d'établissement</strong></a>
+                                            </div>
+                                            <p class="text-dark h6"></p>
+                                            <div class="d-flex justify-content-around blueColor">
+                                                <div class="">
+                                                    <a class="tbtn" href="assets/supports/Proc_demande_de_déclaration _d'établissement.pdf"
+                                                        style="font-size:15px; border:none;">TELECHARGER</a>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </ng-template>
+            </li>
+        </ul>
+
+    </div>
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+
+    <div class="col-12 col-md-6">
+                    <div class="card shadow p-0 mb-3  rounded" style="border: 1px solid rgba(10, 55, 100, 0.9)">
+                        <div class="card-body">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <a href="#" class="text-dark text-decoration-none">
+                                        <strong>Nombre de requetes</strong></a>
+                                    <p class="text-dark text-center">50</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>

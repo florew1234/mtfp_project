@@ -1,0 +1,198 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800">Configuration des relances</h3>
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+  
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{data.length}} élement(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form>
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+              </ul>
+              <!-- <li class="nav-item"> -->
+                <div class="form-group form-inline"> Institutions activées pour la relance :</div>
+                <select class="form-control row col-md-4"  (change)="init()" name="idEntite" id="idEntite" [(ngModel)]="selected_Entite" >
+                  <option value="-1" selected >Sélectionnez un ministère </option>
+                  <option [value]="el.id" *ngFor="let el of ministere">{{el.libelle}}</option>
+                </select>  
+              <!-- </li> -->
+
+              <div>
+                <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)"> Ajouter</button>
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+  
+            <!--begin::Table-->
+            <div class="table-responsive">
+              NB : Merci de respecter l'écriture des variables suivant : <strong>var_containt</strong>  (Renvois les Statistiques) <strong>var_nbreRelance</strong> (Renvois le nombre de relance)
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                  <tr>
+                    <td class="left text-left" colspan="9">
+                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white"> Modifier </button>
+                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger"> Supprimer </button>
+                    </td>
+                  </tr>  
+                  <tr>
+                    <th></th>
+                    <th scope="col">Ordre Relance</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">à partir de </th>
+                    <th scope="col">Utilisateur </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                    <td> <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)"> </td>
+                    <td> {{i+1}} </td>
+                    <td> {{el.msg_relance}} </td>
+                    <td> {{el.apartir_de}} </td>
+                    <td> {{el.id_user == '-1'?'Toutes les directions': el.user_?.agent_user?.nomprenoms}} </td>
+                  </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="6" class="text-center bg-gray-100">Aucun éléments</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+                  [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                </ngb-pagination>
+  
+                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                  <option selected disabled>Filtrer</option>
+                  <option [ngValue]="3">3 éléments par page</option>
+                  <option [ngValue]="5">5 éléments par par page</option>
+                  <option [ngValue]="10">10 éléments par par page</option>
+                </select>
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+          <ng-template #content let-modal>
+            <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+              <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une relance</h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  X
+                </button>
+              </div>
+              <div class="modal-body">
+                <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                  {{error}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4">Message</label>
+                  <div class="col-md-6">
+                    <textarea class="form-control form-control-sm has-error"  rows="10" #msg_relance="ngModel" id="msg_relance" ngModel name="msg_relance"></textarea>
+                    <span *ngIf="msg_relance.invalid && (msg_relance.dirty || msg_relance.touched)" class="text-danger">
+                      <small *ngIf="msg_relance.errors?.required"> Message est requis </small>
+                      <small *ngIf="msg_relance.errors.maxlength"> Message pas plus de 250 caractères. </small>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4">à partir de (précisez le niveau de relance)</label>
+                    <div class="col-md-6">
+                      <input class="form-control form-control-sm" #apartir_de="ngModel" type="number" required name="apartir_de"
+                        ngModel>
+                      <span *ngIf="apartir_de.invalid && (apartir_de.dirty || apartir_de.touched)" class="text-danger">
+                        <small *ngIf="apartir_de.errors?.required"> à partir de est requis </small>
+                        <small *ngIf="apartir_de.errors.maxlength"> à partir de ,pas plus de 250 caractères. </small>
+                      </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4">Acteur </label>
+                    <div class="col-md-6">
+                      <select class="form-control " name="listuser" id="" [(ngModel)]="selected_iduse">
+                        <option value="" selected >Sélectionnez un élément </option>
+                        <option [value]="el.id" *ngFor="let el of listuser">{{el.nomprenom}}</option>
+                      </select>
+                    </div>
+                </div>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+              </div>
+            </form>
+          </ng-template>
+
+
+
+          <ng-template #contentU let-modal>
+            <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+              <div class="modal-header bg-mat-primary">
+                <h4 class="modal-title text-white" id="modal-basic-title">Modifier une relance</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')"> X </button>
+              </div>
+              <div class="modal-body">
+                <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                  {{error}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4">Message</label>
+                  <div class="col-md-8">
+                    <textarea class="form-control form-control-sm has-error" required [(ngModel)]="selected_data.msg_relance" rows="5" #msg_relance="ngModel" id="msg_relance" ngModel name="msg_relance"></textarea>
+                    <span *ngIf="msg_relance.invalid && (msg_relance.dirty || msg_relance.touched)" class="text-danger">
+                      <small *ngIf="msg_relance.errors?.required"> Message est requis </small>
+                      <small *ngIf="msg_relance.errors.maxlength"> Message pas plus de 250 caractères. </small>
+                    </span>
+                  </div>
+                </div>
+                <div  *ngIf="!user_prin" class="form-group row">
+                  <label class="col-md-4">à partir de (précisez le niveau de relance)</label>
+                  <div class="col-md-8">
+                    <input class="form-control form-control-sm"  required [(ngModel)]="selected_data.apartir_de" #apartir_de="ngModel" type="number" required name="apartir_de"
+                      ngModel>
+                    <span *ngIf="apartir_de.invalid && (apartir_de.dirty || apartir_de.touched)" class="text-danger">
+                      <small *ngIf="apartir_de.errors?.required"> à partir de est requis </small>
+                      <small *ngIf="apartir_de.errors.maxlength"> à partir de ,pas plus de 250 caractères. </small>
+                    </span>
+                  </div>
+              </div>
+              <div  *ngIf="!user_prin" class="form-group row">
+                  <label class="col-md-4">Acteur</label>
+                  <div class="col-md-8">
+                    <select class="form-control" name="listuser" required id="" [(ngModel)]="selected_data.id_user">
+                      <option value="" selected >Sélectionnez un élément </option>
+                      <option [value]="el.id" *ngFor="let el of listuser">{{el.nomprenom}}</option>
+                    </select>
+                  </div>
+              </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+              </div>
+            </form>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

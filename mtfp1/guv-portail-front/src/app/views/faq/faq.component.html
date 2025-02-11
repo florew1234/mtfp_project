@@ -1,0 +1,59 @@
+<section class="o-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+        <div class="card-img-overlay">
+
+            <div class="text container">
+                <h2 class="card-title text-center"> Foire Aux Questions</h2>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p></p>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="d-md-flex flex-column rounded p-5 mb-5" style="border: 2px solid #0A3764">
+                <h2 class=""> Trouvez ici les réponses aux préoccupations les plus courantes de nos usagers/clients :
+                </h2>
+                <div class="mt-3">
+
+                    <ul class="list-unstyled">
+
+                        <ng-container *ngFor="let el of data">
+                            <li id="">
+                                <h5 class="question"><i class="fa fa-caret-right">&nbsp;</i>&nbsp;{{el.question}}</h5>
+                                <p class="reponse">
+                                    {{el.reponse}}
+                                </p>
+                            </li>
+                        </ng-container>
+
+
+
+                        <li id="">
+                            <h5 class="question"><i class="fa fa-caret-right">&nbsp;</i>&nbsp;Comment envoyer une
+                                requête à l’administration ?</h5>
+                            <p class="reponse">
+                                <a href="/assets/fichiers/Manuel_utilisation_Espace_usage_ mat_acceuil.pdf" target="_blank">Cliquer</a>
+                                pour connaitre la procédure .
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="align-self-center">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

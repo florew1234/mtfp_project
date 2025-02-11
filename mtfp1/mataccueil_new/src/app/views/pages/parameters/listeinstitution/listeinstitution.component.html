@@ -1,0 +1,299 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800">Entités administratives</h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+  
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{data.length}} élement(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form>
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+                <li class="nav-item"> </li>
+  
+              </ul>
+              <div>
+                <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)">
+                  Ajouter une entité</button>
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+  
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                  <tr>
+                    <td class="left text-left" colspan="9">
+                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white"> Modifier </button>
+                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger"> Supprimer </button>
+                    </td>
+                  </tr>  
+                  <tr>
+                    <th></th>
+                    <th scope="col">N°</th>
+                    <th scope="col">Sigle</th>
+                    <th scope="col">Libellé</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Intervalle de relance</th>
+                    <th scope="col" class="text-center">Etat des relances</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                    <td>
+                        <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)">
+                    </td>
+                    <td>
+                      {{i+1}}
+                    </td>
+                    <td>
+                      {{el.sigle}}
+                    </td>
+                    <td>
+                      {{el.libelle}}
+                    </td>
+                    <td>
+                      {{el.type}}
+                    </td>
+                    <td>
+                      {{el.nbrjrs_relance == null ? '0 jour' : el.nbrjrs_relance+" jour(s)"}}
+                    </td>
+                    <td class="text-center">
+                      <span class="badge badge-success" *ngIf="el.etat_relance == 1">Activé</span>
+                      <span class="badge badge-danger" *ngIf="el.etat_relance == 0 || el.etat_relance == null">Désactivé</span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+                  [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                </ngb-pagination>
+  
+                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                  <option selected disabled>Filtrer</option>
+                  <option [ngValue]="3">3 elements par page</option>
+                  <option [ngValue]="5">5 elements par par page</option>
+                  <option [ngValue]="10">10 elements par par page</option>
+                </select>
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+          <ng-template #content let-modal>
+            <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+              <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une entité</h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  X
+                </button>
+              </div>
+              <div class="modal-body">
+                <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                  {{error}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4">Libellé</label>
+                  <div class="col-md-6">
+                    <input class="form-control form-control-sm" #libelle="ngModel" maxlength="250" required name="libelle"
+                      ngModel>
+                    <span *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="text-danger">
+                      <small *ngIf="libelle.errors?.required"> libelle est requis </small>
+                      <small *ngIf="libelle.errors.maxlength"> libelle ,pas plus de 250 caractères. </small>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4">Sigle</label>
+                    <div class="col-md-6">
+                      <input class="form-control form-control-sm" #sigle="ngModel" maxlength="250" required name="sigle"
+                        ngModel>
+                      <span *ngIf="sigle.invalid && (sigle.dirty || sigle.touched)" class="text-danger">
+                        <small *ngIf="sigle.errors?.required"> sigle est requis </small>
+                        <small *ngIf="sigle.errors.maxlength"> sigle ,pas plus de 250 caractères. </small>
+                      </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4">Type</label>
+                    <div class="col-md-6">
+                      <select class="form-control form-control-sm" #type="ngModel" maxlength="250" required name="type"
+                        ngModel>
+                            <option value="MINISTERE">MINISTERE</option>
+                            <option value="INSTITUTION">INSTITUTION</option>
+                    </select>
+                      <span *ngIf="type.invalid && (type.dirty || type.touched)" class="text-danger">
+                        <small *ngIf="type.errors?.required"> type est requis </small>
+                        <small *ngIf="type.errors.maxlength"> type ,pas plus de 250 caractères. </small>
+                      </span>
+                    </div>
+                </div>
+                <hr>
+                <div class=" row"><label class="col-md-12">Configuration des relances</label></div>
+                <div class="form-group row">
+                    <label class="col-md-4">Intervalle de relance</label>
+                    <div class="col-md-6">
+                      <input class="form-control form-control-sm" #nbrjrs_relance="ngModel" maxlength="250" required name="nbrjrs_relance" type="number" ngModel>
+                      <span *ngIf="nbrjrs_relance.invalid && (nbrjrs_relance.dirty || nbrjrs_relance.touched)" class="text-danger">
+                        <small *ngIf="nbrjrs_relance.errors?.required"> Intervalle est requis </small>
+                        <small *ngIf="nbrjrs_relance.errors.maxlength"> Intervalle pas plus de 250 caractères. </small>
+                      </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4">Etat</label>
+                  <div class="col-md-6">
+                    <select class="form-control form-control-sm" #etat_relance="ngModel" required name="etat_relance" ngModel>
+                          <option value="1">Activé</option>
+                          <option value="0">Désactivé</option>
+                    </select>
+                      <span *ngIf="etat_relance.invalid && (etat_relance.dirty || etat_relance.touched)" class="text-danger">
+                        <small *ngIf="etat_relance.errors?.required"> Etat est requis </small>
+                        <small *ngIf="etat_relance.errors.maxlength"> Etat pas plus de 250 caractères. </small>
+                      </span>
+                    </div>
+                </div>
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+              </div>
+            </form>
+          </ng-template>
+
+
+
+
+          <ng-template #contentU let-modal>
+            <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+              <div class="modal-header bg-mat-primary">
+                <h4 class="modal-title text-white" id="modal-basic-title">Modifier une thématique</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  X
+                </button>
+              </div>
+              <div class="modal-body">
+                <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                  {{error}}
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                  </button>
+                </div>
+                <div class="form-group row">
+                  <label class="col-md-4">Libellé</label>
+                  <div class="col-md-6">
+                    <input class="form-control form-control-sm" #libelle="ngModel" maxlength="250" required name="libelle"
+                      [(ngModel)]="selected_data.libelle">
+                    <span *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="text-danger">
+                      <small *ngIf="libelle.errors?.required">
+                        libelle est requis
+                      </small>
+                      <small *ngIf="libelle.errors.maxlength">
+                        libelle ,pas plus de 250 caractères.
+                      </small>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4">Sigle</label>
+                    <div class="col-md-6">
+                      <input class="form-control form-control-sm" #sigle="ngModel" maxlength="250" required name="sigle"
+                        [(ngModel)]="selected_data.sigle">
+                      <span *ngIf="sigle.invalid && (sigle.dirty || sigle.touched)" class="text-danger">
+                        <small *ngIf="sigle.errors?.required">
+                            sigle est requis
+                        </small>
+                        <small *ngIf="sigle.errors.maxlength">
+                            sigle ,pas plus de 250 caractères.
+                        </small>
+                      </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4">Type</label>
+                    <div class="col-md-6">
+                      <select class="form-control form-control-sm" #type="ngModel" maxlength="250" required name="type"
+                        [(ngModel)]="selected_data.type">
+                            <option value="MINISTERE">MINISTERE</option>
+                            <option value="INSTITUTION">INSTITUTION</option>
+                    </select>
+                      <span *ngIf="type.invalid && (type.dirty || type.touched)" class="text-danger">
+                        <small *ngIf="type.errors?.required">
+                            type est requis
+                        </small>
+                        <small *ngIf="type.errors.maxlength">
+                            type ,pas plus de 250 caractères.
+                        </small>
+                      </span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row"><label class="col-md-12">Configuration des relances</label></div>
+                <div class="form-group row">
+                  <label class="col-md-4">Intervalle de relance </label>
+                  <div class="col-md-6">
+                    <input class="form-control form-control-sm" #nbrjrs_relance="ngModel" maxlength="250" type="number" required name="nbrjrs_relance"
+                      [(ngModel)]="selected_data.nbrjrs_relance">
+                    <span *ngIf="nbrjrs_relance.invalid && (nbrjrs_relance.dirty || nbrjrs_relance.touched)" class="text-danger">
+                      <small *ngIf="nbrjrs_relance.errors?.required">
+                        Intervalle rela est requis
+                      </small>
+                      <small *ngIf="nbrjrs_relance.errors.maxlength">
+                        Intervalle pas plus de 250 caractères.
+                      </small>
+                    </span>
+                  </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Etat</label>
+                <div class="col-md-6">
+                  <select class="form-control form-control-sm" #etat_relance="ngModel" required name="etat_relance" [(ngModel)]="selected_data.etat_relance">
+                        <option value="1">Activé</option>
+                        <option value="0">Désactivé</option>
+                  </select>
+                    <span *ngIf="etat_relance.invalid && (etat_relance.dirty || etat_relance.touched)" class="text-danger">
+                      <small *ngIf="etat_relance.errors?.required">
+                          Etat est requis
+                      </small>
+                      <small *ngIf="etat_relance.errors.maxlength">
+                          Etat pas plus de 250 caractères.
+                      </small>
+                    </span>
+                  </div>
+              </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+              </div>
+            </form>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

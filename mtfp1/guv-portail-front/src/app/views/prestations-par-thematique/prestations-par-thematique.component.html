@@ -1,0 +1,86 @@
+<section class="o-banner">
+        <div class="card text-white ">
+    
+            <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+            <div class="card-img-overlay">
+    
+                <div class="text container">
+                    <h2 class="card-title text-center"> CATALOGUE DES PRESTATIONS</h2>
+                    <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                    <p class="text-center">Prestations par thématiques</p>
+                </div>
+    
+    
+            </div>
+        </div>
+    
+    </section>
+    <div class="container my-5">
+        <div class="row">
+                <div class="col-md-12 my-2">
+                        <div class="row">
+                             <div class="col-md-2">
+                                <span>Thématiques : </span>
+                             </div>
+                             <div class="col-md-6">
+                                <select [(ngModel)]="selected_key" name="thematique" id="" (change)="filter($event)" class="form-control">
+                                    <option value="" selected disabled>Choisir une thématique</option>                                    
+                                    <option value="0">Toutes</option>
+                                    <option [value]="el.id" *ngFor="let el of thematiques">{{el.libelle}}</option>
+                
+                                 </select>
+                             </div>
+                             <div class="col-md-4">
+                                <input [(ngModel)]="searchText" name="searchText"  (keyup)="search()" placeholder="Rechercher...." id="" class="form-control">
+                             </div>
+                        </div>
+                </div>
+            <div class="col-md-12 col-12 col-sm-12">
+    
+                <table class="table  table-striped">
+                    <thead>
+                        <tr class="blueColor text-white ">
+                            <th>Libellé</th>
+                            <th>Description</th>
+                            <th>Sollicitation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                            <td>{{el.libelle}}</td>
+                            
+                            <td class="text-center">
+                                <a *ngIf="el.access_online"  target="_blank" title="Cliquer" class="btn btn-sm btn-light" [href]="el.view_url">Consulter</a>
+                                <span *ngIf="!el.access_online"> - </span>
+                            </td>
+                            <td>
+                                <a *ngIf="el.access_online" target="_blank" title="Cliquer" class="btn btn-sm text-white blueColor" [href]="el.access_url">Solliciter</a>
+                                <span *ngIf="!el.access_online"> - </span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!loading && data.length==0">
+                            <td class="text-center" colspan="10" >Aucun élément</td>
+                        </tr>
+                        <tr *ngIf="loading && data.length==0">
+                            <td class="text-center" colspan="10" >Chargement en cours...</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="d-flex justify-content-between p-2">
+                    <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                    </ngb-pagination>
+                  
+                    <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize" >
+                      <option selected disabled>Filtrer</option>
+                      <option [ngValue]="10">10 elements par page</option>
+                      <option [ngValue]="15">15 elements par par page</option>
+                      <option [ngValue]="20">20 elements par par page</option>
+                      <option [ngValue]="50">50 elements par par page</option>
+                    </select>
+                  </div>
+            </div>
+    
+        </div>
+    
+    
+    </div>

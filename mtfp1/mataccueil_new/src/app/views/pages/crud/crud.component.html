@@ -1,0 +1,248 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h3 mb-0 text-gray-800">CRUD</h3>
+
+  </div>
+  <div class="row d-flex">
+    <div class="col-md-12">
+      <div class="card my-2">
+        <!-- Header -->
+        <div class="card-header p-4 border-0 pt-5">
+
+          <div class="card-toolbar d-flex justify-content-between">
+            <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+              <li class="nav-item">
+                <span class="mr-2">5 élements</span>
+              </li>
+              <li class="nav-item">
+                <form>
+                  <div class="form-group form-inline">
+                    <input class="form-control form-control-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                      name="searchText" (keyup)="search()" />
+                  </div>
+                </form>
+              </li>
+              <li class="nav-item">
+
+                
+              </li>
+
+            </ul>
+            <div>
+                <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)">
+                   Ajout nouveau</button>
+            </div>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="card-body pt-3 pb-0">
+
+          <!--begin::Table-->
+          <div class="table-responsive">
+
+            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <th scope="col">Utilisateur</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Contact</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                  <td>
+                    {{el.first_name}} {{el.last_name }}
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="el.email" [term]="searchText"></ngb-highlight>
+                  </td>
+                  <td>
+                    {{el.phone }}
+                  </td>
+                  <td class="text-center ">
+                    <span class="label label-lg label-light-success label-inline" *ngIf="el.is_active">Actif</span>
+                    <span class="label label-lg label-light-danger label-inline" *ngIf="!el.is_active">Inactif</span>
+                  </td>
+                  <td class="text-center pr-0">
+                    <button (click)="openEditModal(contentU,el.id)" class="btn btn-icon btn-clean btn-sm">
+                      <i class="la la-pen"></i>
+                    </button>
+                    <button *ngIf="el.is_active" (click)="lock(el.id,i)" class="btn btn-icon btn-clean btn-sm mx-3">
+                      <i class="la la-lock"></i>
+                    </button>
+
+                    <button *ngIf="!el.is_active" (click)="unlock(el.id,i)" class="btn btn-icon btn-clean btn-sm mx-3">
+                      <i class="la la-lock-open"></i>
+                    </button>
+                    <button (click)="archive(el.code,i)" class="btn btn-icon btn-clean btn-sm">
+                      <i class="la la-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr *ngIf="data.length==0">
+                  <td colspan="6" class="text-center bg-secondary">Aucun elements</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+              <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+                [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+              </ngb-pagination>
+
+              <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                <option selected disabled>Filtrer</option>
+                <option [ngValue]="3">3 elements par page</option>
+                <option [ngValue]="5">5 elements par par page</option>
+                <option [ngValue]="10">10 elements par par page</option>
+              </select>
+            </div>
+          </div>
+          <!--end::Table-->
+        </div>
+
+
+        <ng-template #content let-modal>
+          <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+            <div class="modal-header bg-gray-100">
+              <h5 class="modal-title" id="modal-basic-title">Nouvel ajout</h5>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+               X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                {{error}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="form-group">
+                <label>Nom</label>
+                <input class="form-control" #last_name="ngModel" maxlength="250" required name="last_name" ngModel>
+                <span *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)" class="text-danger">
+                  <small *ngIf="last_name.errors?.required">
+                    Nom est requis
+                  </small>
+                  <small *ngIf="last_name.errors.maxlength">
+                    Nom ,pas plus de 250 caractères.
+                  </small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>Prénom</label>
+                <input class="form-control" #first_name="ngModel" maxlength="250" required name="first_name" ngModel>
+                <span *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)" class="text-danger">
+                  <small *ngIf="first_name.errors?.required">
+                    Prénom est requis
+                  </small>
+                  <small *ngIf="first_name.errors.maxlength">
+                    Prénom ,pas puls de 250 caractères.
+                  </small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" type="email" required #email="ngModel" name="email" ngModel pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                  <small *ngIf="email.errors?.required">
+                    Email est requis
+                  </small>
+                  <small *ngIf="email.errors?.pattern">
+                    Email invalid
+                  </small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>Contact</label>
+                <input class="form-control" type="number" required #phone="ngModel" name="phone" ngModel>
+                <span *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-danger">
+                  <small *ngIf="phone.errors?.required">
+                    Contact est requis
+                  </small>
+                  <small *ngIf="phone.errors?.pattern">
+                    Contact invalid
+                  </small>
+                </span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+            </div>
+          </form>
+        </ng-template>
+        <ng-template #contentU let-modal>
+          <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+            <div class="modal-header bg-gray-100">
+              <h4 class="modal-title" id="modal-basic-title">Nouvelle modification</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <i class="la la-close font-size-h3"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                {{error}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="form-group">
+                <label>Nom</label>
+                <input class="form-control" #last_name="ngModel" maxlength="250" required name="last_name" ngModel>
+                <span *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)" class="text-danger">
+                  <small *ngIf="last_name.errors?.required">
+                    Nom est requis
+                  </small>
+                  <small *ngIf="last_name.errors.maxlength">
+                    Nom ,pas plus de 250 caractères.
+                  </small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>Prénom</label>
+                <input class="form-control" #first_name="ngModel" maxlength="250" required name="first_name" ngModel>
+                <span *ngIf="first_name.invalid && (first_name.dirty || first_name.touched)" class="text-danger">
+                  <small *ngIf="first_name.errors?.required">
+                    Prénom est requis
+                  </small>
+                  <small *ngIf="first_name.errors.maxlength">
+                    Prénom ,pas puls de 250 caractères.
+                  </small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" type="email" required #email="ngModel" name="email" ngModel pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                  <small *ngIf="email.errors?.required">
+                    Email est requis
+                  </small>
+                  <small *ngIf="email.errors?.pattern">
+                    Email invalid
+                  </small>
+                </span>
+              </div>
+              <div class="form-group">
+                <label>Contact</label>
+                <input class="form-control" type="number" required #phone="ngModel" name="phone" ngModel>
+                <span *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-danger">
+                  <small *ngIf="phone.errors?.required">
+                    Contact est requis
+                  </small>
+                  <small *ngIf="phone.errors?.pattern">
+                    Contact invalid
+                  </small>
+                </span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+            </div>
+          </form>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!---Container Fluid-->

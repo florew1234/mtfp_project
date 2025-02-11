@@ -1,0 +1,1096 @@
+<!-- Container Fluid-->
+<div class="container-fluid " id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">ENREGISTREMENT D'UNE REQUÊTE</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card ">
+                
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <div class="row col-md-12 d-flex justify-content-between my-3">
+                        <div class="align-self-center">
+                            <button (click)="openAddModal(add)" class="btn rounded-0 shadow-sm bg-mat-primary text-white mx-1">Ajouter
+                                une
+                                préoccupation</button>
+                            <button (click)="openAddModal(newrdv)" class="btn rounded-0 btn-info text-white mx-1">Prendre
+                                Rdv</button>
+                        </div>
+                    </div>
+                    <ngb-tabset>
+                        <ngb-tab title="Vos préoccupations">
+                            <ng-template ngbTabContent>
+                                <div class="card-toolbar d-flex justify-content-between mt-4">
+                                    <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                                        <li class="nav-item">
+                                            <span class="mr-2">{{data.length}} élement(s)</span>
+                                        </li>
+                                        <li class="nav-item">
+                                            <form>
+                                                <div class="form-group form-inline">
+                                                    <input class="form-control form-control-sm form-control-sm form-control form-control-sm form-control-sm-sm "
+                                                        placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                                                        name="searchText" (keyup)="search()" />
+                                                </div>
+                                            </form>
+                                        </li>
+                                        <li class="nav-item">
+
+
+                                        </li>
+
+                                    </ul>
+                                    <div>
+
+                                    </div>
+                                </div>
+                                <!--begin::Table-->
+                                <div class="table-responsive">
+
+                                    <table class="table table-bordered table-striped datatable  table-head-custom table-vertical-center"
+                                        id="kt_datatable">
+                                        <thead>
+                                            <tr>
+                                                <td class="left text-left" colspan="15">
+
+                                                    <button *ngIf="show_actions" (click)="openEditModal(edit)" title="Modifier la requête"
+                                                        class="btn mx-1 btn-xs btn-warning edit">
+                                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil"
+                                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                        </svg>
+                                                    </button>
+
+                                                    <button *ngIf="show_actions" title="Supprimer à la requête" (click)="dropRequeteusager()"
+                                                        class="btn mx-1 btn-xs btn-danger edit">
+                                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
+                                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                        </svg>
+                                                    </button>
+
+
+
+                                                    <!--button *ngIf="show_actions" title="Afficher fichier joint" (click)="displayResource()"
+                                                        class="btn btn-xs mx-1 btn-info">
+                                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-eye"
+                                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
+                                                            <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                                        </svg>
+                                                    </button-->
+
+                                                    <button *ngIf="show_actions" title="Transmettre la requête au MTFP" (click)="transmettreRequete()"
+                                                        class="btn mx-1 btn-xs btn-success">
+                                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-90deg-right"
+                                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z" />
+                                                        </svg>
+                                                    </button>
+
+
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th width="7%">Date Enreg.</th>
+                                                <th width="10%">Type</th>
+                                                <th width="15%">Prestation</th>
+                                                <th width="15%">Objet</th>
+                                                <th width="15%">Message</th>
+                                                <th width="15%">Statut</th>
+
+                                                <th>Réponse du MTFP</th>
+                                                <!--<th width="20%">Durée Traitement</th>-->
+                                                <th width="10%">Appréciat.</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                                <td>
+                                                    <input type="radio" [value]="el" ngModel name="getrequete" (change)="checked($event,el)">
+                                                </td>
+                                                <td>{{el.created_at | date:'dd/MM/yyy hh:mm:ss'}} </td>
+                                                <td>
+                                                    <span *ngIf="el.plainte==0">Requête</span>
+                                                    <span *ngIf="el.plainte==1">Plainte</span>
+                                                    <span *ngIf="el.plainte==2">Demande d'information</span>
+                                                </td>
+                                                <td>{{el.service==null ? '' : el.service.libelle}} </td>
+                                                <td>{{el.objet}} </td>
+                                                <td>{{el.msgrequest}} </td>
+                                                <td>
+                                                    <span *ngIf="el.visible==0">En attente de transmission</span>
+                                                    <span *ngIf="el.visible==1 && el.traiteOuiNon==0  && el.rejete==0 && el.interrompu==0">En
+                                                        cours de traitement</span>
+                                                    <span *ngIf="el.visible==1 && el.traiteOuiNon==1  && el.rejete==1">Rejeté</span>
+                                                    <span *ngIf="el.visible==1 && el.visible==1 && el.traiteOuiNon==1  && el.rejete==0 && el.interrompu==0">Finalisé</span>
+                                                    <span *ngIf="el.visible==1 && el.traiteOuiNon==1 && el.interrompu==1">Interrompu</span>
+                                                </td>
+
+                                                <td>{{el.reponseStructure}} </td>
+                                                <!--<td>{{Date.dateDiff('d',s.created_at,s.dateReponse)}} </td>-->
+                                                <td>
+                                                    <button (click)="openNoteModal(note,el)" *ngIf="el.traiteOuiNon==1 && el.noteUsager==NULL"
+                                                        title="Apprécier la prestation" class="btn btn-xs btn-danger edit"><svg
+                                                            width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil"
+                                                            fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                            <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                        </svg> </button>
+                                                     <span *ngIf="el.noteUsager!=NULL">{{el.noteUsager}}</span>   
+
+                                                </td>
+
+
+
+
+                                            </tr>
+                                            <tr *ngIf="data.length==0">
+                                                <td colspan="10" class="text-center bg-gray-100">Aucun elements</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="d-flex justify-content-between p-2">
+                                        <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page"
+                                            [maxSize]="5" [pageSize]="pageSize" [rotate]="true" [ellipses]="false"
+                                            [boundaryLinks]="true">
+                                        </ngb-pagination>
+
+                                        <select class="custom-select custom-select-sm float-right" style="width: auto"
+                                            [(ngModel)]="pageSize">
+                                            <option selected disabled>Filtrer</option>
+                                            <option [ngValue]="3">3 elements par page</option>
+                                            <option [ngValue]="5">5 elements par par page</option>
+                                            <option [ngValue]="10">10 elements par par page</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!--end::Table-->
+
+                            </ng-template>
+                        </ngb-tab>
+                        <ngb-tab title="Mes rdv">
+                            <ng-template ngbTabContent>
+                                <table class="datatable table table-striped primary mt-4" cellspacing="0" width="100%">
+                                    <thead>
+
+                                        <tr>
+                                                    <td class="left text-left" colspan="15">
+    
+                                                        <button *ngIf="show_actions2" (click)="openEditModal2(editrdv)" title="Modifier"
+                                                            class="btn mx-1 btn-xs btn-warning edit">
+                                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil"
+                                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                            </svg>
+                                                        </button>
+    
+                                                        <button *ngIf="show_actions2" title="Supprimer" (click)="dropRDV()"
+                                                            class="btn mx-1 btn-xs btn-danger edit">
+                                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash"
+                                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                            </svg>
+                                                        </button>
+    
+                                                        <button *ngIf="show_actions2" title="Transmettre le rendez-vous" (click)="sendRDV()"
+                                                            class="btn mx-1 btn-xs btn-success">
+                                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-90deg-right"
+                                                                fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                                <path fill-rule="evenodd" d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4z" />
+                                                            </svg>
+                                                        </button>
+    
+    
+                                                    </td>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>Date Rdv</th>
+                                            <th>Créneau</th>
+                                            <th>objet</th>
+                                            <th>Code Préoccupation</th>
+                                            <th>Mes attentes</th>
+                                            <th>statut</th>
+                                            <!--<th>Actions</th>-->
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+
+
+                                        <tr class="" *ngFor="let s of rdvs">
+
+                                            <td>
+                                                <input type="radio" [value]="s" ngModel name="getrequete" (change)="checked2($event,s)">
+                                            </td>
+                                            <td>{{s.dateRdv}} </td>
+                                            <td>{{s.rdvcreneau.heureDebut}} - {{s.rdvcreneau.heureFin}}</td>
+                                            <td>{{s.objet}} </td>
+                                            <td>{{s.codeRequete}} </td>
+                                            <td>
+                                                <div style="max-height: 100px;overflow-y: scroll;">{{s.attente}} </div>
+                                            </td>
+                                            <td>
+                                                <span *ngIf="s.statut==0">En attente de transmission</span>
+                                                <span *ngIf="s.statut==1">Transmis à la Structure</span>
+                                                <span *ngIf="s.statut==2">Confirmé</span>
+                                                <span *ngIf="s.statut==3">Rejeté</span>
+                                                <span *ngIf="s.statut==4">Effectué</span>
+                                                <span *ngIf="s.statut==5">Annulé</span>
+                                            </td>
+
+
+                                        </tr>
+                                        <tr *ngIf="rdvs.length==0">
+                                            <td colspan="10" class="text-center bg-gray-100">Aucun elements</td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </ng-template>
+                        </ngb-tab>
+
+                    </ngb-tabset>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <ng-template #newrdv let-modal>
+        <form #frmrdv="ngForm" (ngSubmit)="saveRdv(frmrdv.value)" class="form-horizontal" novalidate="">
+            <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Prendre un rendez-vous </h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    X
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-group row">
+                    <label for="idEntite" class="col-sm-4">Structure de provenance</label>
+                    <div class="col-sm-7" style="padding-right:0px;">
+                        <select name="idEntite" id="idEntite" class="form-control form-control-sm" ngModel
+                            (change)="onEntiteChange($event)">
+                            <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="dateRdv" class="col-sm-4">Date du prochain RDV</label>
+                    <div class="col-sm-7" style="padding-right:0px;">
+                            <input name="dateRdv" required type="date" id="dateRdv" class="form-control form-control-sm" ngModel />
+
+                    </div>
+                </div>
+                <br>
+
+
+                <div class="form-group row" style="margin-top: 30px;">
+                    <label class="col-sm-4" style="margin-right:15px;">Préoccupation concernée: </label>
+
+                    <div class="col-sm-7" style="padding-left:0px;">
+                        <select name="codeRequete" id="codeRequete" class="form-control form-control-sm"
+                            required ngModel (change)="selectRequest($event)">
+                            <option value="0">Aucune</option>
+                            <option [value]="fc.codeRequete" *ngFor="let fc of data">{{fc.codeRequete+' :
+                                '+fc.objet}}</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div *ngIf="show_structures" class="form-group row" style="margin-top: 30px;">
+                    <label class="col-sm-4" style="margin-right:15px;">Structure </label>
+
+                    <div class="col-sm-7" style="padding-left:0px;">
+                        <select name="idStructure" id="idStructure" class="form-control form-control-sm"
+                             ngModel>
+                            <option [value]="fc.id" *ngFor="let fc of structures">{{fc.libelle}}</option>
+
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row" style="margin-top: 30px;">
+
+                    <label for="objet" class="col-sm-4">Objet du RDV</label>
+                    <div class="col-sm-7" style="padding-right: 0px;">
+                        <input type="text" class="form-control has-error" id="objet" name="objet"
+                            [(ngModel)]="selected_el_obj" required >
+
+                    </div>
+                </div>
+
+                <div class="form-group row" style="margin-top: 30px;">
+                    <label class="col-sm-4" style="margin-right:15px;">Créneaux : </label>
+                    <div class="col-sm-7" style="padding-left: 0px;">
+                        <select name="idRdvCreneau" id="idRdvCreneau" class="form-control form-control-sm"
+                            required ngModel>
+                            <option [value]="fc.id" *ngFor="let fc of rdvcreneaus">{{fc.heureDebut+' -
+                                '+fc.heureFin}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row" style="margin-top: 30px;">
+                    <label for="attente" class="col-sm-4">Vos attentes à l'issue de l'entretion :</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control form-control-sm has-error" id="attente" name="attente"
+                            ngModel></textarea>
+                    </div>
+                    <br><br>
+                </div>
+
+                <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+                    <div class="spinner-border text-secondary" role="status">
+                        <span class="sr-only">Processus en cours...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" [disabled]="frmrdv.invalid"><i class="fas fa-save"></i>&nbsp;
+                    Enregistrer</button>
+                <button type="submit" (click)="setStatut()" [disabled]="frmrdv.invalid" class="btn btn-info"><i class="fas fa-save"></i>&nbsp;
+                    Transmettre</button>  
+                <br><br>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #editrdv let-modal>
+            <form #frmeditrdv="ngForm" (ngSubmit)="editRDV(frmeditrdv.value)" class="form-horizontal" novalidate="">
+                <div class="modal-header bg-mat-primary">
+                    <h5 class="modal-title text-white" id="modal-basic-title">Modifier un rendez-vous </h5>
+                    <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        X
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group row">
+                        <label for="idEntite" class="col-sm-4">Structure de provenance</label>
+                        <div class="col-sm-7" style="padding-right:0px;">
+                            <select name="idEntite" id="idEntite" class="form-control form-control-sm" [(ngModel)]="selected_data2.idEntite"
+                                (change)="onEntiteChange($event)">
+                                <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="dateRdv" class="col-sm-4">Date du prochain RDV</label>
+                        <div class="col-sm-7" style="padding-right:0px;">
+                            <input name="dateRdv" required type="date" id="dateRdv" class="form-control form-control-sm" [(ngModel)]="selected_data2.dateRdv" />
+                        </div>
+                    </div>
+                    <br>
+
+
+                    <div class="form-group row" style="margin-top: 30px;">
+                        <label class="col-sm-4" style="margin-right:15px;">Préoccupation concernée: </label>
+
+                        <div class="col-sm-7" style="padding-left:0px;">
+                            <select name="codeRequete" id="codeRequete" class="form-control form-control-sm"
+                                required [(ngModel)]="selected_data2.codeRequete" (change)="selectRequest($event)">
+                                <option value="0">Aucune</option>
+                                <option [value]="fc.codeRequete" *ngFor="let fc of data">{{fc.codeRequete+' :
+                                    '+fc.objet}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div *ngIf="show_structures" class="form-group row" style="margin-top: 30px;">
+                        <label class="col-sm-4" style="margin-right:15px;">Structure </label>
+
+                        <div class="col-sm-7" style="padding-left:0px;">
+                            <select name="idStructure" id="idStructure" class="form-control form-control-sm"
+                            [(ngModel)]="selected_data2.idStructure">
+                                <option [value]="fc.id" *ngFor="let fc of structures">{{fc.libelle}}</option>
+
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row" style="margin-top: 30px;">
+
+                        <label for="objet" class="col-sm-4">Objet du RDV</label>
+                        <div class="col-sm-7" style="padding-right: 0px;">
+                            <input type="text" class="form-control has-error" id="objet" name="objet"
+                                [(ngModel)]="selected_data2.objet" required>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row" style="margin-top: 30px;">
+                        <label class="col-sm-4" style="margin-right:15px;">Créneaux : </label>
+                        <div class="col-sm-7" style="padding-left: 0px;">
+                            <select name="idRdvCreneau" id="idRdvCreneau" class="form-control form-control-sm"
+                                required [(ngModel)]="selected_data2.idRdvCreneau">
+                                <option [value]="fc.id" *ngFor="let fc of rdvcreneaus">{{fc.heureDebut+' -
+                                    '+fc.heureFin}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" style="margin-top: 30px;">
+                        <label for="attente" class="col-sm-4">Vos attentes à l'issue de l'entretion :</label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control form-control-sm has-error" id="attente" name="attente"
+                                [(ngModel)]="selected_data2.attente"></textarea>
+                        </div>
+                        <br><br>
+                    </div>
+                    <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+                        <div class="spinner-border text-secondary" role="status">
+                            <span class="sr-only">Processus en cours...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" [disabled]="frmeditrdv.invalid"><i class="fas fa-save"></i>&nbsp;
+                        Enregistrer</button>
+                    <br><br>
+                </div>
+            </form>
+    </ng-template>
+    <ng-template #note let-modal>
+        <form #frmnoter="ngForm" (ngSubmit)="noterRequete(frmnoter.value)" class="form-horizontal"
+            novalidate="">
+            <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Appreciation</h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    X
+                </button>
+            </div>
+            <div class="modal-body">
+                <span class="help-inline has-error-col" style="color:green !important;">Afin de mieux vous
+                    servir, nous aimerions recueillir votre appréciation du traitement de votre
+                    requête/plainte.</span>
+                <span class="help-inline has-error-col">{{errormessage}}</span>
+                <br><br>
+                <div class="form-group row">
+                    <label for="objet2" class="col-sm-4">Objet de la requête </label>
+                    <div class="col-sm-8">
+                        <input readonly="" type="text" class="form-control  form-control-sm has-error" id="objet2"
+                            name="objet" value="{{selected_data_note.objet}}" [(ngModel)]="selected_data_note.objet"
+                            required>
+
+                    </div>
+                </div>
+
+                <div class="form-group row" style="margin-top: 30px;">
+                    <label class="col-sm-8" style="margin-right:15px;">Quel est votre degré de satisfaction
+                        par rapport au délai de traitement de votre demande ? * </label>
+                    <select name="noteDelai" style="width: 100px; height: 35px;" id="noteDelai" class="form-control form-control-sm"
+                        required ngModel>
+                        <option [value]="fc" *ngFor="let fc of notes">{{fc}}</option>
+                    </select>
+                </div>
+
+
+
+                <div class="form-group row" style="margin-top: 30px;">
+                    <label class="col-sm-8" style="margin-right:15px;">Quel est votre degré de satisfaction
+                        par rapport au résultat du traitement de votre sollicitation ? * </label>
+                    <select name="noteResultat" style="width: 100px; height: 35px;" id="noteResultat" class="form-control form-control-sm"
+                        required ngModel>
+                        <option [value]="fc" *ngFor="let fc of notes">{{fc}}</option>
+                    </select>
+                </div>
+
+
+
+
+
+
+                <div class="form-group row" style="margin-top: 30px;">
+                    <label for="commentaireNotation" class="col-sm-4">Commentaire :</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control form-control-sm has-error" id="commentaireNotation"
+                            name="commentaireNotation" ngModel></textarea>
+                    </div>
+                    <br><br>
+                </div>
+                <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+                    <div class="spinner-border text-secondary" role="status">
+                        <span class="sr-only">Processus en cours...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button *ngIf='selected_data_note.traiteOuiNon==1 && selected_data_note.noteUsager<1' type="submit"
+                    class="btn btn-primary" [disabled]="frmnoter.invalid"><i class="fas fa-save"></i>&nbsp;
+                    Enregistrer</button>
+                <br><br>
+            </div>
+        </form>
+    </ng-template>
+    <ng-template #profil let-modal>
+        <form #frmusager="ngForm" (ngSubmit)="saveUsager(frmusager.value)" class="form-horizontal"
+            novalidate="">
+            <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Mon profil</h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    X
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="color: red;">{{errormessage}}</div>
+                <div class="form-group  row">
+
+                    <label for="nom1" class="col-sm-3 control-label"> Nom * </label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" class="form-control has-error" id="nom1" name="nom" value="{{user.nom}}"
+                            [(ngModel)]="user.nom" required>
+
+
+                    </div>
+
+                </div>
+
+                <div class="form-group  row">
+
+                    <label for="prenoms" class="col-sm-3 control-label"> Prénoms * </label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" class="form-control has-error" id="prenoms" name="prenoms" value="{{user.prenoms}}"
+                            [(ngModel)]="user.prenoms" required>
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="form-group  row">
+
+                    <label for="email1" class="col-sm-3 control-label"> Email *</label>
+
+                    <div class="col-sm-9">
+
+                        <input type="email" class="form-control has-error" id="email1" name="email" value="{{user.email}}"
+                            [(ngModel)]="user.email" required>
+
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="form-group  row">
+
+                    <label for="tel2" class="col-sm-3 control-label"> Téléphone *</label>
+
+                    <div class="col-sm-9">
+
+                        <input type="text" numbers-only="numbers-only" class="form-control has-error" id="tel2"
+                            name="tel" value="{{user.tel}}" [(ngModel)]="user.tel" required>
+
+
+
+                    </div>
+
+                </div>
+
+                <div class="form-group  row" style="margin-bottom: 10px;">
+
+                    <label for="idDepartement1" class="col-sm-3 control-label"> Département *</label>
+
+                    <div class="col-sm-9">
+
+                        <select name="idDepartement" id="idDepartement1" class="form-control" required
+                            [(ngModel)]="user.idDepartement">
+                            <option [value]="fc.id" *ngFor="let fc of departements">{{fc.libelle}}</option>
+                        </select>
+
+
+
+                    </div>
+
+                </div>
+
+                <!--div class="form-group  row">
+                    <label for="tel" class="col-sm-3 control-label">Mot de passe *</label>
+
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control has-error" id="password" name="password"
+                            placeholder="" ngModel>
+                    </div>
+                </div>
+                <div class="form-group  row">
+                    <label for="confirm" class="col-sm-3 control-label">Confirmer le mot de passe *</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control has-error" id="confirm" name="confirm"
+                            placeholder="" ngModel>
+                    </div>
+                </div-->
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" [disabled]="frmusager.invalid"><i class="fas fa-save"></i>&nbsp;
+                    Enregistrer</button>
+
+
+            </div>
+        </form>
+
+    </ng-template>
+    <ng-template #listrdv let-modal>
+        <div class="modal-header bg-mat-primary">
+            <h5 class="modal-title text-white" id="modal-basic-title">Mes rdv</h5>
+            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+            </button>
+        </div>
+        <div class="modal-body">
+
+
+        </div>
+
+    </ng-template>
+
+
+    <ng-template #edit let-modal>
+        <form #frmrequeteusagerU="ngForm" (ngSubmit)="saveRequeteusager(frmrequeteusagerU.value)" class="form-horizontal"
+            novalidate="">
+
+            <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Modifier la préoccupation</h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    X
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="color:red">{{errormessage}}</div>
+
+                <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+                    <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Usager</h4>
+
+                    <div class="form-group row">
+                        <!--label for="email" class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control form-control-sm has-error" id="email"
+                                name="email" placeholder="" value="{{selected_data.usager.email}}"
+                                [(ngModel)]="selected_data.usager.email">
+
+                        </div-->
+
+                        <label for="nom" class="col-sm-2 control-label">Nom et prénoms</label>
+
+                        <div class="col-sm-4">
+                            <input readonly="" type="text" class="form-control form-control-sm has-error"
+                                id="nom" name="nom" placeholder="" value="{{selected_data.usager.nom}}"
+                                [(ngModel)]="selected_data.usager.nom">
+                        </div>
+
+                    </div>
+
+                    <!--div class="form-group row">
+                        <label for="tel" class="col-sm-2 control-label">Téléphone</label>
+
+                        <div class="col-sm-4">
+                            <input readonly="" type="text" class="form-control form-control-sm has-error"
+                                id="tel" name="tel" placeholder="" value="{{selected_data.usager.tel}}"
+                                [(ngModel)]="selected_data.usager.tel">
+                        </div>
+
+                        <label for="email" class="col-sm-2 control-label">Département</label>
+                        <div class="col-sm-4">
+                            <select name="idDepartement" readonly="" id="idDepartement" class="form-control form-control-sm form-control-sm"
+                                [(ngModel)]="selected_data.usager.idDepartement">
+                                <option [value]="fc.id" *ngFor="let fc of departements">{{fc.libelle}}</option>
+                            </select>
+                        </div>
+                    </div-->
+
+                </fieldset>
+
+
+
+
+                <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+                    <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">{{typeRequete}}
+                        <small *ngIf="selected_data.visible==0">(Non transmis)</small></h4>
+
+
+
+                    <!--div class="form-group row">
+                        <label for="plainte" class="col-sm-2 control-label">Plainte <br>(oui ou non)
+                        </label>
+                        <div class="col-sm-1">
+                            <input type="checkbox" id="plainte" name="plainte" [(ngModel)]="selected_data.plainte">
+
+                        </div>
+                    </div-->
+
+                    <div class="form-group row">
+
+                        <label for="plainte" class="col-sm-2 control-label">Type :</label>
+                        <div class="col-sm-10">
+                            <select name="plainte" id="plainte" class="form-control form-control-sm"
+                                required [(ngModel)]="selected_data.plainte">
+                                <option disabled selected>Choisir</option>
+                                <option value="0">Requete</option>
+                                <option value="1">Plainte</option>
+                                <option value="2">Demande d'information</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                            <label for="idEntite" class="col-sm-4">Structure de provenance</label>
+                            <div class="col-sm-7" style="padding-right:0px;">
+                                <select name="idEntite" id="idEntite" class="form-control form-control-sm"
+                                [(ngModel)]="selected_data.idEntite" (change)="onEntiteChange($event)">
+                                    <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+                                </select>
+    
+                            </div>
+                    </div>
+                    <div class="form-group row" *ngIf="selected_data.visible==0 && selected_data.plainte!=0">
+
+                        <label for="link_to_prestation" class="col-sm-4 control-label">Préoccupation liée à une
+                            prestation :</label>
+                        <div class="col-sm-8">
+                            <select name="link_to_prestation" id="link_to_prestation" class="form-control form-control-sm"
+                                required [(ngModel)]="selected_data.link_to_prestation">
+                                <option value="1">Oui</option>
+                                <option value="0">Non</option>
+                            </select>
+                            
+                        </div>
+                    </div>
+
+
+                    <!--div class="form-group row" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
+
+                        <label for="idType" class="col-sm-2 control-label">Thématique :</label>
+                        <div class="col-sm-10">
+                            <select name="idType" id="idType" required class="form-control form-control-sm"
+                                required [(ngModel)]="selected_data.service.idType" (change)="chargerPrestation($event)">
+                                <option disabled selected>Choisir</option>
+                                <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+                            </select>
+                        </div>
+                    </div-->
+                  
+
+                    <div class="form-group row" *ngIf="selected_data.link_to_prestation==1 || selected_data.plainte==0">
+                        <label for="idPrestation" class="col-sm-2 control-label">Prestation :</label>
+                        <div class="col-sm-10">
+                            <select name="idPrestation" required id="idPrestation" class="form-control form-control-sm form-control-sm"
+                                [(ngModel)]="selected_data.service.id">
+                                <option disabled selected>Choisir</option>
+                                <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="objet" class="col-sm-2 control-label">Objet :</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm has-error" id="objet"
+                                name="objet" placeholder="" value="{{selected_data.objet}}" [(ngModel)]="selected_data.objet"
+                                required>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="msgrequest" class="col-sm-2 control-label">Message :</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
+                                placeholder="Message de la requête" value="{{selected_data.msgrequest}}"
+                                [(ngModel)]="selected_data.msgrequest" required></textarea>
+                        </div>
+                    </div>
+
+
+                    <a *ngIf="selected_data.fichier_joint!=''" target="_blank" href="{{selected_data.fichier_joint}}"
+                        download="{{selected_data.fichier_joint}}">Voir fichier joint</a>
+
+
+                </fieldset>
+
+
+                <fieldset *ngIf="selected_data.traiteOuiNon==1" class="divusager" style="border:1px solid #ddd;padding:10px;">
+                    <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Appréciation
+                        de l'usager</h4>
+
+                    <div class="form-group row">
+                        <label for="noteUsager" class="col-sm-2 control-label">Note :</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm has-error" id="noteUsager"
+                                name="noteUsager" placeholder="" value="{{selected_data.noteUsager}}"
+                                [(ngModel)]="selected_data.noteUsager" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="commentaireNotation" class="col-sm-2 control-label">Commentaire de
+                            l'usager :</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control form-control-sm has-error" id="commentaireNotation"
+                                name="commentaireNotation" value="{{selected_data.commentaireNotation}}"
+                                [(ngModel)]="selected_data.commentaireNotation" required></textarea>
+                        </div>
+                    </div>
+
+
+
+                </fieldset>
+                <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+                    <div class="spinner-border text-secondary" role="status">
+                        <span class="sr-only">Processus en cours...</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary mx-1"><i class="fas fa-save"></i>&nbsp;
+                    Enregistrer</button>
+
+
+            </div>
+        </form>
+
+    </ng-template>
+
+    <ng-template #add let-modal>
+        <form #frmrequeteusager="ngForm" (ngSubmit)="addRequeteusager(frmrequeteusager.value)" class="form-horizontal">
+
+            <div class="modal-header bg-mat-primary">
+                <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une préoccupation</h5>
+                <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    X
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="color:red">{{errormessage}}</div>
+
+                <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+                    <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Usager</h4>
+
+                    <div class="form-group row">
+                        <!--label for="email" class="col-sm-2 control-label">Email</label>
+
+                        <div class="col-sm-4">
+                            <input type="text" readonly class="form-control form-control-sm has-error" id="email"
+                                name="email" placeholder="" value="{{user.email}}" [(ngModel)]="user.email">
+
+                        </div-->
+
+                        <label for="nom" class="col-sm-4 control-label">Nom et prénoms</label>
+
+                        <div class="col-sm-8">
+                            <input readonly="" type="text" class="form-control form-control-sm has-error"
+                                id="nom" name="nom" placeholder="" value="{{user.full_name}}" [(ngModel)]="user.full_name">
+                        </div>
+
+                    </div>
+
+                    <!--div class="form-group row">
+                        <label for="tel" class="col-sm-2 control-label">Téléphone</label>
+
+                        <div class="col-sm-4">
+                            <input readonly="" type="text" class="form-control form-control-sm has-error"
+                                id="tel" name="tel" placeholder="" value="{{user.tel}}" [(ngModel)]="user.tel">
+                        </div>
+
+                        <label for="email" class="col-sm-2 control-label">Département</label>
+                        <div class="col-sm-4">
+                            <select name="idDepartement" readonly="" id="idDepartement" class="form-control form-control-sm form-control-sm"
+                                [(ngModel)]="user.idDepartement">
+                                <option [value]="fc.id" *ngFor="let fc of departements">{{fc.libelle}}</option>
+                            </select>
+                        </div>
+                    </div-->
+
+                </fieldset>
+
+
+
+
+                <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+                    <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">{{typeRequete}}</h4>
+
+
+
+                    <!--div class="form-group row">
+                        <label for="plainte" class="col-sm-2 control-label">Plainte <br>(oui ou non)
+                        </label>
+                        <div class="col-sm-1">
+                            <input type="checkbox" id="plainte" name="plainte" ngModel>
+
+                        </div>
+                    </div-->
+                    <div class="form-group row">
+
+                        <label for="plainte" class="col-sm-2 control-label">Type :</label>
+                        <div class="col-sm-10">
+                            <select name="plainte" id="plainte" class="form-control form-control-sm"
+                                required [(ngModel)]="selected_type_preoccupation">
+                                <option disabled selected>Choisir</option>
+                                <option value="0">Requete</option>
+                                <option value="1">Plainte</option>
+                                <option value="2">Demande d'information</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="idEntite" class="col-sm-4">Structure de provenance</label>
+                        <div class="col-sm-7" style="padding-right:0px;">
+                            <select name="idEntite" id="idEntite" class="form-control form-control-sm"
+                                ngModel (change)="onEntiteChange($event)">
+                                <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="selected_type_preoccupation!=0">
+
+                        <label for="plainte" class="col-sm-4 control-label">Préoccupation liée à une
+                            prestation :</label>
+                        <div class="col-sm-4">
+                            <label for="">
+                                Oui
+                                <input type="radio" value="1" [(ngModel)]="link_to_prestation" name="link_to_prestation">
+                            </label>
+                        </div>
+                        <div class="col-sm-4">
+                            <label for="">
+                                Non
+                                <input type="radio" value="0" [(ngModel)]="link_to_prestation" name="link_to_prestation">
+                            </label>
+                        </div>
+                    </div>
+                    <!--div class="form-group row" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+
+                        <label for="idType" class="col-sm-2 control-label">Thématique :</label>
+                        <div class="col-sm-10">
+                            <select name="idType" id="idType" required class="form-control form-control-sm"
+                                required ngModel (change)="chargerPrestation($event)">
+                                <option disabled selected>Choisir</option>
+                                <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+                            </select>
+                        </div>
+                    </div-->
+
+                    <div class="form-group row" *ngIf="link_to_prestation==1 || selected_type_preoccupation==0">
+                        <label for="idPrestation" required class="col-sm-2 control-label">Prestation :</label>
+                        <div class="col-sm-10">
+                            <select name="idPrestation" id="idPrestation" class="form-control form-control-sm form-control-sm"
+                                ngModel>
+                                <option disabled selected>Choisir</option>
+                                <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="objet" class="col-sm-2 control-label">Objet :</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control form-control-sm has-error" id="objet"
+                                name="objet" placeholder="" ngModel required>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label for="msgrequest" class="col-sm-2 control-label">Message :</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control form-control-sm has-error" id="msgrequest" name="msgrequest"
+                                placeholder="Message de la requête" ngModel required></textarea>
+                        </div>
+                    </div>
+
+
+
+
+                </fieldset>
+                <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+                    <div class="spinner-border text-secondary" role="status">
+                        <span class="sr-only">Processus en cours...</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary mx-1"><i class="fas fa-save"></i>&nbsp;
+                    Enregistrer</button>
+                <button type="submit" (click)="setVisible()" class="btn btn-info"><i class="fas fa-save"></i>&nbsp;
+                   Transmettre</button>
+
+            </div>
+        </form>
+
+    </ng-template>
+    <ng-template #info let-modal>
+
+        <div class="modal-header bg-mat-primary">
+            <h5 class="modal-title text-white" id="modal-basic-title">Informations sur la prestation</h5>
+            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group error" style="margin-top: 20px;">
+                <label class="col-sm-12" style="padding-right:0px;"> {{ selected_service.libelle }} </label>
+                <br>
+
+            </div>
+
+            <div class="form-group error" style="margin-top: 30px;">
+                <label class="col-sm-3" style="margin-right:15px;"> Structure : </label>
+
+                <div class="col-sm-7" style="padding-left:0px;">
+                    {{ selected_service.service_parent.libelle }}
+                </div>
+            </div>
+
+
+            <div class="form-group error" style="margin-top: 30px;">
+
+                <label for="objet" class="col-sm-3">Délai : </label>
+                <div class="col-sm-7" style="padding-right: 0px;">
+                    {{ selected_service.delai }}
+
+                </div>
+                <br>
+            </div>
+
+            <div class="form-group error" style="margin-top: 30px;">
+
+                <label for="objet" class="col-sm-12">Liste des pièces : </label>
+                <ul class="col-sm-12" style="padding-right: 0px; max-height: 250px; overflow-y: scroll;">
+                    <li *ngFor="let piece of selected_service.listepieces;let i=index" style="margin-bottom: 10px; list-style: none;">{{
+                        i+1}}. {{ piece.libellePiece }} </li>
+                </ul>
+                <br>
+            </div>
+
+        </div>
+    </ng-template>
+</div>
+<!---Container Fluid-->

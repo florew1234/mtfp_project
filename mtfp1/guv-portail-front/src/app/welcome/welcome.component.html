@@ -1,0 +1,1063 @@
+<section class="s-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" alt="...">
+        <div class="">
+
+            <div class="text container">
+                <!-- <h2 class="card-title">Portail des Démarches Administratives</h2> -->
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <!-- <h4>Le MTFP à votre service </h4> -->
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-6 col-12 col-sm-12">
+            <div class="d-md-flex flex-column blueColor p-5 mb-5">
+                <h2 class="text-white text-center">Catalogue des prestations</h2>
+                <p class="text-white text-center">Accéder à l'intégralité des prestations fournies par les différentes
+                    structures du Ministère du Travail et de la Fonction Publique suivante diverse thématique</p>
+
+                <div class="align-self-center">
+                    <a  routerLink="/prestations-par-structure" class="tbtn">ACCEDER</a>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-12  col-md-6 ">
+            <div class="card rounded-0  shadow-sm border-0 ">
+                <div class="card-img d-flex justify-content-center">
+                    <div><img src="assets/logo-mtfp.png" class="img-fluid " width="300" alt="..."></div>
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <h2 class="card-title ">GUICHET UNIQUE VIRTUEL</h2>
+                        <p>Point unique de connexion à toutes nos plateformes virtuelles</p>
+                        <a [routerLink]="['/main']" fragment="loginBlock" (click)="gotoHashtag('loginBlock')" class="btn text-white px-5 py-3 my-2"
+                            style="background-color: rgba(10, 55, 100, 0.9)">ACCEDER</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="" id="services" style="background-color:#EDEDED">
+        <div class="yellow h5 p-1" style="width:300px; font-family:montserrat-semi-bold">Sollicitation instantanée </div>
+        <div class="p-5">
+            <div class="row">
+                <!-- <div class="col-12 col-sm-12 col-md-3">
+                    <div class="card shadow p-1 mb-1  rounded  card_service" style="--my-color-var: #d2a7a7;">
+                        <div class="card-body">
+                            <div class="d-flex  flex-column justify-content-center">
+                                <div class="service-card-title-icon pointer align-self-center text-center d-flex justify-content-center ">
+                                    <i class="fas fa-address-card fa-2x blueColorT align-self-center"></i>
+                                </div>
+                                <div class="my-2 text-center d-flex justify-content-center ">
+                                    <a routerLink="/prendre-rendezvous" class=" text-decoration-none  text-dark card_service_title  h6 ">
+                                        <strong>Je prends un rendez-vous</strong>
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="col-12 col-sm-12 col-md-3">
+                    <div class="card shadow p-1 mb-1  rounded  card_service" style="--my-color-var: #d2a7a7;">
+                        <div class="card-body">
+                            <div class="d-flex  flex-column justify-content-center">
+                                <div class="service-card-title-icon pointer align-self-center text-center d-flex justify-content-center ">
+                                    <i class="fas fa-address-card fa-2x blueColorT align-self-center"></i>
+                                </div>
+                                <div class="my-2 text-center d-flex justify-content-center ">
+                                    <a [routerLink]="['/main']" (click)="gotoHashtag('loginBlock')" class=" text-decoration-none  text-dark card_service_title  h6 ">
+                                        <strong>Espace<br/> carrière </strong>
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-3">
+                    <div class="card shadow p-1 mb-1  rounded card_service" style="--my-color-var: #ddd7c7;">
+                        <div class="card-body">
+                            <div class="d-flex  flex-column justify-content-center">
+                                <div class="service-card-title-icon pointer align-self-center text-center d-flex justify-content-center ">
+                                    <i class="fas fa-address-card fa-2x blueColorT align-self-center"></i>
+                                </div>
+                                <div class="my-2 text-center d-flex justify-content-center ">
+                                    <a routerLink="/reclammation" class="text-dark text-decoration-none card_service_title h6 "><strong>
+                                            Je
+                                            dépose une réclamation</strong></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-12 col-sm-12 col-md-6">
+                    <div class="card shadow p-1 mb-1  rounded card_service" style="--my-color-var: rgb(220, 221, 137);">
+                        <div class="card-body">
+                            <div class="d-flex  flex-column justify-content-center ">
+                                <div class="service-card-title-icon pointer align-self-center text-center d-flex justify-content-center ">
+                                    <i class="fas fa-address-card fa-2x blueColorT align-self-center"></i>
+                                </div>
+                                <div class="my-2 text-center d-flex justify-content-center ">
+                                    <a routerLink="/demande-info" class="text-dark text-decoration-none card_service_title h6"><strong>J'ai besoin d'une information</strong></a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6">
+                    <div class="card shadow p-1 mb-1  rounded card_service" style="--my-color-var: #cad2ff;">
+                        <div class="card-body">
+                            <div class="d-flex  flex-column justify-content-center">
+                                <div class="service-card-title-icon pointer align-self-center text-center d-flex justify-content-center ">
+                                    <i class="fas fa-address-card fa-2x blueColorT align-self-center"></i>
+                                </div>
+                                <div class="my-2 text-center d-flex justify-content-center ">
+                                    <a routerLink="/je-denonce" class="text-dark text-decoration-none card_service_title h6 "><strong>Je dénonce une dérive</strong></a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-12 col-sm-12">
+            <div class=" blueColor p-5 mb-5">
+                <ngb-carousel [showNavigationIndicators] = "showNavigationIndicators" style="border: none">
+                    <ng-template ngbSlide *ngFor="let el of events">
+
+                        <h3 class="text-white text-center">EVENEMENTS DECLENCHEURS </h3>
+                        <p class="text-white text-center">
+                            <a style="text-decoration:none;color: white" routerLink="/evenements-declencheur">
+                                {{el.question}}
+                            </a>
+                        </p>
+
+                    </ng-template>
+
+                </ngb-carousel>
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-8">
+            <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide>
+                    <div class="card shadow-sm border-0 p-1 mb-5  rounded">
+                        <div class="card-body">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+
+                                <div class="p-0 mt-3 d-flex flex-column justify-content-center">
+                                    <img src="assets/logo-mtfp.png" class="img-fluid h100 mx-auto" alt="">
+                                    <a [routerLink]="['/main']" (click)="gotoHashtag('loginBlock')" class="text-dark text-decoration-none h3 text-center my-3"><strong
+                                            class="text-center">ESPACE USAGERS</strong></a>
+                                    <p class="text-dark mb-5 h6 mt-2 text-center">
+                                        Formulez et/ou suivez le traitement de vos demandes d'informations, requêtes et plaintes.
+
+                                    </p>
+                                    <div class="d-flex justify-content-around blueColor">
+                                        <div class="">
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="card shadow-sm border-0 p-1 mb-5  rounded">
+                        <div class="card-body">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+
+                                <div class="p-0 mt-3 d-flex flex-column justify-content-center">
+                                    <img src="assets/logo-mtfp.png" class="img-fluid h100 mx-auto" alt="">
+                                    <a [routerLink]="['/main']" (click)="gotoHashtag('loginBlock')" class="text-dark text-decoration-none h3 text-center my-3"><strong
+                                            class="text-center">ESPACE CARRIERE</strong></a>
+                                    <p class="text-dark mb-5 h6 mt-2 text-center">
+                                        Toute l'information sur le suivi de votre carrière
+                                    </p>
+                                    <div class="d-flex justify-content-around blueColor">
+                                        <div class="">
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="card shadow-sm border-0 p-1 mb-5  rounded">
+                        <div class="card-body">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+
+                                <div class="p-0 mt-3 d-flex flex-column justify-content-center">
+                                    <img src="assets/logo-mtfp.png" class="img-fluid h100 mx-auto" alt="">
+                                    <a href="#" class="text-dark text-decoration-none h3 text-center my-3"><strong
+                                            class="text-center">ESPACE CONCOURS</strong></a>
+                                    <p class="text-dark mb-5 h6 mt-2 text-center">
+                                        Votre candidature aux concours désormais en ligne
+
+                                    </p>
+                                    <div class="d-flex justify-content-around blueColor">
+                                        <div class="">
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+
+
+        </div>
+        <div class="col-12 col-sm-12 col-md-4">
+            <div id="loginBlock">
+                <form #loginForm="ngForm" (ngSubmit)="loginSend(loginForm.value)">
+                    <div class="card">
+                        <div class="card-header blueColor py-2">
+                            <div class="d-flex justify-content-center">
+                                <img src="assets/auth-person.svg" height="30" class="mx-2" alt="">
+                                <h6 class="text-center text-white mt-2">
+                                    <strong class="mt-2">Se connecter</strong></h6>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group ">
+                                <label for="">E-mail</label>
+                                <!-- <label for="">Email | Numéro NPI | Téléphone</label> -->
+                                <input type="text" class="form-control" name="username" #login="ngModel" ngModel>
+                                <span *ngIf="login.invalid && (login.dirty || login.touched)" class="text-danger">
+                                    <small *ngIf="login.errors?.required" id="typeLabelHelp" class="form-text">Identifiant
+                                        requis</small>
+                                </span>
+                            </div>
+
+                            <div class="form-group ">
+                                <div class="d-flex justify-content-between">
+                                    <label for="">Mot de passe </label>
+                                    <div *ngIf="!needMailCheck">
+                                        <a routerLink="/forgot-password" class="text-secondary text-right"><small>Mot
+                                                de passe oublié ?</small></a>
+                                    </div>
+                                </div>
+                                <input type="password" class="form-control" name="password" #password="ngModel" ngModel>
+                                <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                                    <small *ngIf="password.errors?.required" id="typeLabelHelp" class="form-text">Mot
+                                        de passe requis</small>
+                                </span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+
+                                <button class="btn btn-warning btn-block" [disabled]="loginForm.invalid || loading">Se
+                                    connecter</button>
+                            </div>
+                            <hr class="my-4">
+                            <!--div *ngIf="needMailCheck" class="d-flex justify-content-center">
+                                             <a href="#" (click)="resendMailCheclCode()" class="text-secondary">Renvoyer le code de vérification</a>
+                                    </div-->
+                            <div class="d-flex justify-content-center">
+                                <span class=" text-center mx-auto" style="font-size:12px">Vous n'avez pas de compte ?
+                                    <a routerLink="/register" class="text-secondary"><u>Inscrivez-vous</u></a></span>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="p-2 mt-2" style="background-color:#EDEDED">
+        <div class="row d-flex justify-content-between p-3">
+            <div class="col-md-6">
+                <h5 class="my-auto"><strong>{{default_services.label}}</strong></h5>
+            </div>
+            <div class="col-md-4 ">
+                <select name="e_services_filter" (change)="loadServices($event)" id="" class="form-control ">
+                    <option value="" disabled selected>E-services par métier</option>
+                    <option value="administration-travail">Administration du travail</option>
+                    <option value="fonction-publique">Fonction publique</option>
+                    <option value="administration-centrale">Administration centrale</option>
+                    <option value="espace-formation">Formation</option>
+                    <option value="telechargement">Procédures d'utilisation pdf</option>
+                </select>
+            </div>
+        </div>
+        <div class="row p-3" *ngIf="default_services.key=='administration-travail'" id="administration-travail">
+
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex ">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Attestation
+                                            de non-litige</strong></a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Autorisation
+                                            de licenciement pour motif économique ou motif personnel</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2">
+                                <div class="block-sollicitation-title d-flex justify-content-center ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Attestation
+                                            d'existence</strong></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow p-1 mb-5  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex  ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Déclaration
+                                            d'établissement</strong></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow p-1 mb-5  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="https://service-public.bj/public/services/service/PS00403" target="_blank" class="text-dark  text-decoration-none h6 align-self-center  ml-2"><strong>Permis
+                                            de travail</strong></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow p-1 mb-5  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex  ">
+                                    <a href="https://service-public.bj/public/services/service/PS00035" target="_blank" class="text-dark  text-decoration-none h6 align-self-center  ml-2"><strong>Visa
+                                            de contrat des travailleurs nationaux</strong></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow p-1 mb-5  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="https://service-public.bj/public/services/service/PS00417" target="_blank" style="cursor:pointer" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Visa
+                                            de contrats des expatriés</strong></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow p-1 mb-5  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Visa
+                                            de contrats d’apprentissage</strong></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow p-1 mb-5  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Visa
+                                            de règlements intérieurs d’entreprises </strong></a>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow p-1 mb-5  rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Décision
+                                            d'agrément d'exercice de médecin </strong></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-3" *ngIf="default_services.key=='fonction-publique'" id="fonction-publique">
+
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Attestation
+                                            de non-agent</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Soumission
+                                            de dossier à un concours</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" href="https://weche.fpbenin.net/" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Consultation de carrière ou de situation administrative</strong></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row p-3" *ngIf="default_services.key=='espace-formation'" id="espace-formation">
+
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Notification
+                                            de retour de stage</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Sollicitation
+                                            d’information sur une formation</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <div class="row p-3" *ngIf="default_services.key=='administration-centrale'" id="administration-centrale">
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Attestation
+                                            de présence au poste</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Attestation
+                                            de stage</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Délivrance
+                                            de certificat de prise de service</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Attestation
+                                            de service fait</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Dépôt
+                                            de requêtes et de plaintes</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a style="cursor:pointer" (click)="e_services_info()" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Soumission
+                                            de demande de stage</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row p-3" *ngIf="default_services.key=='telechargement'" id="telechargement">
+
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="assets/supports/Proc_autorisation_de_stage.pdf" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Procédure
+                                            de sollicitation de stage</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="assets/supports/Proc_attestation_de_stage.pdf" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Procédure
+                                            de sollicitation d'attestation de stage</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="assets/supports/Proc_attestation_de_service_fait.pdf" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Procédure
+                                            de sollicitation d'attestation de service fait</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="assets/supports/Proc_visa_de_contrat_apprentissage.pdf" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Procédure
+                                            de sollicitation de visa de contrat d'apprentissage</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="assets/supports/Proc_visa_de_reglement_interieur.pdf" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Procédure
+                                            de sollicitation de visa de reglement intérieur</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12 col-md-4">
+                <div class="card shadow mb-5 p-1 rounded card_eservices">
+                    <div class="card-body">
+                        <div class="d-flex  justify-content-around">
+                            <div class="align-self-center text-center text-sm-start">
+                                <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                            <div class="p-2 ">
+                                <div class="block-sollicitation-title d-flex ">
+                                    <a href="assets/supports/Proc_demande_de_déclaration _d'établissement.pdf" class="text-dark  text-decoration-none h6 align-self-center ml-2"><strong>Procédure
+                                            de sollicitation de déclaration d'établissement</strong></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="row ">
+        <div class="col-md-6 col-12 col-sm-12 p-5">
+            <div class="text-center mb-3 ">
+                <i class="fa fa-chart-area fa-2x  mb-3" style="color:rgba(10, 55, 100, 0.9)"></i>
+                <p class="text-center  h2  " style="color:rgba(10, 55, 100, 0.9)">Statistiques</p>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <div class="card shadow p-1 border-0 mb-3  rounded" >
+                        <div class="card-body" style="background-color: rgb(137, 221, 182)">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <h6 class="text-dark text-decoration-none text-center">
+                                        <strong> Nombre total de prestation</strong></h6>
+                                    <p class="text-dark text-center">{{count_prestation}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                        <div class="card shadow p-1 border-0 mb-3  rounded" >
+                                <div class="card-body" style="background-color: rgb(220, 221, 137)">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <h6 class="text-dark text-decoration-none text-center">
+                                        <strong>Nombre de services en ligne</strong></h6>
+                                    <p class="text-dark text-center">{{ServiceEnligne}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-md-12">Teste 
+                        <div class="card shadow p-1 border-0 mb-3  rounded" >
+                                <div class="card-body" style="background-color:  rgb(39, 167, 195)">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <h6  class="text-dark text-decoration-none  text-center">
+                                        <strong>Les services non dématérialisés</strong></h6>
+                                    <p class="text-dark text-center">{{ServiceTotal - ServiceEnligne+" / "+ServiceTotal}}</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+                <!--div class="col-12 col-md-12">
+                    <div class="card shadow p-1 border-0 mb-3  rounded" >
+                            <div class="card-body" style="background-color:  rgb(221, 158, 137)">
+                        <div class="d-flex flex-md-row flex-column justify-content-around">
+                            <div class="">
+                                <h6  class="text-dark text-decoration-none  text-center">
+                                    <strong>Prestation la plus sollicitée</strong></h6>
+                                <p class="text-dark text-center">{{first_prestation.libelle}}</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+                
+                <div class="col-12 col-md-12">
+                        <div class="card shadow p-1 border-0 mb-3  rounded" >
+                                <div class="card-body" style="background-color:  rgb(243, 220, 155)">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <h6 class="text-dark text-decoration-none  text-center">
+                                        <strong>FAQ la plus sollicitée</strong></h6>
+                                    <p class="text-dark text-center">{{first_faq.question}}</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+                <!--div class="col-12 col-md-6">
+                        <div class="card shadow p-1 border-0 mb-3  rounded" >
+                                <div class="card-body" style="background-color:  rgb(199, 194, 224)">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <a href="#" class="text-dark text-decoration-none">
+                                        <strong>Total thématiques</strong></a>
+                                    <p class="text-dark text-center">50</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                        <div class="card shadow p-1 border-0 mb-3  rounded" >
+                                <div class="card-body" style="background-color:  rgb(137, 207, 221)">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <a href="#" class="text-dark text-decoration-none">
+                                        <strong>Total structures</strong></a>
+                                    <p class="text-dark text-center">50</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div-->
+
+            </div>
+        </div>
+        <!--width: 100%;-->
+        <div class="col-md-6 col-12 col-sm-12 p-5" style="background: linear-gradient(
+                rgba(10, 55, 100, 0.9),
+                rgba(10, 55, 100, 0.9)),
+                url('assets/images/utile.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center;  height: auto;  color: white;">
+            <div class="text-center mb-3">
+                <i class="fa fa-link fa-2x text-white mb-3"></i>
+                <p class="text-center text-white h2 ">Liens utiles</p>
+            </div>
+            <div class="row ">
+                <div class="col-12 col-md-6">
+                    <div class="card shadow mb-3  rounded">
+                        <div class="card-body" title="Ministere du Travail et de la Fonction Publique">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <a href="https://travail.gouv.bj" target="_blank" class="text-dark text-decoration-none">
+                                        <img src="assets/logo-mtfp.png" class="img-fluid h100 mx-auto" style="height:60px" alt="">
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card shadow  mb-3  rounded">
+                        <div class="card-body" title="CNSS BENIN">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <a href="https://cnssbenin.org" target="_blank" class="text-dark text-decoration-none">
+                                        <img src="assets/logo-cnss.png" class="img-fluid  mx-auto" style="height:60px"
+                                            alt="">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card shadow p-2 mb-3 rounded" style="background:gray">
+                        <div class="card-body" title="Portail National des Services Publics">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <a href="https://service-public.bj" target="_blank" class="text-dark text-decoration-none">
+                                        <img src="assets/services-publics.png" class="img-fluid h100 mx-auto" style="height:50px" alt="">
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <div class="card shadow p-1 mb-3 rounded" style="background:#355084">
+                        <div class="card-body" title="PRESIDENCE DU BENIN">
+                            <div class="d-flex flex-md-row flex-column justify-content-around">
+                                <div class="">
+                                    <a href="https://presidence.bj/" target="_blank" class="text-dark text-decoration-none">
+                                        <img src="assets/logo-presidence.png" class="img-fluid h80 mx-auto" style="height:60px"
+                                            alt="">
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+                <div class="col-12 col-md-12">
+                    <div class="card shadow mb-5  rounded" style="background-image:url('assets/covid19-banner.jpg');background-origin: content-box;background-position: center; height: 100px;">
+                        <div class="card-body d-flex justify-content-center" title="COVID">
+                            <div class="d-flex justify-content-center">
+                                    <a href="https://www.gouv.bj/coronavirus/" target="_blank" class="text-white text-decoration-none align-self-center"><strong>Informations
+                                            coronavirus (covid-19)</strong></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

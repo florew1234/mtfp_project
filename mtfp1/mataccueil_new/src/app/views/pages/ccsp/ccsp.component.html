@@ -1,0 +1,223 @@
+
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">PARAMETRES / Centre communaux</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+
+                    <div class="card-toolbar d-flex justify-content-between">
+                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                            <li class="nav-item">
+                                <span class="mr-2">{{data.length}} élement(s)</span>
+                            </li>
+                            <li class="nav-item">
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <input class="form-control form-control-sm " placeholder="Rechercher...." type="text"
+                                            [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+
+
+                            </li>
+
+                        </ul>
+                        <div>
+                            <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)">
+                                Ajouter un ccsp</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <!--begin::Table-->
+                    <div class="table-responsive">
+
+                        <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <td class="left text-left" colspan="9">
+                                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                                            Modifier
+                                        </button>
+                    
+                                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
+                                        <button (click)="setState(1)" *ngIf="is_active!=undefined && !is_active" class="btn mx-1 btn-sm btn-success">
+                                            Activer
+                                        </button>
+                                        <button (click)="setState(0)" *ngIf="is_active!=undefined && is_active"  class="btn mx-1 btn-sm btn-danger">
+                                            Désactiver
+                                        </button>
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <th></th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Libellé</th>
+                                    <th scope="col">Adresse</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Contact</th>
+                                    <th scope="col">Etat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                    <td>
+                                        <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)">
+                                    </td>
+                                    <td>
+                                        {{i+1}}
+                                    </td>
+                                    <td>
+                                        {{el.title}}
+                                    </td>
+                                    <td>
+                                        {{el.address}}
+                                    </td>
+                                    <td>
+                                        {{el.email}}
+                                    </td>
+                                    <td>
+                                        {{el.phone}}
+                                    </td>
+
+                                    <td>
+                                        <span *ngIf="el.is_published" class="bg-success text-white rounded px-1">Actif</span>
+                                        <span *ngIf="!el.is_published" class="bg-danger text-white rounded  px-1">Inactif</span>
+                                    </td>
+                                   
+                                </tr>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                            </ngb-pagination>
+
+                            <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                <option selected disabled>Filtrer</option>
+                                <option [ngValue]="3">3 elements par page</option>
+                                <option [ngValue]="5">5 elements par par page</option>
+                                <option [ngValue]="10">10 elements par par page</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+
+
+                <ng-template #content let-modal>
+                    <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter un ccsp</h5>
+                            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Libellé</label>
+                                <input type="text" class="form-control" name="title" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Adresse</label>
+                                <input type="text" class="form-control" name="address" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Email</label>
+                                <input type="email" class="form-control" name="email" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Contact</label>
+                                <input type="text" class="form-control" name="phone" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Latitude</label>
+                                <input type="text" class="form-control" name="lat" ngModel required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Longitude</label>
+                                <input type="text" class="form-control" name="lng" ngModel required>
+                            </div>
+                          
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #contentU let-modal>
+                    <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h4 class="modal-title text-white" id="modal-basic-title">Modifier un ccsp</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Libellé</label>
+                                <input type="text" class="form-control" name="title" [(ngModel)]="selected_data.title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Adresse</label>
+                                <input type="text" class="form-control" name="address" [(ngModel)]="selected_data.resume"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Email</label>
+                                <input type="email" class="form-control" name="email" [(ngModel)]="selected_data.link"  required>
+                            </div>
+                            <div class="form-group">
+                                <label for=""> Contact</label>
+                                <input type="text" class="form-control" name="phone" [(ngModel)]="selected_data.link"  required>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label for=""> Latitude</label>
+                                <input type="text" class="form-control" name="phone" [(ngModel)]="selected_data.lat"  required>
+                            </div>
+                          
+                            <div class="form-group">
+                                <label for=""> Longitude</label>
+                                <input type="text" class="form-control" name="phone" [(ngModel)]="selected_data.lng"  required>
+                            </div>
+                          
+                            
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

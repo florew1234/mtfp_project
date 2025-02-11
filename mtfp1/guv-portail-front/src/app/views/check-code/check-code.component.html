@@ -1,0 +1,46 @@
+<div class="p-3 content row" style=" background:#d6d6d5">
+    <div class="container mt-1 mb-1 " style="padding-left: 0px !important; background-color: #FFF;box-shadow: rgba(0, 0, 0, 0.45) 0px 2px 10px;
+        ">
+        <div class="row p-4">
+            <div class="col-12 col-md-6">
+                <!-- <h3 class="text-danger text-center">Inscription au Portail unifié</h3>
+                            <h4 class="text-center text-dark" style="margin-top: 30px"> Ce portail unifié vous permet d'accéder à tous les services du minstère</h4> -->
+                <img src="./assets/bg2.jpg" alt="" width="100%" style="height: 35vh">
+                <h1  class="text-center p-3" style="font-size: 13px">Guichet Unique Virtuel du Ministère du Travail et de la Fonction Publique</h1>
+              
+            </div>
+            <div class="col-md-6 col-12">
+                <form #codeForm="ngForm" (ngSubmit)="codeVerification(codeForm.value)">
+                    <div class="card" style="background-color: #FFF;box-shadow: rgba(0, 0, 0, 0.45) 0px 2px 10px;
+                        ">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="">Code de vérification</label> <label class="ml-2" style="color:red; font-size: 14px; font-style: italic;">(Le code sera détruit dans 5 min. Cliquez sur Renvoyer le code  pour obtenir un autre.)</label>
+                                <input type="text" class="form-control" name="code" #code="ngModel" ngModel>
+                                <span *ngIf="code.invalid && (code.dirty || code.touched)" class="text-danger">
+                                    <small *ngIf="code.errors?.required" id="typeLabelHelp" class="form-text">Code requis</small>
+                                </span>
+                            </div>
+
+                            <div class="d-flex">
+                                <a (click)="resendCode()" class="text-center text-primary mb-3" id="renvoi" style="cursor: pointer;"> Renvoyer le code </a>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck" name="authorized_always_id" #authorized_always_id="ngModel" ngModel>
+                                    <label class="form-check-label" for="gridCheck">
+                                        Toujours autorisé la connexion avec ce PC
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <button class="btn btn-warning" [disabled]="codeForm.invalid || loading">Vérifier</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

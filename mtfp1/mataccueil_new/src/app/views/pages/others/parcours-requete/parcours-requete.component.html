@@ -1,0 +1,362 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h3 mb-0 text-gray-800 text-uppercase">PARCOURS / {{typeRequete}}</h3>
+
+  </div>
+  <div class="row d-flex">
+    <div class="col-md-12">
+      <div class="card my-2">
+        <div class="card-body">
+          <form #filterForm="ngForm" (ngSubmit)="filter(filterForm.value)">
+
+            <div class="row">
+              <!-- *ngIf="isAdmin" -->
+              <div *ngIf="isAdmin" class="form-group col-md-4">
+               <div> <label for="" class=" ">Les entités qui ont au moins une requête non traité :</label> </div>
+               <div>
+                  <select class="form-control " name="ministere" id="ministere" [(ngModel)]="selected_Entite" (change)="onEntiteChange($event)">
+                    <option value="-1" selected >Sélectionnez un ministère </option>
+                    <option [value]="el.id" *ngFor="let el of ministere">{{el.libelle}}</option>
+                  </select>
+               </div>
+              </div>
+              <div *ngIf="isAdmin" class="form-group col-md-2">
+                <div>    <label clas="" for="">Thématique : </label> </div>
+                <div>
+                  <select name="idType" id="idType" required class="form-control form-control-sm" required ngModel (change)="onThematiqueChange($event)">
+                      <option disabled selected>Choisir</option>
+                      <option [value]="fc.id" *ngFor="let fc of themes">{{fc.libelle}}</option>
+                  </select>
+                </div>
+              </div>
+              <div *ngIf="isAdmin" class="form-group col-md-4">
+               <div> <label for="" class=" ">Structure :</label> </div>
+               <div>
+                  <select class="form-control " name="structure" [(ngModel)]="selected_Struct" id="structure">
+                    <option value="-1" selected >Sélectionnez une structure</option>
+                    <option [value]="el.id" *ngFor="let el of structures">{{el.libelle}}</option>
+                  </select>
+               </div>
+              </div>
+              <div *ngIf="isSuperieur" class="form-group col-md-4">
+               <div> <label for="" class=" ">Structure qui ont des préoccupations en attente: </label> </div>
+               <div>
+                  <select class="form-control " name="structure" [(ngModel)]="selected_Struct" id="structures_pre">
+                    <option value="-1" selected >Sélectionnez une structure</option>
+                    <option [value]="el.idStructure" *ngFor="let el of structures_pre">{{el.libelle}}</option>
+                  </select>
+               </div>
+              </div>
+              <div class="form-group col-md-2">
+                <div>    <label clas="" for="">Statut : </label> </div>
+                <div>
+                    <select class="form-control form-group" name="statut" [(ngModel)]="selected_Status" id="">
+                        <option value="0">En cours</option>
+                        <option value="1">Traitée</option>
+                      </select>
+                </div>
+              </div>
+              <div class="form-group col-md-2">
+                <div>
+                    <label clas="" for="">Du : </label>
+                </div>
+                <div>
+                    <input class="form-control form-group" type="date" name="startDate" [(ngModel)]="select_date_start" id="">
+                </div>
+              </div>
+              <div class="form-group col-md-2">
+                <div>
+                    <label clas="" for="">Au : </label>
+                </div>
+                <div>
+                    <input class="form-control" type="date" name="endDate" [(ngModel)]="select_date_end"
+                    id="">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <button class="btn btn-primary mx-1 " type="submit">Filtrer</button>
+                <button (click)="print()" class="btn mx-1 btn-danger">Imprimer</button>
+                <button (click)="reset()" class="btn btn-default mx-1" type="button">Annuler</button>
+
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="card my-2">
+        <!-- Header -->
+        <div class="card-header p-4 border-0 pt-5">
+          <div class="card-toolbar d-flex justify-content-between">
+            <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+              <li class="nav-item">
+                <span class="mr-2">{{pager.total}} élement(s)</span>
+              </li>
+              <li class="nav-item">
+                <form>
+                  <div class="form-group form-inline">
+                    <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...."
+                      type="text" [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                  </div>
+                </form>
+              </li>
+              <li class="nav-item">
+
+
+              </li>
+
+            </ul>
+            <div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="card-body  pb-0">
+
+          <!--begin::Table-->
+          <div class="table-responsive">
+
+            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <td class="left text-left" colspan="9">
+
+                    <button *ngIf="RelanceAWho !=''" title="Relancer"  (click)="relancerPreocuppationType()" class="btn mx-1 btn-xs btn-danger edit">
+                      Relancer {{RelanceAWho}}
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  
+                  <th></th>
+                  <th width="7%">Date Enreg.</th>
+
+                  <!--th width="10%">Usager</th>
+
+                    <th width="10%">Email Usager</th-->
+
+                  <th width="15%">Prestation</th>
+
+                  <th width="15%">Objet</th>
+
+                  <th width="9%">Séjour</th>
+
+                  <th>Ratio</th>
+
+                  <th>Efficacité / Efficience</th>
+
+                  <th width="8%">Statut</th>
+
+                  <th>Réponse donnée</th>
+
+                  <th>Parcours</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let el of data ; index as i;">
+
+                  <td>
+                    <input type="radio" [value]="el" ngModel name="getrequete" (change)="checked($event,el)">
+                  </td>
+                  <td>{{el.created_at | date:'dd/MM/yyy hh:mm:ss'}} </td>
+
+                  <!--td *ngIf="el.usager.id=='91586'">{{el.identity}}</td>
+                    <td *ngIf="el.usager.id!='91586'">{{el.usager.nom}} {{el.usager.prenoms}}</td>
+
+                    <td>{{el.usager.email}} </td-->
+
+                  <td>{{el.service==null ? '' : el.service.libelle}} </td>
+
+                  <td *ngIf="el.usager==null?'': el.usager.id=='91586'">
+                    <dl>
+                      <dt>Matricule</dt>
+                      <dd>{{el.matricule}}</dd>
+                    </dl>
+                    <dl>
+                      <dt>Année de départ</dt>
+                      <dd>{{el.out_year}}</dd>
+                    </dl>
+                    <dl>
+                      <dt>Ministère/Inst. </dt>
+                      <dd>{{el.entity_name}}</dd>
+                    </dl>
+                  </td>
+                  <td>{{el.objet}}</td>
+                  <!-- <td *ngIf="el.usager==null?'0': el.usager.id!='91586'">{{el.objet}}</td> -->
+
+                  <td align="right">
+
+                    <span *ngIf="el.traiteOuiNon==1">{{daysBetweenTwoDate(el.dateReponse,el.created_at | date:'dd/MM/yyy hh:mm:ss')}}</span>
+
+                    <span *ngIf="el.traiteOuiNon==0">{{daysTodayFromDate(el.created_at | date:'dd/MM/yyy hh:mm:ss')}}</span>
+
+                  </td>
+
+                  <td>
+                    
+                    <span class="text-center"><span *ngIf="el.service==null ? 0 : el.service.nbreJours!=0 && el.traiteOuiNon==1">{{ratioBetweenTwoDate(el.service==null ? 0 : el.service.nbreJours,el.dateReponse,el.created_at
+                        | date:'dd/MM/yyy hh:mm:ss')}}</span> </span>
+
+                    <span class="text-center"><span *ngIf="el.service==null ? 0 : el.service.nbreJours!=0 && el.traiteOuiNon==0">{{ratioTodayFromDate(el.service==null ? 0 : el.service.nbreJours,el.created_at
+                        | date:'dd/MM/yyy hh:mm:ss')}}</span></span>
+
+                    <span class="text-center"><span *ngIf="el.service==null ? 0 : el.service.nbreJours==0">-</span></span>
+
+                   
+                  </td>
+
+                  <td>
+
+                    <span *ngIf="el.service==null ? 0 : el.service.nbreJours!=0 && el.traiteOuiNon==1">
+
+                      <span  class="badge badge-primary" *ngIf="ratioBetweenTwoDate(el.service==null ? 0 : el.service.nbreJours,el.dateReponse,el.created_at  | date:'dd/MM/yyy hh:mm:ss')<1">Efficience</span>
+
+                      <span  class="badge badge-success" *ngIf="ratioBetweenTwoDate(el.service==null ? 0 : el.service.nbreJours,el.dateReponse,el.created_at  | date:'dd/MM/yyy hh:mm:ss')==1"
+                        style="border-color : green !important; background-color : green !important; box-shadow: 0 1px 1px green !important;">Efficace</span>
+
+                      <span  class="badge badge-danger" *ngIf="ratioBetweenTwoDate(el.service==null ? 0 : el.service.nbreJours,el.dateReponse,el.created_at  | date:'dd/MM/yyy hh:mm:ss')>1">Non
+                        efficace</span>
+
+                    </span>
+
+                    <span class="text-center"><span *ngIf="el.service==null ? 0 : el.service.nbreJours!=0 && el.traiteOuiNon==0">
+
+                        <span *ngIf="ratioTodayFromDate(el.service==null ? 0 : el.service.nbreJours,el.created_at  | date:'dd/MM/yyy hh:mm:ss')<1">...</span>
+
+                        <span *ngIf="ratioTodayFromDate(el.service==null ? 0 : el.service.nbreJours,el.created_at  | date:'dd/MM/yyy hh:mm:ss')==1">...</span>
+
+                        <span  class="badge badge-danger" *ngIf="ratioTodayFromDate(el.service==null ? 0 : el.service.nbreJours,el.created_at  | date:'dd/MM/yyy hh:mm:ss')>1">Non
+                          efficace</span>
+
+                      </span></span>
+
+                    <span class="text-center"><span *ngIf="el.service==null ? 0 : el.service.nbreJours==0 && el.traiteOuiNon==1">Indéterminé</span></span>
+                    <span class="text-center"><span *ngIf="el.service==null ? 0 : el.service.nbreJours==0 && el.traiteOuiNon==0">Indéterminé</span></span>
+
+                  </td>
+
+                  <td>
+
+                    <span class="badge badge-warning" *ngIf="el.traiteOuiNon==0  && el.rejete==0 && el.interrompu==0">En cours</span>
+
+                    <span class="badge badge-danger" *ngIf="el.traiteOuiNon==1  && el.rejete==1">Rejeté</span>
+
+                    <span class="badge badge-success" *ngIf="el.traiteOuiNon==1  && el.rejete==0 && el.interrompu==0 && el.archiver==0">Finalisé</span>
+
+                    <span class="badge badge-danger" *ngIf="el.traiteOuiNon==1  && el.rejete==0 && el.interrompu==0 && el.archiver==1">Archivé</span>
+                    <span *ngIf="el.traiteOuiNon==1  && el.rejete==0 && el.interrompu==0 && el.archiver==1">Motif : {{el.motif_archive}}</span>
+
+                    <span  class="badge badge-danger" *ngIf="el.traiteOuiNon==1 && el.interrompu==1">Interrompu</span>
+
+                  </td>
+
+                  <td>
+
+                    <div class="d-flex flex-column">
+                      <div *ngIf="el.parcours.length != 0">
+                        {{ show_step(el.parcours[0].idEtape)==null ? '' :
+                        show_step(el.parcours[0].idEtape).LibelleEtape }}
+                      </div>
+                      <span (click)="openEditModal(contentU,el.parcours)">
+                        <u>Plus détails</u>
+                      </span>
+                    </div>
+                  </td>
+
+                  <td>
+                    {{el.reponseStructure}} 
+                    <span *ngIf="el.fichier_joint">Fichier réponse : <a target="blank" (click)="ChangerFile(el.fichier_joint)" href="#">{{el.fichier_joint}}</a></span>
+                  </td>
+
+                </tr>
+                <tr *ngIf="data.length==0">
+                  <td colspan="9" class="text-center bg-gray-100">Aucun elements</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-end p-2">
+
+              <div *ngIf="pager!=Null">
+                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                  <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item first-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: 1 }" class="page-link">Début</a>
+                  </li>
+
+                  <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item previous-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: pager.current_page - 1 }"
+                      class="page-link">Précédent</a>
+                  </li>
+
+                  <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.current_page === page}" class="page-item number-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+                  </li>
+
+                  <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: pager.current_page + 1 }"
+                      class="page-link">Suivant</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: pager.last_page }"
+                      class="page-link">Fin</a>
+                  </li>
+                  <li class="page-item last-item disabled">
+                    <a class="page-link">{{pager.last_page}} page(s)</a>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <ng-template #contentU let-modal>
+
+            <div class="modal-header bg-mat-primary">
+              <h4 class="modal-title text-white" id="modal-basic-title">Parcours</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>
+                    Date
+                  </th>
+                  <th>
+                    Etape
+                  </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let parc of list_parcours; let i=index">
+                    <td>
+                      {{i+1}}
+                    </td>
+                    <td>
+                      {{parc.dateArrivee }}
+                    </td>
+                    <td>
+                      {{ show_step(parc.idEtape)==null ? '' : show_step(parc.idEtape).LibelleEtape }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+
+          </ng-template>
+          <!--end::Table-->
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+<!---Container Fluid-->

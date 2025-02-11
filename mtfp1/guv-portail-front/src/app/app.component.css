@@ -1,0 +1,173 @@
+/*
+
+
+
+
+.img-bg {
+position: absolute;
+height: 100%;
+top:0px;
+right: 100px;
+}
+
+header{
+    height: 100px;
+    padding: 15px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+.logo-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    margin-right: 10px;;
+}
+
+
+.logo-title{
+    color:#344051;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+
+}
+
+.nav-items{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding-top: 25px;
+}
+
+
+
+.nav-items a {
+    color: #344051;
+    line-height: 120%;
+    padding: 5px 14px 0 0;
+    text-decoration: none;
+    font-weight: bold;
+
+}
+
+.nav-items a:hover {
+    color: #ea4552;
+}
+
+
+.footer-flag{
+position: relative;
+top: -15px;
+}
+
+.inner-footer{
+    margin-bottom: 0px;
+    height: 250px;
+    
+}
+
+// Pied de page 
+
+.containerfull.line_footer_copy{
+	background: #333b46;
+	color:white;
+	margin-top:20px;
+	text-align: center;
+}
+
+.containerfull.links{
+	background: #252525;
+	padding:5px;
+}
+
+.containerfull.links li a{
+	font-size: 1.0em;
+	color:#777;
+}
+.containerfull.links li{
+	border: 0px;
+	margin-right: 10px;
+}
+
+.drapeau .vert {
+    width: 40%;
+    height: 5px;
+    box-sizing: border-box;
+    margin: 0 0;
+    padding: 0 0;
+    float: left;
+    background-color: green;
+}
+
+.drapeau .jaune {
+    width: 30%;
+    height: 5px;
+    box-sizing: border-box;
+    margin: 0 0;
+    padding: 0 0;
+    float: left;
+    background-color: #e6cc0d;
+}
+
+.drapeau .rouge {
+    width: 30%;
+    height: 5px;
+    box-sizing: border-box;
+    margin: 0 0;
+    padding: 0 0;
+    float: left;
+    background-color: red;
+}
+
+.copyright{
+	text-align:center; 
+	padding:20px;
+}
+
+.footer_armoirie{
+	width: 100%;
+	text-align: center;
+	padding:5px;
+	padding-top:40px;
+}
+
+
+.lireplus{
+	color:#e2001a;
+	font-weight: bold;
+	font-size: 18px;
+	text-decoration: none;
+	display: block; 
+}
+
+.menu ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+*/
+
+body {
+    font-family: 'Open Sans',"Century Gothic",calibri !important;
+}
+
+.nav-link:focus, .nav-link:hover {
+    color: #0a58ca;
+}
+
+.my-cookie{
+    position:fixed;
+    bottom:20px;
+    right: 10px;
+    height:300px;
+    width:500px;
+    background-color:white;
+    opacity:0.9;
+    
+}

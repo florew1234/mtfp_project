@@ -1,0 +1,205 @@
+<div class="container py-5">
+    <h2 class="text-dark fw-bold">
+        Vue d'ensemble
+    <button  (click)="printView()" class="float-end btn btn-sm btn-outline-danger">
+        Imprimer
+    </button>
+    </h2>
+    <hr/>
+    <div class="bg-white mb-3 p-3">
+        <div class="row">
+            <div class="col-12 col-md-4">
+                <table class="table">
+                    <thead>
+                        <th>Libellé</th>
+                        <th>Valeur</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Total des préoccupations reçues</td>
+                            <td> {{data?.all}}</td>
+                        </tr>
+                        <!-- <tr>
+                            <td>Total des préoccupations traitées</td>
+                            <td>{{data?.treated}}</td>
+                        </tr> -->
+                        <tr>
+                            <td>Total des préoccupations en attente</td>
+                            <td>{{data?.pending}} soit {{ data?.pending_pourcent }}</td>
+                        </tr>
+                        <tr>
+                            <td>Total notes enregistrées </td>
+                            <td>{{data?.note_all}}</td>
+                        </tr>
+                        <tr>
+                            <td>Moyenne des notes enregistrées </td>
+                            <td>{{data?.moy}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-md-4">
+                <table class="table">
+                    <thead>
+                        <th>5 plus anciens logs sectoriels au système</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of data1?.last_sectoriels">
+                           <td>
+                            <dl>
+                                <dt>{{d.user?.email}}</dt>
+                                <dt>{{d.user?.agent_user?.nomprenoms}}</dt>
+                                <dd>Date dernière connexion {{d?.last_login | date:"dd-MM-yyyy"}}</dd>
+                            </dl>
+                           </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-md-4">
+                <table class="table">
+                    <thead>
+                        <th>5 plus anciens logs PF au système</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let d of data1?.last_pfc">
+                           <td>
+                            <dl>
+                                <dt>{{d.user?.email}}</dt>
+                                <dt>{{d.user?.agent_user?.nomprenoms}}</dt>
+                                <dd>Date dernière connexion {{d?.last_login | date:"dd-MM-yyyy"}}</dd>
+                            </dl>
+                           </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <h2 class="text-dark fw-bold">Performance des structures </h2>
+    <hr/>
+    <div class="bg-white mb-3 p-3">
+        <table class="table mb-3">
+            <thead>
+                <th>Libéllé</th>
+                <th>Valeur</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Structures ayant le plus fort taux de préoccupations non traitées </td>
+                    <td>
+                        <dl>
+                            <dt>Entité: {{data2?.high_pending?.entite}}</dt>
+                            <dt>Direction: {{data2?.high_pending?.direction}}</dt>
+                            <dt>Non traitées: {{data2?.high_pending?.nontraitee}}</dt>
+                        </dl>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Structures et prestations ayant obtenu les plus faibles notes.</td>
+                    <td>
+                        <dl>
+                            <dt>{{data2?.bad_notes?.length}} élément(s) trouvé(s)</dt>
+                            <dd><span (click)="open(content,data2?.bad_notes)" class="text-underline">Voir plus</span></dd>
+                        </dl>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th rowspan="2"></th>
+                    <th class="text-center" colspan="2">Semaine écoulé</th>
+                    <th class="text-center" colspan="2">Total</th>
+                </tr>
+                <tr>
+                    <th>Plus élevé</th>
+                    <th>Plus Faible</th>
+                    <th>Plus élevé</th>
+                    <th>Plus Faible</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let d of data3; let i=index">
+                    <td>{{d.name}}</td>
+                    <td>
+                        <ol>
+                            <li *ngFor="let el of d.max_last_week; else elseContent1">
+                            <dl class="mb-1">
+                                <dt>Commune: {{el.libellecom}}</dt>
+                                <dt>Valeur:  {{el?.total}}</dt>
+                            </dl>
+                            </li>
+                        </ol>
+                        <ng-template #elseContent1>
+                            <p class="text-center">Aucune donnée disponible</p>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <ol>
+                            <li *ngFor="let el of d.min_last_week; else elseContent2">
+                            <dl class="mb-1">
+                                <dt>Commune: {{el.libellecom}}</dt>
+                                <dt>Valeur:  {{el?.total}}</dt>
+                            </dl>
+                            </li>
+                        </ol>
+                        <ng-template #elseContent2>
+                            <p class="text-center">Aucune donnée disponible</p>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <ol>
+                            <li *ngFor="let el of d.max_total; else elseContent3">
+                            <dl class="mb-1">
+                                <dt>Commune: {{el.libellecom}}</dt>
+                                <dt>Valeur:  {{el?.total}}</dt>
+                            </dl>
+                            </li>
+                        </ol>
+                        <ng-template #elseContent3>
+                            <p class="text-center">Aucune donnée disponible</p>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <ol>
+                            <li *ngFor="let el of d.min_total; else elseContent4">
+                            <dl class="mb-1">
+                                <dt>Commune: {{el.libellecom}}</dt>
+                                <dt>Valeur:  {{el?.total}}</dt>
+                            </dl>
+                            </li>
+                        </ol>
+                        <ng-template #elseContent4>
+                            <p class="text-center">Aucune donnée disponible</p>
+                        </ng-template>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+   
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Détails</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="d('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<dl *ngFor="let el of elements">
+            <dt>Structure: {{el.structure}}</dt>
+            <dt>Prestation: {{el.prestation}}</dt>
+            <dt>Note: {{el.note}}</dt>
+        </dl>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Fermer</button>
+	</div>
+</ng-template>
+

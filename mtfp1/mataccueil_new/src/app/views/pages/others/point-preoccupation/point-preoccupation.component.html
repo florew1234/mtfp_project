@@ -1,0 +1,140 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800 text-uppercase">POINTS DES PREOCCUPATIONS EN COURS DE TRAITEMENT</h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{pager.total}} élement(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form>
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+                <li class="nav-item">
+  
+                  <button *ngIf="user.profil_user.direction!=1" title="Relancer la structure en charge de la Préoccupation" (click)="relancerPreocuppation()" class="btn mx-1 btn-xs btn-info edit">
+                    Relancer
+                  </button>
+                </li>
+  
+              </ul>
+              <div>
+  
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+  
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                 
+                  <tr>
+                    <th></th>
+                    <th width="7%">Date Enreg.</th>
+                    <!--th width="10%">Usager</th-->
+                    <th width="10%">Type de requête</th>
+                    <th width="10%">Thématique</th>
+                    <th width="15%">Prestation</th>
+                    <th width="15%">Objet</th>
+                    <th width="15%">Message de l'usager</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data ; index as i">
+                      <td>
+                          <input type="radio" [value]="el" ngModel name="getrequete" (change)="checked($event,el)">
+                      </td>
+                    <td>{{el.created_at  | date:'dd/MM/yyy hh:mm:ss'}} </td>
+                    <td>{{el.usager==null ? el.contact+" "+el.email : el.usager.nom}} {{el.usager==null ? '' : el.usager.prenoms}}</td>
+                    <!--td *ngIf="el.usager.id!='91586'">{{el.usager.nom}} {{el.usager.prenoms}}</td-->
+                    <td>
+                        <span *ngIf="el.plainte==0">Requête</span>
+                        <span *ngIf="el.plainte==1">Plainte</span>
+                        <span *ngIf="el.plainte==2">Demande d'information</span>
+                    </td>
+                    <td>{{el.service.type.libelle}} </td>
+                    <td>{{el.service==null ? '' : el.service.libelle}} </td>
+                    <td *ngIf="el.usager==null?'': el.usager.id=='91586'">
+                        <dl >
+                            <dt >Matricule</dt>
+                            <dd>{{el.matricule}}</dd>
+                        </dl>
+                        <dl >
+                            <dt >Année de départ</dt>
+                            <dd>{{el.out_year}}</dd>
+                        </dl>
+                        <dl >
+                            <dt >Ministère/Inst. </dt>
+                            <dd>{{el.entity_name}}</dd>
+                        </dl>
+                    </td>
+                    <td >{{el.objet}}</td>
+                    <!-- <td *ngIf="el.usager==null?'0': el.usager.id!='91586'">{{el.objet}}</td> -->
+                    <td>{{el.msgrequest}} </td>
+                </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-end p-2">
+
+                <div *ngIf="pager!=Null">
+                  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item first-item">
+                      <a routerLink="/listrequetepointpreoccupation" [queryParams]="{ page: 1 }" class="page-link">Début</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item previous-item">
+                      <a routerLink="/listrequetepointpreoccupation" [queryParams]="{ page: pager.current_page - 1 }"
+                        class="page-link">Précédent</a>
+                    </li>
+  
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.current_page === page}" class="page-item number-item">
+                      <a routerLink="/listrequetepointpreoccupation" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrequetepointpreoccupation" [queryParams]="{ page: pager.current_page + 1 }"
+                        class="page-link">Suivant</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrequetepointpreoccupation" [queryParams]="{ page: pager.last_page }" class="page-link">Fin</a>
+                    </li>
+                    <li  class="page-item last-item disabled">
+                      <a  class="page-link">{{pager.last_page}} page(s)</a>
+                    </li>
+                  </ul>
+                </div>
+  
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+        </div>
+  
+       
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

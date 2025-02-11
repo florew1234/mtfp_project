@@ -1,0 +1,372 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">PARAMETRES / STRUCTURES</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+
+                    <div class="card-toolbar d-flex justify-content-between">
+                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                            <li class="nav-item">
+                                <span class="mr-2">{{data.length}} élement(s)</span>
+                            </li>
+                            <li class="nav-item">
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <input class="form-control form-control-sm " placeholder="Rechercher...." type="text"
+                                            [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+
+
+                            </li>
+
+                        </ul>
+                        <div>
+                            <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)">
+                                Ajouter une structure</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <!--begin::Table-->
+                    <div class="table-responsive">
+
+                        <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <td class="left text-left" colspan="9">
+                                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                                            Modifier
+                                        </button>
+                    
+                                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <th></th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Libellé</th>
+                                    <th scope="col">Sigle</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Type </th>
+                                    <th scope="col">Activé</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                    <td>
+                                        <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)">
+                                    </td>
+                                    <td>
+                                        {{i+1}}
+                                    </td>
+                                    <td>
+                                        {{el.libelle}}
+                                    </td>
+                                    <td>
+                                        {{el.sigle}}
+                                    </td>
+                                    <td>
+                                        {{el.contact}}
+                                    </td>
+                                    <td class="text-center">
+                                        <span class="badge badge-danger" *ngIf="el.type_s==null || el.type_s==''">Aucun type</span>
+                                        <span *ngIf="el.type_s =='dg'">Direction Générale</span>
+                                        <span *ngIf="el.type_s =='dc'">Direction Centrale</span>
+                                        <span *ngIf="el.type_s =='dt'">Direction Technique</span>
+                                        <span *ngIf="el.type_s =='se'">Service</span>
+                                        <span *ngIf="el.type_s =='di'">Division</span>
+                                    </td>
+                                    <td class="text-center">
+                                        <span  class="badge badge-success" *ngIf="el.active==1">Oui</span>
+                                        <span class="badge badge-danger" *ngIf="el.active==0">Non</span>
+                                    </td>
+                                </tr>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                            </ngb-pagination>
+
+                            <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                <option selected disabled>Filtrer</option>
+                                <option [ngValue]="3">3 elements par page</option>
+                                <option [ngValue]="5">5 elements par par page</option>
+                                <option [ngValue]="10">10 elements par par page</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+
+
+                <ng-template #content let-modal>
+                    <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une structure</h5>
+                            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Type de structure</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-group" required name="type_s" id="type_s" #type_s="ngModel" ngModel>
+                                        <option value="">- Choisir - </option>
+                                        <option value="dg">Direction Générale</option>
+                                        <option value="dc">Direction Centrale</option>
+                                        <option value="dt">Direction Technique</option>
+                                        <option value="se">Service</option>
+                                        <option value="di">Division</option>
+                                    </select>
+                                    <span *ngIf="type_s.invalid && (type_s.dirty || type_s.touched)" class="text-danger">
+                                        <small *ngIf="type_s.errors?.required">
+                                            Type est requis
+                                        </small>
+                                        <small *ngIf="active.errors.maxlength">
+                                            Type pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Libellé *</label>
+                                <div class="col-md-6">
+                                    <input class="form-control form-control-sm" #libelle="ngModel" maxlength="250"
+                                        required name="libelle" ngModel>
+                                    <span *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="text-danger">
+                                        <small *ngIf="libelle.errors?.required">
+                                            libelle est requis
+                                        </small>
+                                        <small *ngIf="libelle.errors.maxlength">
+                                            libelle ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Sigle</label>
+                                <div class="col-md-6">
+                                    <input class="form-control form-control-sm" #sigle="ngModel" maxlength="250" name="sigle"
+                                        ngModel>
+                                    <span *ngIf="sigle.invalid && (sigle.dirty || sigle.touched)" class="text-danger">
+                                        <small *ngIf="sigle.errors?.required">
+                                            sigle est requis
+                                        </small>
+                                        <small *ngIf="sigle.errors.maxlength">
+                                            sigle ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Email</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control form-control-sm" #email="ngModel" maxlength="250"
+                                        name="contact" ngModel>
+                                    <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                        <small *ngIf="email.errors?.required">
+                                            email est requis
+                                        </small>
+                                        <small *ngIf="email.errors.maxlength">
+                                            email ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Sous tutelle de :</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #structure="ngModel" maxlength="250"
+                                        name="idParent" ngModel>
+                                        <option value=""></option>
+                                        <option [value]="e.id" *ngFor="let e of _temp">{{e.libelle}}</option>
+                                    </select>
+                                    <span *ngIf="structure.invalid && (structure.dirty || structure.touched)" class="text-danger">
+                                        <small *ngIf="structure.errors?.required">
+                                            structure est requis
+                                        </small>
+                                        <small *ngIf="structure.errors.maxlength">
+                                            structure ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Activé</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-group" required name="active" id="active" #active="ngModel" ngModel>
+                                        <option value="">- Choisir - </option>
+                                        <option value="1">Oui</option>
+                                        <option value="0">Non</option>
+                                    </select>
+                                    <span *ngIf="active.invalid && (active.dirty || active.touched)" class="text-danger">
+                                        <small *ngIf="active.errors?.required">
+                                            Active est requis
+                                        </small>
+                                        <small *ngIf="active.errors.maxlength">
+                                            Active ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #contentU let-modal>
+                    <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h4 class="modal-title text-white" id="modal-basic-title">Modifier une structure</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Type de structure</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-group" required name="type_s" id="type_s" #type_s="ngModel" [(ngModel)]="selected_data.type_s">
+                                        <option value="">- Choisir - </option>
+                                        <option value="dg">Direction Générale</option>
+                                        <option value="dc">Direction Centrale</option>
+                                        <option value="dt">Direction Technique</option>
+                                        <option value="se">Service</option>
+                                        <option value="di">Division</option>
+                                    </select>
+                                    <span *ngIf="type_s.invalid && (type_s.dirty || type_s.touched)" class="text-danger">
+                                        <small *ngIf="type_s.errors?.required">
+                                            Type est requis
+                                        </small>
+                                        <small *ngIf="active.errors.maxlength">
+                                            Type pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Libellé</label>
+                                <div class="col-md-6">
+                                    <input class="form-control form-control-sm" #libelle="ngModel" maxlength="250"
+                                        required name="libelle" [(ngModel)]="selected_data.libelle">
+                                    <span *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="text-danger">
+                                        <small *ngIf="libelle.errors?.required">
+                                            libelle est requis
+                                        </small>
+                                        <small *ngIf="libelle.errors.maxlength">
+                                            libelle ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4">Sigle</label>
+                                <div class="col-md-6">
+                                    <input class="form-control form-control-sm" #sigle="ngModel" maxlength="250" name="sigle"
+                                        [(ngModel)]="selected_data.sigle">
+                                    <span *ngIf="sigle.invalid && (sigle.dirty || sigle.touched)" class="text-danger">
+                                        <small *ngIf="sigle.errors?.required">
+                                            sigle est requis
+                                        </small>
+                                        <small *ngIf="sigle.errors.maxlength">
+                                            sigle ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Email</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control form-control-sm" #email="ngModel" maxlength="250"
+                                        name="contact" [(ngModel)]="selected_data.contact">
+                                    <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                        <small *ngIf="email.errors?.required">
+                                            email est requis
+                                        </small>
+                                        <small *ngIf="email.errors.maxlength">
+                                            email ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Sous tutelle de :</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #structure="ngModel" maxlength="250"
+                                        name="idParent" [(ngModel)]="selected_data.idParent">
+                                        <option value=""></option>
+                                        <option [value]="e.id" *ngFor="let e of _temp">{{e.libelle}}</option>
+                                    </select>
+                                    <span *ngIf="structure.invalid && (structure.dirty || structure.touched)" class="text-danger">
+                                        <small *ngIf="structure.errors?.required">
+                                            structure est requis
+                                        </small>
+                                        <small *ngIf="structure.errors.maxlength">
+                                            structure ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4">Activé</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" required name="active" id="active" #active="ngModel" [(ngModel)]="selected_data.active">
+                                        <option value="">- Choisir - </option>
+                                        <option value="1">Oui</option>
+                                        <option value="0">Non</option>
+                                    </select>
+                                    <span *ngIf="active.invalid && (active.dirty || active.touched)" class="text-danger">
+                                        <small *ngIf="active.errors?.required">
+                                            Active est requis
+                                        </small>
+                                        <small *ngIf="active.errors.maxlength">
+                                            Active ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

@@ -1,0 +1,92 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800 text-uppercase">Graphique par thématique
+        </h3>
+
+    </div>
+
+
+    <div class="row d-flex">
+        <div class="col-md-12">
+
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+                    <div class="row col-md-12 ">
+                        <div class="col-md-2">De
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" type="date" [(ngModel)]="param_stat.startDate" options="options" />
+                                    <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span> -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2">A
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <input class="form-control" type="date" [(ngModel)]="param_stat.endDate" options="options" />
+                                    <!-- <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">Type
+                            <div class="form-group"> 
+                                <select class="form-control form-group" name="statut" [(ngModel)]="selected_type"  (change)="prepare()" id="">
+                                    <option value="-1">Tous les types</option>
+                                    <option value="0">Requêtes</option>
+                                    <option value="1">Plaintes</option>
+                                    <option value="2">Demande d'information</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5" >Type de graphe :
+                            <div class="form-group">
+                                <select name="typeGraphe" id="typeGraphe" class="form-control ng-dirty ng-valid-parse ng-valid ng-valid-required ng-touched"
+                                    required="true" [(ngModel)]="typeGraphe">
+                                    <option value="Histogramme" label="Histogramme">Histogramme</option>
+                                    <option value="Camembert" label="Camembert">Camembert</option>
+                                </select>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-md-12 ">
+                        <div class="col-md-2">
+                            <div class="form-group"> 
+                                <button type="button" class="btn btn-primary" id="btn-save" (click)="searchStats()"><i class="fas fa-search"></i>&nbsp; Afficher</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group"> 
+                                <button type="button" class="btn btn-danger" (click)="resetStats()">Reinitialiser</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+                    
+                    <div class="chartjs-container" *ngIf="typeGraphe=='Histogramme'">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+                            [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+                        </canvas>
+                    </div>
+
+                    <div class="chartjs-container" *ngIf="typeGraphe=='Camembert'">
+                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
+                        </canvas>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

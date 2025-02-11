@@ -1,0 +1,52 @@
+<section class="o-banner">
+        <div class="card text-white rounded-0">
+      
+            <img src="assets/bg-new.jpeg" class="card-img" height="120" alt="...">
+            <div class="card-img-overlay">
+      
+                <div class="text container">
+                    <h2 class="card-title text-center">GUICHET UNIQUE VIRTUEL</h2>
+                    <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                    <p></p>
+                </div>
+            </div>
+        </div>
+      
+</section>
+<div class="container my-4 bg-light" >
+    <h6 class="text-center mx-1 my-2"><u>Accédez aux différents services</u></h6>
+  
+    <div class="row ">
+            <div class="col-12 col-md-4" *ngFor="let d of data">
+                    <div class="card shadow p-1 mb-5 bg-body rounded block-sollicitation" *ngIf="d.client.name!=''">
+                        <div class="card-body">
+                            <div class="d-flex flex-column justify-content-around">
+                                <div class="align-self-center text-center text-sm-start">
+                                    <i class="fas fa-address-card fa-3x blueColorT"></i> </div>
+                                <div class="p-2 text-center" >
+                                    <div class="block-sollicitation-title d-flex justify-content-center ">
+                                        <span class="text-dark  text-decoration-none h6 align-self-center "><strong>{{d.client.name}}</strong></span>
+                                    </div>
+                                    <p class="text-dark h6"></p>
+                                    <div class="d-flex justify-content-around blueColor">
+                                        <div class="">
+                                           
+                                                <a  class="tbtn" style="font-size:15px; border:none;" *ngIf="!d.client.revoked" href="{{d.client.redirect}}?access_token={{access_token}}&email={{user.email}}" target="_blank">ACCEDER
+                                                    <h6 class="text-dark mt-2"></h6></a>
+                                                <a  class="tbtn text-white" style="font-size:15px; border:none;" href="javascript:void(0);" *ngIf="d.client.revoked"  onclick="alert('Application en cours d\'intégration')">BIENTÔT DISPONIBLE
+                                                    <h6 class="text-dark mt-2"></h6>
+                                                </a>
+                                        </div>
+        
+                                    </div>
+                                </div>
+        
+                            </div>
+        
+                        </div>
+                    </div>
+            </div>
+    </div>
+    
+</div>
+

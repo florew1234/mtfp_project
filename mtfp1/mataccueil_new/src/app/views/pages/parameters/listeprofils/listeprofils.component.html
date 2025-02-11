@@ -1,0 +1,393 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h3 mb-0 text-gray-800">PARAMETRES / PROFILS</h3>
+
+  </div>
+  <div class="row d-flex">
+    <div class="col-md-12">
+      <div class="card my-2">
+        <!-- Header -->
+        <div class="card-header p-4 border-0 pt-5">
+
+          <div class="card-toolbar d-flex justify-content-between">
+            <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+              <li class="nav-item">
+                <span class="mr-2">{{data.length}} élement(s)</span>
+              </li>
+              <li class="nav-item">
+                <form>
+                  <div class="form-group form-inline">
+                    <input class="form-control form-control-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                      name="searchText" (keyup)="search()" />
+                  </div>
+                </form>
+              </li>
+              <li class="nav-item">
+
+
+              </li>
+
+            </ul>
+            <div>
+              <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)">
+                Ajouter un profil</button>
+            </div>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="card-body pt-3 pb-0">
+
+          <!--begin::Table-->
+          <div class="table-responsive">
+
+            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <td class="left text-left" colspan="9">
+                      <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                          Modifier
+                      </button>
+                      
+                      <button (click)="archive()" class="btn mx-1 btn-sm btn-danger">
+                        Supprimer
+                      </button>
+                      <button (click)="openEditModal(contentGuide)" class=" mx-1 btn btn-sm btn-danger text-white">
+                          Joindre guide d'utilisation
+                      </button>
+                  </td>
+              </tr>  
+                <tr>
+                  <th></th>
+                  <th scope="col">N°</th>
+                  <th scope="col">Libellé</th>
+                  <th scope="col">Guide d'utilisation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                  <td>
+                      <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)">
+                  </td>
+                  <td>
+                    {{i+1}}
+                  </td>
+                  <td>
+                    {{el.LibelleProfil}}
+                  </td>
+                  <td>
+                    <span *ngIf="el.fichier_guide">Fichier : <a target="_blank" (click)="ChangerFile(el.fichier_guide)" href="#">{{el.fichier_guide}}</a></span>
+                  </td>
+                
+                </tr>
+                <tr *ngIf="data.length==0">
+                  <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+              <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+                [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+              </ngb-pagination>
+
+              <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                <option selected disabled>Filtrer</option>
+                <option [ngValue]="3">3 elements par page</option>
+                <option [ngValue]="5">5 elements par par page</option>
+                <option [ngValue]="10">10 elements par par page</option>
+              </select>
+            </div>
+          </div>
+          <!--end::Table-->
+        </div>
+
+
+        <ng-template #contentGuide let-modal>
+          <form #newFormGuide="ngForm" (ngSubmit)="addGuide(newFormGuide.value)">
+            <div class="modal-header bg-mat-primary">
+              <h5 class="modal-title text-white" id="modal-basic-title">Joindre le guide d'utilisation </h5>
+              <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row form-group">
+                <label for="message" class="col-md-2 ">Joindre Guide</label>
+                <div class="col-md-10">
+                  <input type="file" class="form-control" (change)="onFileChange($event)" #file="ngModel" name="fichier" ngModel>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" [disabled]="!newFormGuide.form.valid" type="submit">Sauvegarder</button>
+            </div>
+          </form>
+        </ng-template>
+
+
+        <ng-template #content let-modal>
+          <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+            <div class="modal-header bg-mat-primary">
+              <h5 class="modal-title text-white" id="modal-basic-title">Ajouter un profil</h5>
+              <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                {{error}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Libellé</label>
+                <div class="col-md-6">
+                  <input class="form-control form-control-sm" #libelle="ngModel" maxlength="250" required name="libelle"
+                    ngModel>
+                  <span *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="text-danger">
+                    <small *ngIf="libelle.errors?.required">
+                      libelle est requis
+                    </small>
+                    <small *ngIf="libelle.errors.maxlength">
+                      libelle ,pas plus de 250 caractères.
+                    </small>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Saisie</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisie" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Saisie Adjoint</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisie_adjoint" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Point Focal / Saisie</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisiePoint" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Point Focal Communal</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisiePointCom" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Inspection</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="inspection" ngModel>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-4">Validation</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="validation" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit SGM</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="sgm" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit DC</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="dc" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Décisionnel / Suivi prestations</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="decisionnel_suivi" ngModel>
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-4">Ministre</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="ministre" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Direction</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="direction" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Service</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="service" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Division</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="division" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Usersimple</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="usersimple" ngModel>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Ratio</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="ratio" ngModel>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+            </div>
+          </form>
+        </ng-template>
+
+
+        <ng-template #contentU let-modal>
+          <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+            <div class="modal-header bg-mat-primary">
+              <h4 class="modal-title text-white" id="modal-basic-title">Modifier un profil</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                {{error}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Libellé</label>
+                <div class="col-md-6">
+                  <input class="form-control form-control-sm" #libelle="ngModel" maxlength="250" required name="libelle"
+                    [(ngModel)]="selected_data.LibelleProfil">
+                  <span *ngIf="libelle.invalid && (libelle.dirty || libelle.touched)" class="text-danger">
+                    <small *ngIf="libelle.errors?.required">
+                      libelle est requis
+                    </small>
+                    <small *ngIf="libelle.errors.maxlength">
+                      libelle ,pas plus de 250 caractères.
+                    </small>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Saisie</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisie" [(ngModel)]="selected_data.saisie">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Saisie Adjoint</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisie_adjoint" [(ngModel)]="selected_data.saisie_adjoint">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Point Focal / Saisie</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisiePoint" [(ngModel)]="selected_data.pointfocal">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Point Focal Communal</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="saisiePointCom" [(ngModel)]="selected_data.pointfocalcom">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Inspection</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="inspection" [(ngModel)]="selected_data.inspection">
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-4">Validation</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="validation" [(ngModel)]="selected_data.niveauValidation">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Décisionnel / Suivi prestations</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="decisionnel_suivi" [(ngModel)]="selected_data.decisionnel_suivi">
+                </div>
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-md-4">Droit SGM</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="sgm" [(ngModel)]="selected_data.sgm">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit DC</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="dc" [(ngModel)]="selected_data.dc">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Ministre</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="ministre" [(ngModel)]="selected_data.ministre">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Direction</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="direction" [(ngModel)]="selected_data.direction">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Service</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="service" [(ngModel)]="selected_data.service">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Division</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="division" [(ngModel)]="selected_data.division">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Usersimple</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="usersimple" [(ngModel)]="selected_data.usersimple">
+                </div>
+              </div>
+              <div class="form-group row">
+                <label class="col-md-4">Droit Ratio</label>
+                <div class="col-md-6">
+                  <input type="checkbox" value="false" name="ratio" [(ngModel)]="selected_data.ratio">
+                </div>
+              </div>
+
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+            </div>
+          </form>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!---Container Fluid-->

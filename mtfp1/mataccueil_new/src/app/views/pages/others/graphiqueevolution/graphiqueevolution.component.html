@@ -1,0 +1,53 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800 text-uppercase">EVOLUTION DES {{typeRequete}}</h3>
+
+    </div>
+   
+
+    <div class="row d-flex">
+        <div class="col-md-12">
+
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+                        <div class="form-group row" style="margin-top:30px;">
+
+                                <label for="year" class="col-sm-2 control-label">Année :</label>
+                                <div class="col-sm-4">
+                                    <select name="year" id="year" class="form-control" required [(ngModel)]="selected_year">
+                                        <option *ngFor="let i of years" [value]="i">{{i}}</option>
+                                    </select>
+                        
+                                </div>
+                        
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-primary" id="btn-save" (click)="loadGraphe()"><i class="fas fa-search"></i>&nbsp;
+                                        Afficher</button>
+                                </div>
+                        
+                                <div class="col-md-2">
+                                    <button type="button" class="btn btn-danger" (click)="resetStats()">Reinitialiser</button>
+                                </div>
+                            </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+                    <div class="chartjs-container">
+                        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+                            [colors]="lineChartColors" [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+                        </canvas>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

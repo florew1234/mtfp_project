@@ -1,0 +1,161 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800 text-uppercase">POINTS DES REPONSES</h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{pager.total}} élement(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form>
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+                <li class="">
+
+                  <div class="form-group">
+                    <label for="">Filtre</label>
+                    <input type="date" class="form-control-sm" (change)="filter($event)">  
+                  </div>
+                </li>
+  
+              </ul>
+              <div>
+  
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+  
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                 
+                  <tr>
+                    <th width="7%">Date Enreg.</th>
+                    <th width="10%" *ngIf="user.profil_user.direction!=1 && user.profil_user.service!=1 && user.profil_user.division!=1">Usager</th>
+                    <th width="10%">Type de requête</th>
+                    <th width="10%">Thématique</th>
+                    <th width="15%">Prestation</th>
+                    <th width="15%">Objet</th>
+                    <th width="15%">Message de l'usager</th>
+                    <th>Etat du <br>traitement</th>
+                    <th>Date réponse</th>
+                    <th width="15%">Réponse de <br>l'administration</th>
+                    <th>Délai de <br>référence (jours)</th>
+                    <th>Séjour</th>
+                    <th>Note Délai <br>traitement</th>
+
+                    <th>Note Résultat <br> traitement</th>
+                    <th>Moy.</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data ; index as i">
+                    <td>{{el.created_at  | date:'dd/MM/yyy hh:mm:ss'}} </td>
+                    <!-- <td *ngIf="el.usager==null?'': el.usager.id=='91586' && user.profil_user.direction!=1 && user.profil_user.service!=1 && user.profil_user.division!=1">{{el.identity}}</td> -->
+                    <td *ngIf="user.profil_user.direction!=1 && user.profil_user.service!=1 && user.profil_user.division!=1">{{el.usager==null? el.contact+" "+el.email : el.usager.nom}} {{el.usager==null?'': el.usager.prenoms}}</td>
+                    <td>
+                        <span *ngIf="el.plainte==0">Requête</span>
+                        <span *ngIf="el.plainte==1">Plainte</span>
+                        <span *ngIf="el.plainte==2">Demande d'information</span>
+                    </td>
+                    <td>{{el.service.type.libelle}} </td>
+                    <td>{{el.service==null ? '' : el.service.libelle}} </td>
+                    <td *ngIf="el.usager==null?'': el.usager.id=='91586'">
+                        <dl >
+                            <dt >Matricule</dt>
+                            <dd>{{el.matricule}}</dd>
+                        </dl>
+                        <dl >
+                            <dt >Année de départ</dt>
+                            <dd>{{el.out_year}}</dd>
+                        </dl>
+                        <dl >
+                            <dt >Ministère/Inst. </dt>
+                            <dd>{{el.entity_name}}</dd>
+                        </dl>
+                    </td>
+                    <td>{{el.objet}}</td>
+                    <!-- <td *ngIf="el.usager==null?'0': el.usager.id!='91586'">{{el.objet}}</td> -->
+                    <td>{{el.msgrequest}} </td>
+                     <td>
+                        <span *ngIf="el.traiteOuiNon==0">En cours</span>
+                        <span *ngIf="el.traiteOuiNon==1  && el.rejete==1">Rejeté</span>
+                        <span *ngIf="el.traiteOuiNon==1  && el.rejete==0 && el.interrompu==0">Finalisé</span>
+                        <span *ngIf="el.traiteOuiNon==1 && el.interrompu==1">Interrompu</span>
+                    </td>
+                    <td><span *ngIf="el.dateReponse">{{el.dateReponse}}</span></td>
+                    <td>{{el.reponseStructure}} </td>
+                    <td>{{el.service.delai}} </td>
+                    <td align="right">
+                        <span *ngIf="el.traiteOuiNon==1">{{daysBetweenTwoDate(el.dateReponse,el.created_at)}}</span> 
+                        <span *ngIf="el.traiteOuiNon==0">{{daysTodayFromDate(el.created_at)}}</span> 
+                     </td>
+                    <td>{{el.notes.length==0 ? '' : el.notes[0].noteDelai}} </td>
+                    <td>{{el.notes.length==0 ? '' : el.notes[0].noteResultat}} </td>
+                    <td>{{el.notes.length==0 ? '' : ( (el.notes[0].noteDelai+el.notes[0].noteResultat)/2)}}</td>
+                                     </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="14" class="text-center bg-gray-100">Aucun elements</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-end p-2">
+
+                <div *ngIf="pager!=Null">
+                  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item first-item">
+                      <a routerLink="/listrequetepointreponse" [queryParams]="{ page: 1 }" class="page-link">Début</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item previous-item">
+                      <a routerLink="/listrequetepointreponse" [queryParams]="{ page: pager.current_page - 1 }"
+                        class="page-link">Précédent</a>
+                    </li>
+  
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.current_page === page}" class="page-item number-item">
+                      <a routerLink="/listrequetepointreponse" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrequetepointreponse" [queryParams]="{ page: pager.current_page + 1 }"
+                        class="page-link">Suivant</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrequetepointreponse" [queryParams]="{ page: pager.last_page }" class="page-link">Fin</a>
+                    </li>
+                    <li  class="page-item last-item disabled">
+                      <a  class="page-link">{{pager.last_page}} page(s)</a>
+                    </li>
+                  </ul>
+                </div>
+  
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+        </div>
+  
+       
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

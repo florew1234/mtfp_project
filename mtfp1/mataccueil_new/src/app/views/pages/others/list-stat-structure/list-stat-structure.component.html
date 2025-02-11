@@ -1,0 +1,287 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800 text-uppercase">STATISTIQUES - STRUCTURES</h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <div class="row col-md-12">
+                  <div class="col-md-2">De
+                      <div class="form-group">
+                        <input class="form-control" type="date" [(ngModel)]="param_stat.startDate" options="options"/>
+                      </div>
+                    </div>
+                    <div class="col-md-2">A
+                      <div class="form-group">
+                        <input class="form-control" type="date" [(ngModel)]="param_stat.endDate" options="options"/>
+                      </div>
+                    </div>
+                    <div class="col-md-2">Type
+                      <div class="form-group"> 
+                        <select class="form-control form-group" name="statut" [(ngModel)]="selected_type"  (change)="prepare()" id="">
+                          <option value="-1">Tous les types</option>
+                          <option value="0">Requêtes</option>
+                          <option value="1">Plaintes</option>
+                          <option value="2">Demande d'information</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-6">Structure
+                      <div class="form-group">
+                          <select (change)="filterAll($event)" class="form-control-sm  col-md-7 form-group mx-1" name="structure" [(ngModel)]="selected_Struct" id="">
+                            <option value="all">Tout afficher</option> 
+                            <option [value]="el.id" *ngFor="let el of structures">{{el.libelle}}</option>
+                            </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row col-md-12">
+                    <div class="col-md-1">
+                      <div class="form-group">
+                        <button  type="button" class="btn btn-primary" (click)="searchStats()" >Afficher</button>
+                      </div></div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                        <button  type="button" class="btn btn-info " (click)="genererPDFStat(0)" > Générer</button>
+                      </div></div>
+                    <div class="col-md-1">
+                      <div class="form-group">
+                        <button  type="button" class="btn btn-danger" (click)="resetStats()" >Reinitialiser</button>
+                      </div>
+                    </div>
+                    <div class="col-md-9">
+                      
+                    </div>
+                      
+                  </div>
+            </div>
+
+        </div>
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+          <h4>Statistiques par structure </h4>
+
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{data.length}} élément(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form class="mx-1"> 
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+                <li class="nav-item">
+                    <div  *ngIf="user.profil_user.saisie==1">
+                        <button  type="button" class="btn btn-info mx-1" id="btn-save" (click)="genererPDFStat(0)" ><i class="fas fa-file-pdf-o"></i>&nbsp; Générer</button>
+                      </div>
+                     
+                </li>
+                <!--li class="nav-item">
+                    <div *ngIf="user.profil_user.saisie==1">
+                        <button  type="button" class="btn btn-success  mx-1" id="btn-save" (click)="genererPDFStat(1)" ><i class="fas fa-file-pdf-o"></i>&nbsp; Générer et envoyer</button>
+                      </div>
+                </li-->
+  
+              </ul>
+              <div>
+  
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+           
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                 
+                  <tr>
+                    <th width="15%">Structure</th>
+                    <th>{{typeRequete}} reçues</th>
+                    <th>{{typeRequete}} en cours</th>
+                    <th>{{typeRequete}} en cours hors délai</th>
+                    <th>{{typeRequete}} traitées</th>
+                    <th>{{typeRequete}} traitées hors délai</th>
+                    <th>{{typeRequete}} à traitées dans les délais</th>
+                    <th>Ratio de performance relatif</th>
+                    <th>Ratio de performance absolu</th>
+                    <th>Avis positif</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                   
+                    <td>{{el.libelle}}</td>
+                    <td>{{el.total}} </td>
+                    <td>{{el.totalEnCours}} </td>
+                    <td>{{el.totalEnCoursHorsDelai}} </td>
+                    <td>{{el.totalTraite}} </td>
+                    <td>{{el.totalTraiteHorsDelai}}</td>
+                    <td>{{el.totalEnCoursDelaiDans24H}}</td>
+                    <td> {{el.totalTraite / el.total | number: '1.0-2' }}</td>
+                    <td> {{el.totalEnCoursDelaiDans24H / el.total | number: '1.0-2' }}</td>
+                    <td><span *ngIf="el.totalRetour>0">{{el.totalRetourPositif}} / {{el.totalRetour}}</span></td>
+                    <td>
+                      <button class="btn btn-primary" (click)="openAddModal(rl,el.id)">Relancer</button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="11" class="text-center bg-gray-100">Aucun éléments</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+                  [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                </ngb-pagination>
+  
+                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                  <option selected disabled>Filtrer</option>
+                  <option [ngValue]="5">5 éléments par page</option>
+                  <option [ngValue]="10">10 éléments par page</option>
+                  <option [ngValue]="20">20 éléments par page</option>
+                </select>
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+        </div>
+        <div class="card my-2">
+            <!-- Header -->
+            <div class="card-header p-4 border-0 pt-5">
+            <h4>Statistiques détaillés par structure </h4>
+
+              <div class="card-toolbar d-flex justify-content-between">
+                <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                  <li class="nav-item">
+                    <span class="mr-2">{{data2.length}} élement(s)</span>
+                  </li>
+                  <li class="nav-item">
+                    <div >
+                      <button  type="button" class="btn btn-info " id="btn-save" (click)="genererPDFStatDetails(0)" ><i class="fas fa-file-pdf-o"></i>&nbsp; Générer</button>
+                    </div>
+                  </li>
+    
+                </ul>
+                <div>
+    
+                </div>
+              </div>
+            </div>
+            <!-- Body -->
+            <div class="card-body pt-3 pb-0">
+             
+              <!--begin::Table-->
+              <div class="table-responsive">
+    
+                <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                  <thead>
+                   
+                    <tr>
+                      <th width="15%">Structure</th>
+                      <th>{{typeRequete}} reçues</th>
+                      <th>{{typeRequete}} en cours</th>
+                      <th>{{typeRequete}} en cours hors délai</th>
+                      <th>{{typeRequete}} traitées</th>
+                      <th>{{typeRequete}} traitées hors délai</th>
+                      <th>{{typeRequete}} à traitées dans les délais</th>
+                      <th>Ratio de performance relatif</th>
+                      <th>Ratio de performance absolu</th>
+                      <th>Avis positif</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let el of data2 | slice: (page2-1) * pageSize2 : (page2-1) * pageSize2 + pageSize2; index as i">
+                     
+                      <td>{{el.libelle}}</td>
+                      <td>{{el.total}} </td>
+                      <td>{{el.totalEnCours}} </td>
+                      <td>{{el.totalEnCoursHorsDelai}} </td>
+                      <td>{{el.totalTraite}} </td>
+                      <td>{{el.totalTraiteHorsDelai}}</td>
+                      <td>{{el.totalEnCoursDelaiDans24H}}</td>
+                      <td> {{el.totalTraite / el.total  | number: '1.0-2'}}</td>
+                      <td> {{el.totalEnCoursDelaiDans24H / el.total  | number: '1.0-2'}}</td>
+                      <td><span *ngIf="el.totalRetour>0">{{el.totalRetourPositif}} / {{el.totalRetour}}</span></td>
+                      <td>
+                        <button class="btn btn-primary" (click)="openAddModal(rl,el.id)">Relancer</button>
+                      </td>
+                    </tr>
+                    <tr *ngIf="data2.length==0">
+                      <td colspan="11" class="text-center bg-gray-100">Aucun élément</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-between p-2">
+                  <ngb-pagination class="" [collectionSize]="collectionSize2" [(page)]="page2" [maxSize]="5" [pageSize]="pageSize2"
+                    [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                  </ngb-pagination>
+    
+                  <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize2">
+                    <option selected disabled>Filtrer</option>
+                    <option [ngValue]="5">5 éléments par page</option>
+                    <option [ngValue]="10">10 éléments par page</option>
+                    <option [ngValue]="20">20 éléments par page</option>
+                  </select>
+                </div>
+              </div>
+              <!--end::Table-->
+            </div>
+    
+    
+          </div>
+  
+<ng-template #rl let-modal>
+
+  <form #relan="ngForm" (ngSubmit)="sendRelance(relan.value)">
+
+    <div class="modal-header bg-mat-primary">
+      <h5 class="modal-title text-white" id="modal-basic-title">Envoyer une notification de relance</h5>
+      <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        X
+      </button>
+    </div>
+    <div class="modal-body">
+      <div style="color:red" class="ng-binding"></div>
+      
+      <div class="form-group row">
+        <label for="message" class="col-sm-2 control-label">Message</label>
+        <div class="col-sm-10">
+          <textarea style="min-height: 100px; resize:none;" class="form-control has-error ng-pristine ng-untouched ng-invalid ng-invalid-required"
+            id="message" name="message" [(ngModel)]="default_msg" required required="required">
+             
+          </textarea>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer" style="background-color: #fff;">
+      <button type="submit" class="btn btn-secondary" id="btn-savetransmit" 
+        [disabled]="relan.invalid"><i class="fas fa-save"></i>&nbsp; Envoyer</button>
+
+    </div>
+  </form>
+
+</ng-template>
+       
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

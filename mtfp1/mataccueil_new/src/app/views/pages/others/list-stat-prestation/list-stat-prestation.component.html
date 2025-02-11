@@ -1,0 +1,132 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800 text-uppercase">STATISTIQUES / PRESTATIONS</h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{data.length}} élement(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form>
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+                <li class="nav-item">
+                </li>
+  
+              </ul>
+              <div>
+                  <select name="entiteId" class="form-control" [(ngModel)]="entiteId" (change)="searchStats()">
+                    <option *ngFor="let e of entities" [value]="e.id">{{e.libelle}}</option>
+                  </select>
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+            <div class="row col-md-12 d-flex justify-content-center">
+
+              <div class="col-md-1" style="padding-left: 40px;"> <label>De</label> </div>
+  
+              <div class="col-md-3">
+                <div class="form-group">
+                  <input class="form-control" type="date" [(ngModel)]="param_stat.startDate" options="options"/>
+                </div>
+              </div>
+             
+  
+              <div class="col-md-1"> <label>A</label> </div>
+  
+              <div class="col-md-3">
+                <div class="form-group">
+                  <input class="form-control" type="date" [(ngModel)]="param_stat.endDate" options="options"/>
+                </div>
+              </div>
+  
+              <div class="col-md-1">
+                <button  type="button" class="btn btn-primary"  (click)="searchStats()" > Afficher</button>
+              </div>
+  
+              <div class="col-md-1">
+                <button  type="button" class="btn btn-info "  (click)="genererPDFStat()" >Générer</button>
+              </div>
+  
+            <div class="col-md-1">
+                <button  type="button" class="btn btn-danger" (click)="resetStats()" >Reinitialiser</button>
+              </div>
+  
+            </div>
+  
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                 
+                  <tr>
+                    <th>Prestation</th>
+                    <th>Nombre de requête</th>
+                    <th>Nombre de plainte</th>
+                    <th>Nombre de demande Infos</th>
+                    <th>Totale Préoccupation</th>
+                    <th>Nombre de notation</th>
+                    <th>Note totale reçu</th>
+                    <th>% de satisfaction</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                    <td>{{el.libelle}}</td>
+                    <td>{{el.totalRequete}} </td>
+                    <td>{{el.totalPlainte}} </td>
+                    <td>{{el.totalInfo}} </td>
+                    <td>{{el.total}} </td>
+                    <td>{{el.notation}} </td>
+                    <td>{{el.noteRecu}} </td>
+                    <td>
+                      <span *ngIf="el.noteAttendu==0">--</span>
+                      <span *ngIf="el.noteAttendu!=0"> {{el.pourcent | number:".2"}} %</span>
+                    </td>
+
+                  </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize"
+                  [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                </ngb-pagination>
+  
+                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                  <option selected disabled>Filtrer</option>
+                  <option [ngValue]="3">3 elements par page</option>
+                  <option [ngValue]="5">5 elements par par page</option>
+                  <option [ngValue]="10">10 elements par par page</option>
+                </select>
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+        </div>
+  
+       
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

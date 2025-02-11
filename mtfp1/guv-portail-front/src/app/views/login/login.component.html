@@ -1,0 +1,59 @@
+<div class="container-fluid">
+   
+    <div class="row my-5">
+            <div class="col-md-4 mx-auto">
+                    <div >
+                        <form #loginForm="ngForm" (ngSubmit)="loginSend(loginForm.value)">
+                            <div class="card" style="
+                                ">
+                                <div class="card-header blueColor py-2">
+                                        <div class="d-flex justify-content-center">
+                                                <img src="assets/auth-person.svg" height="30" class="mx-2" alt="">
+                                                <h6  class="text-center text-white mt-2">
+                                                   
+                                                    <strong class="mt-2">Se connecter</strong></h6>
+                                        </div>
+
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group ">
+                                        <label for="">Email | Numéro NPI | Téléphone</label>
+                                        <input autofocus="autofocus" type="text" class="form-control" name="username" #login="ngModel" ngModel>
+                                        <span *ngIf="login.invalid && (login.dirty || login.touched)" class="text-danger">
+                                            <small *ngIf="login.errors?.required" id="typeLabelHelp" class="form-text">Identifiant requis</small>
+                                        </span>
+                                    </div>
+                                  
+                                    <div class="form-group ">
+                                        <div  class="d-flex justify-content-between">
+                                                <label for="">Mot de passe </label>
+                                                <div *ngIf="!needMailCheck">
+                                                        <a routerLink="/forgot-password" class="text-secondary text-right"><small>Mot de passe oublié ?</small></a>
+                                                </div>
+                                        </div>
+                                        <input type="password" class="form-control" name="password" #password="ngModel" ngModel>
+                                        <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                                            <small *ngIf="password.errors?.required" id="typeLabelHelp" class="form-text">Mot de passe requis</small>
+                                        </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                       
+                                        <button class="btn btn-warning btn-block" [disabled]="loginForm.invalid || loading">Se connecter</button>
+                                    </div>
+                                    <hr class="my-4">
+                                    <!--div *ngIf="needMailCheck" class="d-flex justify-content-center">
+                                             <a href="#" (click)="resendMailCheclCode()" class="text-secondary">Renvoyer le code de vérification</a>
+                                    </div-->
+                                    <div class="d-flex justify-content-center">
+                                            <span class=" text-center mx-auto" style="font-size:12px">Vous ne disposer pas d'un compte ? <a routerLink="/register" class="text-secondary"><u>Inscrivez-vous</u></a></span>
+
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+    </div>
+</div>

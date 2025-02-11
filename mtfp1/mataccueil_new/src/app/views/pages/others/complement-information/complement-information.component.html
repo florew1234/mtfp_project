@@ -1,0 +1,123 @@
+<!-- Container Fluid-->
+<div class="container-fluid mt-3" id="container-wrapper">
+
+    <div class="row d-flex">
+        <div class="col-md-8 mx-auto">
+            <div class="card ">
+                <!-- Header -->
+                <div class="card-header d-flex justify-content-between text-white p-4 bg-mat-primary border-0 pt-5">
+                    <div class="d-flex flex-column">
+                        <!--h4>
+                            <img src="assets/img/logo-mtfpas.png" class="img-fluid" width="200" alt="">
+                        </h4-->
+                        <h4>
+                            RENSEIGNEMENTS
+                        </h4>
+                    </div>
+                    <!---a href="" class="text-white align-self-center"> 
+                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-left" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                          </svg>
+                        Revenir au portail des démarches administratives
+                    </a-->
+                </div>
+                <!-- Body -->
+                <div class="card-body p-5">
+
+
+                    <form #frmcomplement="ngForm" (ngSubmit)="save(frmcomplement.value)" class="form-horizontal" novalidate="">
+
+                        
+
+
+                        <div class="form-group row" style="margin-top: 30px;">
+                            <label for="message" class="col-sm-12">Message</label>
+                            <div class="col-sm-12">
+                                <textarea readonly="" class="form-control form-control-sm has-error" id="message" name="message"
+                                [(ngModel)]="data.message"></textarea>
+                            </div>
+                            <br><br>
+                        </div>
+
+                        <div *ngIf="data.complement==Null">
+                            <div class="form-group row" style="margin-top: 30px;">
+                                <label for="complement" class="col-sm-12">Réponse</label>
+                                <div class="col-sm-12">
+                                    <textarea class="form-control form-control-sm has-error"  name="complement"
+                                    ngModel></textarea>
+                                </div>
+                                <br><br>
+                            </div>
+    
+                            <div class="col-md-12 text-center d-flex justify-content-center" *ngIf="loading">
+                                <div class="spinner-border text-secondary" role="status">
+                                    <span class="sr-only">Envoi en cours...</span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" [disabled]="frmcomplement.invalid"><i class="fas fa-save"></i>&nbsp;
+                                Envoyer</button>
+                        </div>
+
+                        <div *ngIf="data.complement!=Null">
+                            <div class="form-group row" style="margin-top: 30px;">
+                                <label for="complement" class="col-sm-12">Réponse</label>
+                                <div class="col-sm-12">
+                                    <textarea class="form-control form-control-sm has-error" readonly=""  name="complement"
+                                    [(ngModel)]="data.complement"></textarea>
+                                </div>
+                                <br><br>
+                            </div>
+                      </div>
+                       
+                        
+                    </form>
+
+
+                </div>
+                <div class="" style="background-color:#373B48; color:white">
+                    <div class="containerfull line_footer_copy">
+                        <div class="drapeau">
+                            <div class="vert"></div>
+                            <div class="jaune"></div>
+                            <div class="rouge"></div>
+                        </div>
+                        <div class="footer_armoirie">
+                            <img src="assets/img/armoirie-benin.png" style="width: 100%">
+                        </div>
+
+                        <div class="copyright text-center">
+                            République du Bénin - Ministère du Travail et de la Fonction Publique - Direction des
+                            Systèmes d'Information (DSI) <br>
+                            © Tous Droits Reservés 2021
+                        </div>
+                    </div>
+                    <div class="containerfull links">
+                        <div class="container" align="center">
+                            <div class="menu">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><a class="text-white" href="http://www.travail.gouv.bj"
+                                            target="_blank">www.travail.gouv.bj</a></li>
+                                    <li class="list-inline-item"><a class="text-white" href="http://presidence.bj"
+                                            target="_blank">presidence.bj</a></li>
+                                    <li class="list-inline-item"><a class="text-white" href="http://sgg.gouv.bj" target="_blank">sgg.gouv.bj</a></li>
+                                    <li class="list-inline-item"><a class="text-white" href="http://www.bulletinpaie.finances.bj"
+                                            target="_blank">bulletinpaie.finances.bj</a></li>
+                                    <li class="list-inline-item"><a class="text-white" href="https://demarchesmtfp.gouv.bj"
+                                            target="_blank">demarchesmtfp.gouv.bj</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

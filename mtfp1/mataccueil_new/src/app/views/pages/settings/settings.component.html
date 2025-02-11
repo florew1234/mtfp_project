@@ -1,0 +1,26 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">PARAMETRES / Générale</h3>
+
+    </div>
+ 
+    <div class="row">
+          <div class="card card-body col-8 mx-auto">
+            <form #newForm="ngForm" (ngSubmit)="set(newForm.value)">
+                <div class="form-group">
+                    <label for=""> Message d'entête</label>
+                    <input type="text" class="form-control" name="header_text" [(ngModel)]="setting.header_text">
+                </div>
+
+                <div class="text-end">
+                    <button  class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+        
+                </div>
+            </form>
+        </div>
+    </div>
+  
+
+</div>
+<!---Container Fluid-->

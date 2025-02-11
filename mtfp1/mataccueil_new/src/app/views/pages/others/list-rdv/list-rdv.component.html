@@ -1,0 +1,144 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800 text-uppercase">Rendez-vous (Rdv)</h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{pager.total}} élement(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form>
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+                <li class="nav-item">
+  
+  
+                </li>
+  
+              </ul>
+              <div>
+  
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+  
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                    <tr>
+                        <td class="left text-left" colspan="9">
+                           <!--button *ngIf="user.profil_user.direction != 1" class="btn btn-xs btn-info mx-1" (click)="setRdvStatut(2)">Rendez-vous transmis à la structure </button--> 
+                           
+                           <!--button *ngIf="user.profil_user.direction == 1" class="btn btn-xs btn-pri mx-1" (click)="setRdvStatut(3)">Confirmer Rendez-vous au SRU </button--> 
+                           
+                           <button *ngIf="user.profil_user.direction == 1" class="btn btn-xs btn-primary mx-1" (click)="setRdvStatut(2)">Confirmer Rendez-vous à l'usager</button> 
+                           <button *ngIf="user.profil_user.direction == 1" class="btn btn-xs btn-warning mx-1" (click)="setRdvStatut(3)">Rejeter Rendez-vous</button> 
+                           <button  class="btn btn-xs btn-success mx-1" (click)="setRdvStatut(4)">Rendez-vous tenus</button> 
+                           
+                           
+                           <button class="btn btn-xs btn-danger mx-1" (click)="setRdvStatut(5)">Rendez-vous non tenus</button> 
+                           <!--<button title="Supprimer"  class="btn btn-xs btn-danger"  (click)="dropRdv(s)"><i class="fas fa-remove"></i> </button>-->  
+
+                       </td>
+                   </tr>
+
+                  <tr>
+                    <th></th>
+                    <th>Date Rdv</th> 
+                    <th>Créneau</th> 
+                    <th>Usager</th> 
+                    <th>objet</th> 
+                    <th>Code Requete</th>
+
+                    <th>Attentes de l'usager</th>  
+                    <th>statut</th> 
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data ; index as i">
+                    <td>
+                        <input type="checkbox" name="getRdv"  [(ngModel)]="el.check" >
+                    </td>
+                      <td>{{el.dateRdv}} </td> 
+                      <td>{{el.rdvcreneau == null ? '' : el.rdvcreneau.heureDebut}} - {{el.rdvcreneau == null ? '' :el.rdvcreneau.heureFin}}</td> 
+                      <td>{{el.usager.nom+' '+el.usager.prenoms}} </td> 
+                      <td>{{el.objet}} </td> 
+                      <td>{{el.codeRequete}} </td> 
+                      <td>
+                        <div style="max-height: 100px;overflow-y: scroll;">{{el.attente}} </div>
+                      </td> 
+                      <td>
+                          <span *ngIf="el.statut==0">En attente</span>
+                          <span *ngIf="el.statut==1">En attente de traitement</span>
+                          <span *ngIf="el.statut==2">Confirmé</span>
+                          <span *ngIf="el.statut==3">Rejeté</span>
+                          <span *ngIf="el.statut==4">Effectué</span>
+                          <span *ngIf="el.statut==5">Annulé</span>
+                      </td> 
+
+                </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-end p-2">
+
+                <div *ngIf="pager!=Null">
+                  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item first-item">
+                      <a routerLink="/listrdvs" [queryParams]="{ page: 1 }" class="page-link">Début</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item previous-item">
+                      <a routerLink="/listrdvs" [queryParams]="{ page: pager.current_page - 1 }"
+                        class="page-link">Précédent</a>
+                    </li>
+  
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.current_page === page}" class="page-item number-item">
+                      <a routerLink="/listrdvs" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrdvs" [queryParams]="{ page: pager.current_page + 1 }"
+                        class="page-link">Suivant</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrdvs" [queryParams]="{ page: pager.last_page }" class="page-link">Fin</a>
+                    </li>
+                    <li  class="page-item last-item disabled">
+                      <a  class="page-link">{{pager.last_page}} page(s)</a>
+                    </li>
+                  </ul>
+                </div>
+  
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+        </div>
+  
+       
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

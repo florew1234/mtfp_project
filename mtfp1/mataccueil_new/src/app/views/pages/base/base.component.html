@@ -1,0 +1,15 @@
+<div id="wrapper">
+  <app-header></app-header>
+  <app-aside [get_user]="user"></app-aside>
+  <!-- ============================================================== -->
+  <div class="content-page">
+    <!-- Start content -->
+    <div class="content">
+      <div class="container-fluid" id="container-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <app-footer></app-footer>
+
+  </div>
+</div>

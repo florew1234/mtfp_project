@@ -1,0 +1,197 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 mx-auto my-2">
+            <div class="card" style="border: 2px solid #0A3764">
+                    <div class="card-header blueColor py-2">
+                            <div class="d-flex justify-content-center">
+                                    <img src="assets/auth-person.svg" height="30" class="mx-2" alt="">
+                                    <h6  class="text-center text-white mt-2">
+                                       
+                                        <strong class="mt-2">Inscription</strong></h6>
+                            </div>
+
+                    </div>
+                <div class="card-body " style="background-color:#f9f9f9">
+               
+
+                    <form class="mt-3" #registerForm="ngForm" (ngSubmit)="registerSend(registerForm.value)">
+                        <fieldset  class="my-0">
+                            <legend class="text-muted h6">Information personnelle</legend>
+
+                            <div class="row mb-5">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="" [className]="lastname.invalid && (lastname.dirty || lastname.touched)?'text-danger':lastname.valid && lastname.dirty?'text-info':'text-gray'">Nom
+                                            (*)</label>
+                                        <input type="text" [className]="lastname.invalid && (lastname.dirty || lastname.touched)?'form-control border-danger':lastname.valid && lastname.dirty?'form-control border-info':'form-control '"
+                                            name="lastname" #lastname="ngModel" ngModel required>
+                                        <span *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                                            <small *ngIf="lastname.errors?.required" id="typeLabelHelp" class="form-text">Nom
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="" [className]="firstname.invalid && (firstname.dirty || firstname.touched)?'text-danger':firstname.invalid?'text-gray':'text-info'">Prénoms
+                                            (*)</label>
+                                        <input type="text" [className]="firstname.invalid && (firstname.dirty || firstname.touched)?'form-control border-danger':firstname.invalid?'form-control':'form-control border-info'"
+                                            name="firstname" #firstname="ngModel" ngModel required>
+                                        <span *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                                            <small *ngIf="firstname.errors?.required" id="typeLabelHelp" class="form-text">Prénoms
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="" [className]="birthday.invalid && (birthday.dirty || birthday.touched)?'text-danger':birthday.valid && birthday.dirty ?'text-info':'text-gray'">Date
+                                            de naissance</label>
+                                        <input type="date"  max="2010-12-31" [className]="birthday.invalid && (birthday.dirty || birthday.touched)?'form-control border-danger':birthday.valid && birthday.dirty ?'form-control border-info':'form-control '"
+                                            name="birthday" #birthday="ngModel" ngModel>
+                                        <span *ngIf="birthday.invalid && (birthday.dirty || birthday.touched)" class="text-danger">
+                                            <small *ngIf="birthday.errors?.required" id="typeLabelHelp" class="form-text">Date
+                                                de naissance requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="" [className]="phone.invalid && (phone.dirty || phone.touched)?'text-danger':phone.valid && phone.dirty ?'text-info':'text-gray'">Téléphone
+                                            (*)</label>
+                                        <input [className]="phone.invalid && (phone.dirty || phone.touched)?'form-control border-danger':phone.valid && phone.dirty ?'form-control border-info':'form-control '"
+                                            type="tel" pattern="^\+?\s*(\d+\s?){8,}$" name="phone" #phone="ngModel"
+                                            ngModel required placeholder="+22990909090">
+                                        <span *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-danger">
+                                            <small *ngIf="phone.errors?.required" id="typeLabelHelp" class="form-text">Téléphone
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label class="text-info" for="">Je suis un </label>
+                                        <select class="form-control border-info" name="status_id" #statusAgent="ngModel"
+                                            [(ngModel)]="default_status" (change)="addField($event)" required>
+                                            <option *ngFor="let s of status" value="{{s.id}}">{{s.name}}</option>
+                                        </select>
+                                        <span *ngIf="statusAgent.invalid && (statusAgent.dirty || statusAgent.touched)"
+                                            class="text-danger">
+                                            <small *ngIf="statusAgent.errors?.required" id="typeLabelHelp" class="form-text">Status
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                
+
+                                <div class="col-12 col-md-6" *ngIf="isAgent">
+                                    <div class="form-group" >
+                                        <label for="" [className]="matricule.invalid && (matricule.dirty || matricule.touched)?'text-danger':matricule.valid && matricule.dirty ?'text-info':'text-gray'">Matricule
+                                            Agent (*)</label>
+                                        <input [className]="matricule.invalid && (matricule.dirty || matricule.touched)?'form-control border-danger':matricule.valid && matricule.dirty ?'form-control border-info':'form-control '"
+                                            type="text" name="matricule" #matricule="ngModel" ngModel required>
+                                        <span *ngIf="matricule.invalid && (matricule.dirty || matricule.touched)" class="text-danger">
+                                            <small *ngIf="matricule.errors?.required" id="typeLabelHelp" class="form-text">Matricule
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6" *ngIf="needIfu">
+                                    <div class="form-group" >
+                                        <label for="" [className]="ifu.invalid && (ifu.dirty || ifu.touched)?'text-danger':ifu.valid && ifu.dirty ?'text-info':'text-gray'">N°IFU(*)</label>
+                                        <input [className]="ifu.invalid && (ifu.dirty || ifu.touched)?'form-control border-danger':ifu.valid && ifu.dirty ?'form-control border-info':'form-control '"
+                                            type="text" name="ifu" #ifu="ngModel" ngModel required>
+                                        <span *ngIf="ifu.invalid && (ifu.dirty || ifu.touched)" class="text-danger">
+                                            <small *ngIf="ifu.errors?.required" id="typeLabelHelp" class="form-text">N°IFU
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6"  *ngIf="needRcm">
+                                    <div class="form-group">
+                                        <label for="" [className]="rccm.invalid && (rccm.dirty || rccm.touched)?'text-danger':rccm.valid && rccm.dirty ?'text-info':'text-gray'">RCCM
+                                            (*)</label>
+                                        <input [className]="rccm.invalid && (rccm.dirty || rccm.touched)?'form-control border-danger':rccm.valid && rccm.dirty ?'form-control border-info':'form-control '"
+                                            type="text" name="rccm" #rccm="ngModel" ngModel required>
+                                        <span *ngIf="rccm.invalid && (rccm.dirty || rccm.touched)" class="text-danger">
+                                            <small *ngIf="rccm.errors?.required" id="typeLabelHelp" class="form-text">RCCM
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6" *ngIf="isInstitu">
+                                    <div class="form-group">
+                                        <label class="text-info" for="">Ma structure </label>
+                                        <select class="form-control border-info" name="institu_id" #instituAgent="ngModel"
+                                            [(ngModel)]="default_Institu" required>
+                                            <option *ngFor="let s of struct" value="{{s.id}}">{{s.libelle}}</option>
+                                        </select>
+                                        <span *ngIf="instituAgent.invalid && (instituAgent.dirty || instituAgent.touched)"
+                                            class="text-danger">
+                                            <small *ngIf="instituAgent.errors?.required" id="typeLabelHelp" class="form-text">Status
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <legend class="text-muted h6 text-center">Information du compte</legend>
+
+                        <hr class="mt-0 mb-3">
+                        <fieldset class="my-0">
+                            <div class="row mb-5">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="" [className]="email.invalid && (email.dirty || email.touched)?'text-danger':email.valid && email.dirty ?'text-info':'text-gray'">Email
+                                            (*)</label>
+                                        <input type="email" [className]="email.invalid && (email.dirty || email.touched)?'form-control border-danger':email.valid && email.dirty ?'form-control border-info':'form-control '"
+                                            name="email" #email="ngModel" ngModel email="true">
+
+                                        <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                            <small *ngIf="email.errors?.required" id="typeLabelHelp" class="form-text">Email
+                                                requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Mot de passe (Au moins 6 caractères) </label>
+                                        <input type="password" class="form-control" name="password" #password="ngModel"
+                                            ngModel>
+                                        <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                                            <small *ngIf="password.errors?.required" id="typeLabelHelp" class="form-text">Mot
+                                                de passe requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="">Confirmer mot de passe </label>
+                                        <input type="password" class="form-control" name="password_confirmation"
+                                            #confirm_password="ngModel" ngModel>
+                                        <span *ngIf="confirm_password.invalid && (confirm_password.dirty || confirm_password.touched)"
+                                            class="text-danger">
+                                            <small *ngIf="confirm_password.errors?.required" id="typeLabelHelp" class="form-text">Mot
+                                                de passe requis</small>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </fieldset>
+                        <div class="form-group form-check">
+                            <input type="checkbox"  class="form-check-input" ngModel  name="confidfor" required id="confidfor">
+                            <label  class="form-check-label" for="confidfor">Je donne librement mon consentement pour la collecte de mes données personnelles</label>
+                        </div>
+                        <div class="d-flex justify-content-center mb-3">
+                            <button class="btn btn-warning" [disabled]="registerForm.invalid || loading">S'inscrire</button>
+                        </div>
+                      
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

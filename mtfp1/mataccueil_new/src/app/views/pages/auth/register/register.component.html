@@ -1,0 +1,148 @@
+<div class="row content_page">
+    <div class="col-lg-10 col-lg-offset-1 col-sm-10 col-sm-offset-1">
+        <div class="entete">
+            <img src="assets/images/logo-mtfpas.png" alt="Logo MTFP" width="300px;" />
+            <a href="http://demarchesmtfp.gouv.bj/"> Revenir au portail des démarches administratives</a>
+            <h2 style="text-align: left; color: #5CA0FF; font-weight: normal; font-size:16px;">Plateforme
+                d'enregistrement et de suivi du traitement des requêtes et plaintes des usagers/clients</h2>
+            <h3>Inscription / Usager</h3>
+        </div>
+    </div>
+
+    <div class="col-lg-10 col-lg-offset-1 col-sm-10 col-sm-offset-1">
+
+        <div class="panel-body">
+            <form name="frm" class="form-horizontal" novalidate="" class="col-lg-offset-1" style="padding-left: 20%;padding-right: 20%;">
+                <span class="help-inline">( * ) Champ obligatoire à renseigner </span>
+
+
+                <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+                    <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px;">Votre
+                        identité</h4>
+                    <h5 style="color:red">{{messagerequete}}</h5>
+                    <div class="form-group error">
+                        <label for="email" class="col-sm-4 control-label">Email *</label>
+
+                        <div class="col-sm-8">
+                            <input type="email" class="form-control has-error" id="email" name="email" placeholder=""
+                                ngModel name="email">
+
+                            <span class="error" style="color:red;">Format email : abc@example.com</span>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="form-group error">
+                        <label for="nom" class="col-sm-4 control-label">Nom *</label>
+
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control has-error" id="nom" name="nom" placeholder=""
+                                ngModel>
+                        </div>
+                        <br>
+                    </div>
+
+                    <div class="form-group error">
+                        <label for="prenoms" class="col-sm-4 control-label">Prénoms * </label>
+
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control has-error" id="prenoms" name="prenoms" placeholder=""
+                                ngModel>
+                        </div>
+                        <br>
+                    </div>
+
+                    <div class="form-group error">
+                        <label for="tel" class="col-sm-4 control-label">Téléphone *</label>
+
+                        <div class="col-sm-8">
+                            <input type="number" class="form-control has-error" id="tel" name="tel" placeholder=""
+                                ngModel>
+                        </div>
+                    </div>
+                    <div class="form-group error">
+                        <label for="email" class="col-sm-4 control-label">Département *</label>
+                        <div class="col-sm-8">
+                            <select name="idDepartement" id="idDepartement" class="form-control" required ngModel></select>
+                        </div>
+                        <br><br>
+                    </div>
+                    <div class="form-group error">
+                        <label for="tel" class="col-sm-4 control-label">Mot de passe *</label>
+
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control has-error" id="password" name="password"
+                                placeholder="" ngModel>
+                        </div>
+                    </div>
+                    <div class="form-group error">
+                        <label for="confirm" class="col-sm-4 control-label">Confirmer votre mot de passe *</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control has-error" id="confirm" name="confirm"
+                                placeholder="" ngModel>
+                        </div>
+                    </div>
+
+
+
+                </fieldset>
+
+                <div class="form-group">
+                    <div class="alert alert-danger  alert-dismissible" role="alert" *ngIf="errorform">
+                        {{errormessage}}
+                    </div>
+                </div>
+
+                <div class="form-group" align="center" style="margin-top:40px;">
+
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="consentement" ngModel name="consentement"
+                            required> <label for="confirm" class="form-check-label">Je donne librement mon consentement
+                            pour la collecte et le traitement de mes données</label>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="btn-save" ng-click="saveUsager(modalstate, id)"
+                        ng-disabled="frm.$invalid" disabled="disabled"><i class="fas fa-save"></i>&nbsp; Enregistrer</button>
+
+                    <a ng-click="reset()" class="btn btn-danger"><i class="fas fa-undo"></i> Annuler </a>
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+        <div class="containerfull line_footer_copy">
+            <div class="drapeau">
+                <div class="vert"></div>
+                <div class="jaune"></div>
+                <div class="rouge"></div>
+            </div>
+            <div class="footer_armoirie">
+                <img src="assets/images/armoirie-benin.png">
+            </div>
+
+            <div class="copyright">
+                République du Bénin - Ministère du Travail et de la Fonction Publique - Direction de l'Informatique et
+                du Pré-archivage (DIP) <br>
+                &copy; Tous Droits Reservés 2018
+            </div>
+        </div>
+        <div class="containerfull links">
+            <div class="container" align="center">
+                <div class="menu">
+                    <ul>
+                        <li><a href="http://www.travail.gouv.bj" target="_blank">www.travail.gouv.bj</a></li>
+                        <li><a href="http://presidence.bj" target="_blank">presidence.bj</a></li>
+                        <li><a href="http://sgg.gouv.bj" target="_blank">sgg.gouv.bj</a></li>
+                        <li><a href="http://www.bulletinpaie.finances.bj" target="_blank">bulletinpaie.finances.bj</a></li>
+                        <li><a href="http://www.weche.fpbenin.net" target="_blank">weche.fpbenin.net</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

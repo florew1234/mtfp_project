@@ -1,0 +1,135 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h3 class="h3 mb-0 text-gray-800">PARAMETRES RDV</h3>
+    
+        </div>
+        <div class="row d-flex">
+            <div class="col-md-12">
+                <div class="card my-2">
+                    <!-- Header -->
+                    <div class="card-header p-4 border-0 pt-5">
+    
+                        <div class="card-toolbar d-flex justify-content-between">
+                                                
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="card-body pt-3 pb-0">
+    
+                        <!--begin::Table-->
+                        <div class="table-responsive">
+    
+                            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                                <thead>
+                                    <tr>
+                                        <td class="left text-left" colspan="9">
+                                            <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                                                Modifier
+                                            </button>
+                        
+                                        </td>
+                                    </tr>  
+                                    <tr>
+                                        <th></th>
+                                        <th scope="col">Nombre de postes</th>
+                                        <th scope="col">Date prochain RDV</th>
+                                      
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                        <td>
+                                                <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)">
+                                        </td>
+                                        <td>
+                                                {{el.nombrePoste}}
+                                        </td>
+                                        <td>
+                                            {{el.dateProchainRdv}} 
+                                        </td>
+                                      
+                                    </tr>
+                                    <tr *ngIf="data.length==0">
+                                        <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between p-2">
+                                <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                    [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                                </ngb-pagination>
+    
+                                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                    <option selected disabled>Filtrer</option>
+                                    <option [ngValue]="3">3 elements par page</option>
+                                    <option [ngValue]="5">5 elements par par page</option>
+                                    <option [ngValue]="10">10 elements par par page</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--end::Table-->
+                    </div>
+    
+    
+                  
+                    <ng-template #contentU let-modal>
+                        <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+                            <div class="modal-header bg-mat-primary">
+                                <h4 class="modal-title text-white" id="modal-basic-title">
+                                        Modifier les paramètres de prise de RDV
+                                </h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                    X
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                    {{error}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                            aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4">Nombre de poste</label>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control form-control-sm" #nombrePoste="ngModel" maxlength="250"
+                                            required name="nombrePoste" [(ngModel)]="selected_data.nombrePoste">
+                                        <span *ngIf="nombrePoste.invalid && (nombrePoste.dirty || nombrePoste.touched)" class="text-danger">
+                                            <small *ngIf="nombrePoste.errors?.required">
+                                                    Nombre de poste est requis
+                                            </small>
+                                            <small *ngIf="nombrePoste.errors.maxlength">
+                                                    Nombre de poste ,pas plus de 250 caractères.
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4">Date Prochain RDV</label>
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control form-control-sm" #dateProchainRdv="ngModel" maxlength="250"
+                                            required name="dateProchainRdv" [(ngModel)]="selected_data.dateProchainRdv">
+                                        <span *ngIf="dateProchainRdv.invalid && (dateProchainRdv.dirty || dateProchainRdv.touched)" class="text-danger">
+                                            <small *ngIf="dateProchainRdv.errors?.required">
+                                                    Date Prochain RDV est requis
+                                            </small>
+                                            <small *ngIf="dateProchainRdv.errors.maxlength">
+                                                    Date Prochain RDV ,pas plus de 250 caractères.
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+                            </div>
+                        </form>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+    <!---Container Fluid-->

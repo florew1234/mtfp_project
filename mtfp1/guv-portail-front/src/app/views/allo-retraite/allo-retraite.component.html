@@ -1,0 +1,182 @@
+<section class="o-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+        <div class="card-img-overlay">
+
+            <div class="text container">
+                <h2 class="card-title text-center"> ALLÔ RETRAITE</h2>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p class="text-center"></p>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <p class="">
+                Le MTFP vous remercie pour la confiance. Vous avez besoin d'une information relative à votre retraite ! Remplir  le formulaire ci-dessous et un 
+                retour vous sera fait dans les meilleurs délais.
+            </p>
+            <div class="card" style="border: 2px solid #0A3764">
+                <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à renseigner</strong></h2>
+                <div class="card-body">
+
+                    <form #usagerRetraiteform="ngForm" (ngSubmit)="save(usagerRetraiteform.value)" method="post">
+
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="prestation">Prestation *</label>
+                                <select onclick="e.preventDefault()" name="idPrestation" #idPrestation="ngModel"
+                                    ngModel id="prestation" class="form-control" required>
+                                    <option selected disabled>Choix de la prestation</option>
+                                    <option value="237">Etat des services et proposition d'admission à la retraite ou de cessation définitive d'activité</option>
+                                    <option value="157">Assurance vieillesse-Pension d'invalidité</option>
+                                    <option value="156">Assurance vieillesse-Pension normale de vieillesse</option>
+                                    <option value="89">Lettre de notification d'admission à la retraite</option>
+                                    <option value="87">Arrêté portant admission à la retraite</option>
+                                    <option value="257">Délivrance de certificat administratif</option>
+                                    <option value="91">Délivrance de la fiche de validation des services auxiliaires</option>
+                                    <option value="255">Délivrance d’état des services de l’agent décédé</option>
+                                    <option value="93">Attestation de validité des Services</option>
+                                    <option value="240">Délivrance d'état des services de l'agent décédé</option>
+                                </select>
+                                <span *ngIf="idPrestation.invalid && (idPrestation.dirty || idPrestation.touched)"
+                                    class="text-danger">
+                                    <small *ngIf="idPrestation.errors?.required" class="form-text text-danger">Ce
+                                        champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="code">Matricule *</label>
+                                <input type="text" class="form-control" ngModel id="code" #code="ngModel" name="code"
+                                    required>
+                                <span *ngIf="code.invalid && (code.dirty || code.touched)" class="text-danger">
+                                    <small *ngIf="code.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="form-group col-md-6">
+                                <label for="lastname">Nom *</label>
+                                <input type="text" class="form-control" ngModel id="lastname" #lastname="ngModel" name="lastname"
+                                    required>
+                                <span *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                                    <small *ngIf="lastname.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                <label for="firstname">Prénoms (dans l'ordre) *</label>
+                                <input type="text" class="form-control" ngModel id="firstname" #firstname="ngModel"
+                                    name="firstname" required>
+                                <span *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                                    <small *ngIf="firstname.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group  col-md-6">
+                                <label for="entity_name">Ministère ou institution de départ *</label>
+                                <input type="text" class="form-control" ngModel id="entity_name" #entity_name="ngModel"
+                                    name="entity_name" required>
+                                <span *ngIf="entity_name.invalid && (entity_name.dirty || entity_name.touched)" class="text-danger">
+                                    <small *ngIf="entity_name.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                <label for="email">Email *</label>
+                                <input type="email" class="form-control" #email="ngModel" ngModel id="email" name="email"
+                                    required>
+                                <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                    <small *ngIf="email.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group col-6">
+                                <label for="out_year">Année de départ *</label>
+                                <input type="text" class="form-control" ngModel id="out_year" #out_year="ngModel" name="out_year"
+                                    required>
+                                <span *ngIf="out_year.invalid && (out_year.dirty || out_year.touched)" class="text-danger">
+                                    <small *ngIf="out_year.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                    </small>
+                                </span>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="locality">Localité</label>
+                                <input type="text" class="form-control" id="locality" name="locality">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="phone">Contact personnel *</label>
+                                    <input type="tel" class="form-control" ngModel id="phone" #contact="ngModel" name="contact"
+                                        required>
+                                    <span *ngIf="contact.invalid && (contact.dirty || contact.touched)" class="text-danger">
+                                        <small *ngIf="contact.errors?.required" class="form-text text-danger">Ce champs
+                                            est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="other_phone">Contact d'un proche</label>
+                                    <input type="tel" class="form-control" #other_phone="ngModel" ngModel id="other_phone"
+                                        name="contact_proche">
+                                    <span *ngIf="other_phone.invalid && (other_phone.dirty || other_phone.touched)"
+                                        class="text-danger">
+                                        <small *ngIf="other_phone.errors?.required" class="form-text text-danger">Ce
+                                            champs
+                                            est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="msgrequest">Préoccupations *</label>
+                            <textarea name="msgrequest" id="msgrequest" #msgrequest="ngModel" ngModel class="form-control"
+                                required cols="30" rows="7"></textarea>
+                            <span *ngIf="msgrequest.invalid && (msgrequest.dirty || msgrequest.touched)" class="text-danger">
+                                <small *ngIf="msgrequest.errors?.required" class="form-text text-danger">Ce champs
+                                    est requis
+                                </small>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button type="submit" class="btn btn-success" [disabled]="usagerRetraiteform.invalid || loading">Enregistrer</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>

@@ -1,0 +1,410 @@
+
+<section class="o-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+        <div class="card-img-overlay">
+
+            <div class="text container">
+                <h2 class="card-title text-center" >J'AI BESOIN D'UNE INFORMATION</h2>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p></p>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+<div style="background-color: #0A3764">
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs justify-content-center">
+        <li [ngbNavItem]="1">
+            <a ngbNavLink>Information retraite</a>
+            <ng-template ngbNavContent>
+                <div class="row m-3">
+                    <div class="col-md-10 mx-auto">
+                            <p class="text-center">
+                                Le MTFP vous remercie pour la confiance. Vous avez besoin d'une information relative à votre retraite ! Remplir  le formulaire ci-dessous et un 
+                                retour vous sera fait dans les meilleurs délais.
+                            </p>
+                            <div class="card" style="border: 2px solid #0A3764">
+                                    <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à remplir</strong></h2>
+                                    <div class="card-body">
+                                        
+                                        <form #infoPensionForm="ngForm" (ngSubmit)="savePension(infoPensionForm.value)"  method="post">
+                                          
+                                            <div class="row">
+                                                    
+                                                    <div class="form-group col-md-12">
+                                                            <label for="code">Matricule *</label>
+                                                            <input type="text" ngModel class="form-control" id="code" name="code" required>
+                                                    </div>
+                                            </div>
+                                           
+                                           <div class="row mt-2">
+                                                <div class="form-group col-md-6">
+                                                        <label for="lastname">Nom *</label>
+                                                        <input type="text" ngModel class="form-control" id="lastname" name="lastname" required>
+                                                    </div>
+                                                    <div class="form-group  col-md-6">
+                                                        <label for="firstname">Prénoms (dans l'ordre) *</label>
+                                                        <input type="text" ngModel class="form-control" id="firstname" name="firstname" required>
+                                                </div>
+                                           </div>
+                                            <div class="row mt-2">
+                                                    <div class="form-group  col-md-6">
+                                                            <label for="entity_name">Ministère ou institution de départ *</label>
+                                                            <input type="text" ngModel class="form-control" id="entity_name" name="entity_name" required>
+                                                        </div>
+                                                        <div class="form-group  col-md-6">
+                                                            <label for="email">Votre email ou l'email d'un proche *</label>
+                                                            <input type="email" ngModel class="form-control" id="email" required name="email">
+                                                        </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="form-group col-md-6">
+                                                    <label for="out_year">Année de départ *</label>
+                                                    <input type="text" class="form-control" ngModel id="out_year" name="out_year" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="locality">Localité </label>
+                                                    <input type="text" class="form-control" ngModel id="locality" name="locality" >
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="phone">Contact personnel *</label>
+                                                        <input type="tel" class="form-control" ngModel id="phone" name="contact" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="other_phone">Contact d'un proche </label>
+                                                        <input type="tel" class="form-control" ngModel id="other_phone" name="contact_proche" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    
+                                                    <div class="form-group col-md-12">
+                                                            <label for="">Objet *</label>
+                                                            <input type="text" class="form-control" ngModel id="objet" name="objet" required>
+                                                    </div>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <label for="msgrequest">Message *</label>
+                                                <textarea name="msgrequest" id="msgrequest" ngModel class="form-control" required cols="30" rows="7"></textarea>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox"  class="form-check-input" ngModel  name="confid" required id="confid">
+                                                <label  class="form-check-label" for="confid">Je donne librement mon consentement pour la collecte de mes données personnelles</label>
+                                            </div>
+                                            <div class="d-flex justify-content-end mt-2">
+                                                <button type="reset" class="btn btn-secondary mx-1" >Réinitialiser</button>
+                                                <button type="submit" class="btn btn-success" [disabled]="infoPensionForm.invalid || loading">Enregistrer</button>
+                                            </div>
+                                        </form>
+                
+                                    </div>
+                
+                            </div>
+                
+                    </div>
+                    
+                </div>
+                <ng-template #contentRetraite let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">DEMANDE D'INFORMATION RETRAITE</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Demandeur : {{recup_data.lastname}} {{recup_data.firstname}}
+                        </p>
+                        <p>
+                            Matricule : {{recup_data.code}}
+                        </p>
+                        <p>
+                            Email : {{recup_data.email}}
+                        </p>
+                        <p>
+                            Contact(s) : {{recup_data.contact}} ; {{recup_data.contact_proche}}
+                        </p>
+                        <p>
+                            Ministère ou institution de départ : {{recup_data.entity_name}}
+                        </p>
+                        <p>
+                            Année de départ : {{recup_data.out_year}}
+                        </p>
+                        <p>
+                            Localité : {{recup_data.locality}}
+                        </p>
+                       
+                        <p>
+                            Objet : {{recup_data.objet}}
+                        </p>
+                        <p>
+                            Message : {{recup_data.msgrequest}}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" (click)="validatePension()">Envoyer</button>
+                    </div>
+                </ng-template>
+            </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+            <a ngbNavLink>Information carrière</a>
+            <ng-template ngbNavContent class="bg-white">
+                <div class="row m-3">
+                    <div class="col-md-10 mx-auto">
+                            <p class="text-center">
+                                Le MTFP vous remercie pour la confiance. Vous avez besoin d'une information relative à votre carrère ! Remplir  le formulaire ci-dessous et un 
+                                retour vous sera fait dans les meilleurs délais.
+                            </p>
+                            <div class="card" style="border: 2px solid #0A3764">
+                                    <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à remplir</strong></h2>
+                                    <div class="card-body">
+                                        
+                                        <form #infoCarriereForm="ngForm" (ngSubmit)="saveCarriere(infoCarriereForm.value)"  method="post">
+                                        
+                                           
+                                           <div class="row mt-2">
+                                                <div class="form-group col-md-6">
+                                                        <label for="lastname">Nom *</label>
+                                                        <input type="text" ngModel class="form-control" id="lastname" name="lastname" required>
+                                                    </div>
+                                                    <div class="form-group  col-md-6">
+                                                        <label for="firstname">Prénoms (dans l'ordre) *</label>
+                                                        <input type="text" ngModel class="form-control" id="firstname" name="firstname" required>
+                                                </div>
+                                           </div>
+                                            <div class="row mt-2">
+                                                    <div class="form-group  col-md-6">
+                                                            <label for="entity_name">Ministère ou institution *</label>
+                                                            <input type="text" ngModel class="form-control" id="entity_name" name="entity_name" required>
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                                <label for="code">Matricule *</label>
+                                                                <input type="text" ngModel class="form-control" id="code" name="code" required>
+                                                        </div>
+                                                      
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="form-group col-md-6">
+                                                    <label for="grade_actuel">Grade actuel *</label>
+                                                    <input type="text" ngModel class="form-control" id="grade_actuel" name="grade_actuel" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="grade_attendu">Grade attendu </label>
+                                                    <input type="text" ngModel class="form-control" id="grade_attendu" name="grade_attendu" >
+                                                </div>
+                                            </div>
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="phone">Contact personnel *</label>
+                                                        <input type="tel" ngModel class="form-control" id="phone" name="contact" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                        <label for="email">Email *</label>
+                                                        <input type="email" ngModel class="form-control" required id="email" name="email">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    
+                                                    <div class="form-group col-md-12">
+                                                            <label for="">Objet *</label>
+                                                            <input type="text" ngModel class="form-control" id="objet" name="objet" required>
+                                                    </div>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <label for="msgrequest">Message *</label>
+                                                <textarea name="msgrequest" ngModel id="msgrequest" class="form-control" required cols="30" rows="7"></textarea>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox"  class="form-check-input" ngModel  name="confidcar" required id="confidcar">
+                                                <label  class="form-check-label" for="confidcar">Je donne librement mon consentement pour la collecte de mes données personnelles</label>
+                                            </div>
+                                            <div class="d-flex justify-content-end mt-2">
+                                                <button type="reset" class="btn btn-secondary mx-1" >Réinitialiser</button>
+                                                <button type="submit" class="btn btn-success" [disabled]="infoCarriereForm.invalid || loading2">Enregistrer</button>
+                                            </div>
+                                        </form>
+                
+                                    </div>
+                
+                            </div>
+                
+                    </div>
+                    
+                </div>
+                <ng-template #contentCarriere let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">DEMANDE D'INFORMATION CARRIERE</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Demandeur : {{recup_data.lastname}} {{recup_data.firstname}}
+                        </p>
+                        <p>
+                            Matricule : {{recup_data.code}}
+                        </p>
+                        <p>
+                            Email : {{recup_data.email}}
+                        </p>
+                        <p>
+                            Contact(s) : {{recup_data.contact}} 
+                        </p>
+                        <p>
+                            Ministère ou institution : {{recup_data.entity_name}}
+                        </p>
+                        <p>
+                           Grade actuel : {{recup_data.grade_actuel}}
+                        </p>
+                        <p>
+                            Grade attendu : {{recup_data.grade_attendu}}
+                         </p>
+
+                        <p>
+                            Objet : {{recup_data.objet}}
+                        </p>
+                        <p>
+                            Message : {{recup_data.msgrequest}}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" (click)="validateCarriere()">Envoyer</button>
+                    </div>
+                </ng-template>
+            </ng-template>
+        </li>
+
+        <li [ngbNavItem]="3">
+            <a ngbNavLink>Information Formation</a>
+            <ng-template ngbNavContent>
+                <div class="row m-3">
+                    <div class="col-md-10 mx-auto">
+                            <p class="text-center">
+                                Le MTFP vous remercie pour la confiance. Vous avez besoin d'une information relative à une formation ! Remplir  le formulaire ci-dessous et un 
+                                retour vous sera fait dans les meilleurs délais.
+                            </p>
+                            <div class="card" style="border: 2px solid #0A3764">
+                                    <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à remplir</strong></h2>
+                                    <div class="card-body">
+                                        
+                                        <form #infoFormationForm="ngForm" (ngSubmit)="saveFormation(infoFormationForm.value)"  method="post">
+                                        
+                                           
+                                           <div class="row mt-2">
+                                                <div class="form-group col-md-6">
+                                                        <label for="lastname">Nom *</label>
+                                                        <input type="text" ngModel class="form-control" id="lastname" name="lastname" required>
+                                                    </div>
+                                                    <div class="form-group  col-md-6">
+                                                        <label for="firstname">Prénoms (dans l'ordre) *</label>
+                                                        <input type="text" ngModel class="form-control" id="firstname" name="firstname" required>
+                                                </div>
+                                           </div>
+                                           
+                                            
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="phone">Contact personnel *</label>
+                                                        <input type="tel" ngModel class="form-control" id="phone" name="contact" required>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group  col-md-6">
+                                                        <label for="email">Email *</label>
+                                                        <input type="email" ngModel class="form-control" id="email" required name="email">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                    
+                                                    <div class="form-group col-md-6">
+                                                            <label for="">Objet *</label>
+                                                            <input type="text" ngModel class="form-control" id="objet" name="objet" required>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                            <label for="prestation">Prestation *</label>
+                                                            <select onclick="e.preventDefault()" name="idPrestation" #prestation="ngModel" ngModel id="prestation" class="form-control" required>
+                                                                <option [value]="el.id" *ngFor="let el of prestations">{{el.libelle}}</option>
+                                                            </select>
+                                                            <span *ngIf="prestation.invalid && (prestation.dirty || prestation.touched)" class="text-danger">
+                                                                <small *ngIf="prestation.errors?.required"  class="form-text text-danger">Ce champs est requis
+                                                                    requis</small>
+                                                            </span>
+                                                    </div>
+                                            </div>
+                                            <div class="form-group mt-2">
+                                                <label for="msgrequest">Message *</label>
+                                                <textarea name="msgrequest" ngModel id="msgrequest" class="form-control" required cols="30" rows="7"></textarea>
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox"  class="form-check-input" ngModel  name="confidfor" required id="confidfor">
+                                                <label  class="form-check-label" for="confidfor">Je donne librement mon consentement pour la collecte de mes données personnelles</label>
+                                            </div>
+                                            <div class="d-flex justify-content-end mt-2">
+                                                <button type="reset" class="btn btn-secondary mx-1" >Réinitialiser</button>
+                                                <button type="submit" class="btn btn-success" [disabled]="infoFormationForm.invalid || loading3">Enregistrer</button>
+                                            </div>
+                                        </form>
+                
+                                    </div>
+                
+                            </div>
+                
+                    </div>
+                    
+                </div>
+                <ng-template #contentFormation let-c="close" let-d="dismiss">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modal-basic-title">DEMANDE D'INFORMATION FORMATION</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Demandeur : {{recup_data.lastname}} {{recup_data.firstname}}
+                        </p>
+                        <p>
+                            Matricule : {{recup_data.code}}
+                        </p>
+                        <p>
+                            Email : {{recup_data.email}}
+                        </p>
+                        <p>
+                            Contact(s) : {{recup_data.contact}} ; {{recup_data.contact_proche}}
+                        </p>
+                      
+                        <p>
+                            Prestation : {{showPrestation(recup_data.idPrestation)}}
+                        </p>
+                      
+                        <p>
+                            Objet : {{recup_data.objet}}
+                        </p>
+                        <p>
+                            Message : {{recup_data.msgrequest}}
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" (click)="validatePension()">Envoyer</button>
+                    </div>
+                </ng-template>
+            </ng-template>
+        </li>
+        
+    </ul>
+
+</div>
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

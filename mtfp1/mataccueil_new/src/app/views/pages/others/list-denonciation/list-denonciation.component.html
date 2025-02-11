@@ -1,0 +1,102 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">DENONCIATIONS (IGSEP)</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+
+                    <div class="card-toolbar d-flex justify-content-between">
+                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                            <li class="nav-item">
+                                <span class="mr-2">{{data.length}} élement(s)</span>
+                            </li>
+                            <li class="nav-item">
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <input class="form-control form-control-sm " placeholder="Rechercher...." type="text"
+                                            [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+
+
+                            </li>
+
+                        </ul>
+                        <div>
+                          
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <!--begin::Table-->
+                    <div class="table-responsive">
+
+                        <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Nom et Prénoms</th>
+                                    <th>Téléphone</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Faits dénoncés</th>
+                                    <th scope="col">Entité Administrative</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                    <td>
+                                        {{i+1}}
+                                    </td>
+                                    <td>
+                                        {{el.nom}}  {{el.prenoms}}
+                                    </td>
+                                    <td>{{el.phone}}</td>
+                                    <td>
+                                        {{el.email}}
+                                    </td>
+                                    <td>
+                                        {{el.resume}}
+                                    </td>
+                                    <td>
+                                        {{el.entity_name}}
+                                    </td>
+                                   
+                                </tr>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                            </ngb-pagination>
+
+                            <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                <option selected disabled>Filtrer</option>
+                                <option [ngValue]="3">3 elements par page</option>
+                                <option [ngValue]="5">5 elements par par page</option>
+                                <option [ngValue]="10">10 elements par par page</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+
+
+               
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

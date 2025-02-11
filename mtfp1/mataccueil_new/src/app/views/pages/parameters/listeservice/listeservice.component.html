@@ -1,0 +1,799 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">GESTION DES PRESTATIONS</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+
+                    <div class="card-toolbar d-flex justify-content-between">
+                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                            <li class="nav-item">
+                                <span class="mr-2">{{data.length}} élement(s)</span>
+                            </li>
+                            <li class="nav-item">
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <input class="form-control form-control-sm form-control-sm " placeholder="Rechercher...."
+                                            type="text" [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+
+                                <div class="form-group form-inline">
+                                    <select class="form-control form-control-sm form-control-sm " ngModel name="filter_publish"
+                                        (change)="filter($event)">
+                                        <option value="" disabled>Filtrer</option>
+                                        <option value="all" selected>Tout afficher</option>
+                                        <option value="1" selected>Prestations publiés</option>
+                                        <option value="0" selected>Prestations non publiés</option>
+                                    </select>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <div>
+                            <button class="btn btn-sm bg-mat-primary text-white" [disabled]="user.profil_user.decisionnel_suivi==1"
+                                (click)="openAddModal(content)">
+                                Ajouter un service</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <!--begin::Table-->
+                    <div class="table-responsive">
+
+                        <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <td class="left text-left" colspan="9">
+                                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                                            Modifier
+                                        </button>
+                                        <button title="Gérer les pièces" (click)="openEditModal(pieces)" class="btn my-2 btn-sm btn-primary">
+                                            Gérer pièces
+                                        </button>
+
+                                        <!--button *ngIf="user.profil_user.direction==1 || user.profil_user.admin_sectoriel==1"
+                                            [disabled]="user.profil_user.decisionnel_suivi==1" (click)="publish()"
+                                            title="Publier" class="btn mx-1 btn-sm btn-success">
+                                            Publier 
+                                        </button-->
+
+                                        <button *ngIf="user.profil_user.pointfocal==1" [disabled]="user.profil_user.decisionnel_suivi==1"
+                                            (click)="submit()" title="Publier" class="btn mx-1 btn-sm btn-success">
+                                            Soummettre
+                                        </button>
+                                        <button *ngIf="user.profil_user.admin_sectoriel==1" (click)="publish()" title="Publier" class="btn mx-1 btn-sm btn-success">
+                                            Publier
+                                        </button>
+                                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th width="7%">N°</th>
+                                    <th>Libellé</th>
+                                    <th>Coût</th>
+                                    <th>Délai (Jours)</th>
+                                    <th>Etat</th>
+                                    <th>Disponible en ligne</th>
+                                    <th>Liste des pièces</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let s of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                    <td>
+                                        <input type="radio" [value]="s" ngModel name="get" (change)="checked($event,s)">
+                                    </td>
+                                    <td>{{i+1}}</td>
+                                    <td>{{s.libelle}} </td>
+                                    <td>{{s.cout}} </td>
+                                    <td>{{s.delai}} </td>
+                                    <td>
+                                        <span *ngIf="s.published==1" class="badge badge-success">Publié</span>
+                                        <span *ngIf="s.published==0" class="badge badge-danger">Non publié</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="s.access_online==1" class="badge badge-success">Oui</span>
+                                        <span *ngIf="s.access_online==0" class="badge badge-danger">Non</span>
+                                    </td>
+                                    <td>
+                                            <ul>
+                                                    <li *ngFor="let p of s.listepieces">{{p.libellePiece}}</li>
+                                                </ul>        
+                                    </td>
+
+
+                                </tr>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="12" class="text-center bg-gray-100">Aucun elements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                            </ngb-pagination>
+
+                            <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                <option selected disabled>Filtrer</option>
+                                <option [ngValue]="3">3 elements par page</option>
+                                <option [ngValue]="5">5 elements par par page</option>
+                                <option [ngValue]="10">10 elements par par page</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+
+
+                <ng-template #content let-modal>
+                    <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter un service</h5>
+                            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+                                <li [ngbNavItem]="1">
+                                    <a ngbNavLink>Générales</a>
+                                    <ng-template ngbNavContent>
+
+                                        <div class="form-group row">
+                                            <label for="libelle" class="col-sm-3 control-label">Libellé * </label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control form-control-sm has-error" id="libelle"
+                                                    name="libelle" placeholder="Libellé de la service" value="{{default_data.libelle}}"
+                                                    [(ngModel)]="default_data.libelle" required>
+
+                                                <span class="help-inline has-error-col">{{errormessage}}</span>
+                                            </div>
+                                        </div>
+                                        <div> <label style="text-align: center;border-bottom: 1px #c8d1d3 solid;
+    margin-bottom: 12px;"
+                                                class="col-sm-12 control-label">Description</label> </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="consiste"
+                                                    name="consiste" placeholder="En quoi consiste la
+prestation ?"
+                                                    value="{{default_data.consiste}}" [(ngModel)]="default_data.consiste"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="interetDemandeur"
+                                                    name="interetDemandeur" placeholder="Quel est l’intérêt pour
+le demandeur ?"
+                                                    value="{{default_data.interetDemandeur}}" [(ngModel)]="default_data.interetDemandeur"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="obligatoire "
+                                                    name="obligatoire " placeholder="Est-elle obligatoire ?" value="{{default_data.obligatoire }}"
+                                                    [(ngModel)]="default_data.obligatoire "></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="echeance"
+                                                    name="echeance" placeholder="A-t-elle une échéance
+à respecter ?"
+                                                    value="{{default_data.echeance}}" [(ngModel)]="default_data.echeance"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="interetDemanderTot"
+                                                    name="interetDemanderTot" placeholder="Y-a-t-il un intérêt à le
+demander plus tôt ?"
+                                                    value="{{default_data.interetDemanderTot}}" [(ngModel)]="default_data.interetDemanderTot"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="2">
+                                    <a ngbNavLink>Structure en charge</a>
+                                    <ng-template ngbNavContent>
+                                        <!--div style="text-align: center;border-bottom: 1px #c8d1d3 solid;"> </div-->
+                                        <div class="form-group row " *ngIf="user.profil_user.pointfocal!=1 && user.profil_user.direction!=1">
+                                            <label for="idParent" class="col-sm-3 control-label">Structure *</label>
+                                            <div class="col-sm-9">
+
+                                                <select name="idParent" id="idParent" class="form-control  form-control-sm"
+                                                    required [(ngModel)]="default_data.idParent">
+                                                    <option [value]="oc.id" *ngFor="let oc of structures">{{oc.libelle}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="idType" class="col-sm-3 control-label">Type service *</label>
+                                            <div class="col-sm-9">
+
+                                                <select name="idType" id="idType" class="form-control  " required
+                                                    [(ngModel)]="default_data.idType">
+                                                    <option [value]="oc.id" *ngFor="let oc of types">{{oc.libelle}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="piecesAFournir" class="col-sm-3 control-label">Pièces à fournir
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="sigle"
+                                                    name="piecesAFournir" placeholder="Pièces à fournir " value="{{default_data.piecesAFournir}}"
+                                                    [(ngModel)]="default_data.piecesAFournir"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="dateredac" class="col-sm-5 control-label">Date de rédaction</label>
+                                            <div class="col-sm-7">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+
+                                                        <input id="dateredac" class="form-control" type="date" name="dateredac"
+                                                            [(ngModel)]="default_data.dateredac" options="optionsEon" />
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="delai" class="col-sm-3 control-label">Délai à afficher à
+                                                l'usager</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control form-control-sm has-error" id="delai"
+                                                    name="delai" placeholder="Délai de la prestation" value="{{default_data.delai}}"
+                                                    [(ngModel)]="default_data.delai">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="delaiFixe" class="col-sm-3 control-label">Délai fixe </label>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="delaiFixe" name="delaiFixe" [(ngModel)]="default_data.delaiFixe">
+
+                                            </div>
+
+
+                                            <label style="margin-left:40px;" for="nbreJours" class="col-sm-3 control-label"
+                                                *ngIf="default_data.delaiFixe">Délai
+                                                système</label>
+                                            <div class="col-sm-4" *ngIf="default_data.delaiFixe">
+                                                <input type="text" numbers-only="" class="form-control form-control-sm has-error"
+                                                    id="nbreJours" name="nbreJours" value="{{default_data.nbreJours}}"
+                                                    [(ngModel)]="default_data.nbreJours">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="access_online" class="col-sm-3 control-label">Disponible en
+                                                ligne </label>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="access_online" name="access_online"
+                                                    [(ngModel)]="default_data.access_online">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+
+                                            <label style="margin-left:40px;" for="access_url" class="col-sm-4 control-label"
+                                                *ngIf="default_data.access_online">Url de sollicitation</label>
+                                            <div class="col-sm-8" *ngIf="default_data.access_online">
+                                                <input type="text" class="form-control form-control-sm has-error" id="access_url"
+                                                    name="access_url" [(ngModel)]="default_data.access_url">
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+
+                                            <label style="margin-left:40px;" for="view_url" class="col-sm-4 control-label"
+                                                *ngIf="default_data.access_online">Url de consultation</label>
+                                            <div class="col-sm-8" *ngIf="default_data.access_online">
+                                                <input type="text" class="form-control form-control-sm has-error" id="view_url"
+                                                    name="view_url" [(ngModel)]="default_data.view_url">
+                                            </div>
+
+                                        </div>
+                                        
+
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="3">
+                                    <a ngbNavLink>Autres</a>
+                                    <ng-template ngbNavContent>
+
+                                        <div class="form-group row">
+                                            <label for="cout" class="col-sm-3 control-label">Coût (FCFA) </label>
+                                            <div class="col-sm-9">
+                                                <input type="number" required class="form-control form-control-sm has-error"
+                                                    id="cout" name="cout" placeholder="Coût de la prestation" value="{{default_data.cout}}"
+                                                    [(ngModel)]="default_data.cout">
+
+                                                <span class="help-inline has-error-col">{{errormessage}}</span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label for="lieuDepot" class="col-sm-3 control-label">Lieu de dépôt</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="lieuDepot"
+                                                    name="lieuDepot" placeholder="Lieu de dépôt" value="{{default_data.lieuDepot}}"
+                                                    [(ngModel)]="default_data.lieuDepot"></textarea>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label for="lieuRetrait" class="col-sm-3 control-label">Lieu de retrait</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="lieuRetrait"
+                                                    name="lieuRetrait" placeholder="Lieu de retrait" value="{{default_data.lieuRetrait}}"
+                                                    [(ngModel)]="default_data.lieuRetrait"> </textarea>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="textesRegissantPrestation" class="col-sm-3 control-label">Textes
+                                                régissant
+                                                la prestation</label>
+
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="textesRegissantPrestation"
+                                                    name="textesRegissantPrestation" [(ngModel)]="default_data.textesRegissantPrestation">
+                                                     </textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="hide_for_public" class="col-sm-3 control-label">Cacher au
+                                                public </label>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="hide_for_public" name="hide_for_public"
+                                                    [(ngModel)]="default_data.hide_for_public">
+                                            </div>
+                                        </div>
+
+
+                                    </ng-template>
+                                </li>
+
+                            </ul>
+
+                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+
+                            <!--div class="form-group row">
+                                <label for="nomSousG" class="col-sm-6 control-label">Nom du sous-groupe ayant rédigé</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm has-error" id="nomSousG"
+                                        name="nomSousG" placeholder="Nom du sous-groupe ayant rédigé" 
+                                        ngModel >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nomPresidentSG" class="col-sm-6 control-label">Nom du président du
+                                    sous-groupe</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm has-error" id="nomPresidentSG"
+                                        name="nomPresidentSG" placeholder="Nom du président du sous-groupe"
+                                        ngModel>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="contactPresidentSG" class="col-sm-6 control-label">Contact du président du
+                                    sous-groupe</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm has-error" id="contactPresidentSG"
+                                        name="contactPresidentSG" placeholder="Contact du président du sous-groupe"
+                                         ngModel
+                                        >
+                                </div>
+                            </div-->
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #contentU let-modal>
+                    <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h4 class="modal-title text-white" id="modal-basic-title">Modifier un service</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab2" class="nav-tabs">
+                                <li [ngbNavItem]="1">
+                                    <a ngbNavLink>Générales</a>
+                                    <ng-template ngbNavContent>
+
+                                        <div class="form-group row">
+                                            <label for="libelle" class="col-sm-3 control-label">Libellé * </label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control form-control-sm has-error" id="libelle"
+                                                    name="libelle" placeholder="Libellé de la service" value="{{selected_data.libelle}}"
+                                                    [(ngModel)]="selected_data.libelle" required>
+
+                                                <span class="help-inline has-error-col">{{errormessage}}</span>
+                                            </div>
+                                        </div>
+                                        <div> <label style="text-align: center;border-bottom: 1px #c8d1d3 solid;
+    margin-bottom: 12px;"
+                                                class="col-sm-12 control-label">Description</label> </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="consiste"
+                                                    name="consiste" placeholder="En quoi consiste la
+prestation ?"
+                                                    value="{{selected_data.consiste}}" [(ngModel)]="selected_data.consiste"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="interetDemandeur"
+                                                    name="interetDemandeur" placeholder="Quel est l’intérêt pour
+le demandeur ?"
+                                                    value="{{selected_data.interetDemandeur}}" [(ngModel)]="selected_data.interetDemandeur"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="obligatoire "
+                                                    name="obligatoire " placeholder="Est-elle obligatoire ?" value="{{selected_data.obligatoire }}"
+                                                    [(ngModel)]="selected_data.obligatoire "></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="echeance"
+                                                    name="echeance" placeholder="A-t-elle une échéance
+à respecter ?"
+                                                    value="{{selected_data.echeance}}" [(ngModel)]="selected_data.echeance"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <textarea class="form-control form-control-sm has-error" id="interetDemanderTot"
+                                                    name="interetDemanderTot" placeholder="Y-a-t-il un intérêt à le
+demander plus tôt ?"
+                                                    value="{{selected_data.interetDemanderTot}}" [(ngModel)]="selected_data.interetDemanderTot"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="2">
+                                    <a ngbNavLink>Structure en charge</a>
+                                    <ng-template ngbNavContent>
+                                        <!--div style="text-align: center;border-bottom: 1px #c8d1d3 solid;"> </div-->
+                                        <div class="form-group row " *ngIf="user.profil_user.pointfocal!=1 && user.profil_user.direction!=1">
+                                            <label for="idParent" class="col-sm-3 control-label">Structure *</label>
+                                            <div class="col-sm-9">
+
+                                                <select name="idParent" id="idParent" class="form-control  form-control-sm"
+                                                    required [(ngModel)]="selected_data.idParent">
+                                                    <option [value]="oc.id" *ngFor="let oc of structures">{{oc.libelle}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="idType" class="col-sm-3 control-label">Type service *</label>
+                                            <div class="col-sm-9">
+
+                                                <select name="idType" id="idType" class="form-control  " required
+                                                    [(ngModel)]="selected_data.idType">
+                                                    <option [value]="oc.id" *ngFor="let oc of types">{{oc.libelle}}</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="piecesAFournir" class="col-sm-3 control-label">Pièces à fournir
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="sigle"
+                                                    name="piecesAFournir" placeholder="Pièces à fournir " value="{{selected_data.piecesAFournir}}"
+                                                    [(ngModel)]="selected_data.piecesAFournir"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="dateredac" class="col-sm-5 control-label">Date de rédaction</label>
+                                            <div class="col-sm-7">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+
+                                                        <input id="dateredac" class="form-control" type="date" name="dateredac"
+                                                            [(ngModel)]="selected_data.dateredac" options="optionsEon" />
+                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="delai" class="col-sm-3 control-label">Délai à afficher à
+                                                l'usager</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control form-control-sm has-error" id="delai"
+                                                    name="delai" placeholder="Délai de la prestation" value="{{selected_data.delai}}"
+                                                    [(ngModel)]="selected_data.delai">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="delaiFixe" class="col-sm-3 control-label">Délai fixe </label>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="delaiFixe" name="delaiFixe" [(ngModel)]="selected_data.delaiFixe">
+
+                                            </div>
+
+
+                                            <label style="margin-left:40px;" for="nbreJours" class="col-sm-3 control-label"
+                                                *ngIf="selected_data.delaiFixe">Délai
+                                                système</label>
+                                            <div class="col-sm-4" *ngIf="selected_data.delaiFixe">
+                                                <input type="text" numbers-only="" class="form-control form-control-sm has-error"
+                                                    id="nbreJours" name="nbreJours" value="{{selected_data.nbreJours}}"
+                                                    [(ngModel)]="selected_data.nbreJours">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="access_online" class="col-sm-3 control-label">Disponible en
+                                                ligne </label>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="access_online" name="access_online"
+                                                    [(ngModel)]="selected_data.access_online">
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group row">
+
+                                            <label style="margin-left:40px;" for="access_url" class="col-sm-4 control-label"
+                                                *ngIf="selected_data.access_online">Url de sollicitation</label>
+                                            <div class="col-sm-8" *ngIf="selected_data.access_online">
+                                                <input type="text" class="form-control form-control-sm has-error" id="access_url"
+                                                    name="access_url" [(ngModel)]="selected_data.access_url">
+                                            </div>
+
+                                        </div>
+
+                                        <div class="form-group row">
+
+                                            <label style="margin-left:40px;" for="view_url" class="col-sm-4 control-label"
+                                                *ngIf="selected_data.access_online">Url de consultation</label>
+                                            <div class="col-sm-8" *ngIf="selected_data.access_online">
+                                                <input type="text" class="form-control form-control-sm has-error" id="view_url"
+                                                    name="view_url" [(ngModel)]="selected_data.view_url">
+                                            </div>
+
+                                        </div>
+
+                                    </ng-template>
+                                </li>
+                                <li [ngbNavItem]="3">
+                                    <a ngbNavLink>Autres</a>
+                                    <ng-template ngbNavContent>
+
+                                        <div class="form-group row">
+                                            <label for="cout" class="col-sm-3 control-label">Coût (FCFA) </label>
+                                            <div class="col-sm-9">
+                                                <input type="number" required class="form-control form-control-sm has-error"
+                                                    id="cout" name="cout" placeholder="Coût de la prestation" value="{{selected_data.cout}}"
+                                                    [(ngModel)]="selected_data.cout">
+
+                                                <span class="help-inline has-error-col">{{errormessage}}</span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label for="lieuDepot" class="col-sm-3 control-label">Lieu de dépôt</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="lieuDepot"
+                                                    name="lieuDepot" placeholder="Lieu de dépôt" value="{{selected_data.lieuDepot}}"
+                                                    [(ngModel)]="selected_data.lieuDepot"></textarea>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group row">
+                                            <label for="lieuRetrait" class="col-sm-3 control-label">Lieu de retrait</label>
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="lieuRetrait"
+                                                    name="lieuRetrait" placeholder="Lieu de retrait" value="{{selected_data.lieuRetrait}}"
+                                                    [(ngModel)]="selected_data.lieuRetrait"> </textarea>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label for="textesRegissantPrestation" class="col-sm-3 control-label">Textes
+                                                régissant
+                                                la prestation</label>
+
+                                            <div class="col-sm-9">
+                                                <textarea class="form-control form-control-sm has-error" id="textesRegissantPrestation"
+                                                    name="textesRegissantPrestation" [(ngModel)]="selected_data.textesRegissantPrestation">
+                                                     </textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="hide_for_public" class="col-sm-3 control-label">Cacher au
+                                                public </label>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="hide_for_public" name="hide_for_public"
+                                                    [(ngModel)]="selected_data.hide_for_public">
+                                            </div>
+                                        </div>
+
+
+                                    </ng-template>
+                                </li>
+
+                            </ul>
+
+                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+                            <!-- <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <textarea class="form-control form-control-sm has-error" id="description" name="description" placeholder="Date" value="{{selected_data.description}}" [(ngModel)]="selected_data.description" ></textarea>
+                                    </div>
+                                </div> -->
+
+                            <!--div class="form-group row">
+                                <label for="nomSousG" class="col-sm-6 control-label">Nom du sous-groupe ayant rédigé</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm has-error" id="nomSousG"
+                                        name="nomSousG" placeholder="Nom du sous-groupe ayant rédigé" value="{{selected_data.nomSousG}}"
+                                        [(ngModel)]="selected_data.nomSousG" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="nomPresidentSG" class="col-sm-6 control-label">Nom du président du
+                                    sous-groupe</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm has-error" id="nomPresidentSG"
+                                        name="nomPresidentSG" placeholder="Nom du président du sous-groupe" value="{{selected_data.nomPresidentSG}}"
+                                        [(ngModel)]="selected_data.nomPresidentSG" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="contactPresidentSG" class="col-sm-6 control-label">Contact du président du
+                                    sous-groupe</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control form-control-sm has-error" id="contactPresidentSG"
+                                        name="contactPresidentSG" placeholder="Contact du président du sous-groupe"
+                                        value="{{selected_data.contactPresidentSG}}" [(ngModel)]="selected_data.contactPresidentSG"
+                                        >
+                                </div>
+                            </div-->
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #pieces let-modal>
+                    <form #manageForm="ngForm" (ngSubmit)="savePiece()">
+                        <div class="modal-header bg-mat-primary">
+                            <h4 class="modal-title text-white" id="modal-basic-title">Gérer les pièces</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form #frmpiece="ngForm" (ngSubmit)="addPiece(frmpiece.value)" class="form-horizontal"
+                                novalidate="">
+
+                                <div class="form-group row">
+                                    <label for="libelle" class="col-sm-3 control-label">Prestation * </label>
+                                    <div class="col-sm-8">
+                                        <input readonly="" type="text" class="form-control form-control-sm has-error"
+                                            id="libelle" name="libelle" placeholder="Libellé de l'élément" [(ngModel)]="selected_data.libelle"
+                                            required>
+
+                                    </div>
+                                </div>
+                                <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+
+                                    <div class="form-group row ">
+                                        <label class="col-sm-2 control-label">Pièce : </label>
+                                        <span style="color:red;">{{errorajout}}</span>
+                                        <div class="col-sm-7">
+
+                                            <input piece="text" class="form-control form-control-sm has-error" id="libellePiece"
+                                                name="libellePiece" placeholder="Libellé de la pièce" ngModel required>
+                                        </div>
+
+                                        <div class="col-sm-2">
+                                            <button type="submit" [disabled]="user.profil_user.decisionnel_suivi==1"
+                                                class="btn btn-info" style="padding: 5px 10px !important;">Ajouter</button>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-12 listepieces">
+                                            <table class="table table-bordered tablerequete" id="tbl_pieces">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Libellé de la pièce</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbl_posts_body">
+                                                    <tr *ngFor="let piece of listepieces;let  i =index">
+                                                        <td>{{piece.libellePiece}}</td>
+
+                                                        <td><a class="btn btn-sm btn-danger" (click)="removeRow(i)">Retirer</a></td>
+                                                    </tr>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" id="btn-save" type="submit"><i class="fas fa-save"></i>&nbsp;
+                                Enregistrer</button>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

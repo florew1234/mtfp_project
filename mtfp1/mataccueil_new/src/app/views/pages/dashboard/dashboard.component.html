@@ -1,0 +1,640 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card  text-dark my-5 card-custom bg-gray-100 card-stretch gutter-b">
+            <!--begin::Header-->
+            <div class="card-header border-0">
+                <div class="card-toolbar"><h3 class="card-title font-weight-bolder text-dark">Tableau de bord</h3></div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body -->
+            <div class="card-body " style="background:#F8F8FC !important">
+                <div class="row">
+                    <h4> {{user.agent_user==null ? 'Statistiques globale' : user.agent_user.structure.libelle }}
+                        <hr>
+                    </h4>
+                </div>
+                <div *ngIf="isDecisionel">
+                    <!-- Requetes -->
+                    <div class="row">
+                        <h4>Requetes (E-service)</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <!-- routerLink="/statglob/serv/ntr"  -->
+                                <div class="col-md-6">
+                                    <a class="card text-dark  card-banner"  style="border: 2px solid #fc5454">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{non_traite_e_news}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4>Requêtes (Courrier)</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #fc5454">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{statsCour.length==0 ? '0' : statsCour[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <h4>Requetes (Reçues)</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <a class="card  text-dark  card-banner "  style="border: 2px solid #fc5454">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{stats.length==0 ? '0' : stats[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <!-- <div class="row" *ngIf="user?.profil_user?.LibelleProfil!='Administrateur'">
+                        <h4>Plaintes </h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <a class="card  text-dark  card-banner "  style="border: 2px solid #fc5454">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{stats1.length==0 ? '0' : stats1[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="user?.profil_user?.LibelleProfil!='Administrateur'">
+                        <h4>Demandes d'informations</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                               
+                                <div class="col-md-6">
+                                    <a class="card  text-dark  card-banner "  style="border: 2px solid #fc5454">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">En cours de traitement dans les délais : {{stats2.length==0 ? '0' : stats2[0].totalEnCours}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                
+                <div *ngIf="!isDecisionel">
+                    <!-- Requetes -->
+                    <div class="row" *ngIf="!user?.profil_user?.admin_sectoriel">
+                        <h4>Requetes (Reçues)</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <!-- <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">Affectée <span *ngIf="stats.length!=0 && stats[0].totalNTraite>1">s</span> : 
+                                                    {{stats.length==0 ? '0' : stats[0].totalNTraite}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <!-- <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #DA0000">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Rejetée<span *ngIf="stats.length!=0 && stats[0].totalRejet>1">s</span>
+                                                    {{stats.length==0 ? '0' : stats[0].totalRejet}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <!-- <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #F0C100">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">
+                                                    Suspendues<span *ngIf="stats.length!=0 && stats[0].totalInterrompu>1">s</span> : 
+                                                    {{stats.length==0 ? '0' : stats[0].totalInterrompu}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{stats.length==0 ? '0' : stats[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <h4>Plaintes </h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <!-- <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">Affectée<span *ngIf="stats1.length!=0 && stats1[0].totalNTraite>1">s</span> : 
+                                                    {{stats1.length==0 ? '0' : stats1[0].totalNTraite}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <!-- <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #DA0000">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Rejetée<span *ngIf="stats1.length!=0 && stats1[0].totalRejet>1">s</span>
+                                                    {{stats1.length==0 ? '0' : stats1[0].totalRejet}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <!-- <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #F0C100">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">
+                                                    Suspendues<span *ngIf="stats1.length!=0 && stats1[0].totalInterrompu>1">s</span> : 
+                                                    {{stats1.length==0 ? '0' : stats1[0].totalInterrompu}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div> -->
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{stats1.length==0 ? '0' : stats1[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4>Demandes d'informations</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Affectée<span *ngIf="stats2.length!=0 && stats2[0].totalNTraite>1">s</span> :
+                                                    {{stats2.length==0 ? '0' : stats2[0].totalNTraite}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">En cours de traitement dans les délais : {{stats2.length==0 ? '0' : stats2[0].totalEnCours}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="!isAdmin">
+                    <!-- Requetes -->
+                    <!-- <div class="row" *ngIf="isDecisionel">
+                        <h4>Requetes (E-service)</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a routerLink="/statglob/all/all" class="card text-white  card-banner bg-success"> 
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Total : {{total_e}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a routerLink="/statglob/serv/ntr" class="card text-white  card-banner bg-danger">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Non Traitée : {{non_traite_e_news}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a routerLink="/statglob/serv/rej" class="card  text-dark  card-banner" style="border: 2px solid #DA0000">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Rejetée : {{rejete_e}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a routerLink="/statglob/serv/susp" class="card text-white  card-banner bg-warning">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Suspendue : {{pending_e}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="isDecisionel">
+                        <h4>Requêtes (Courrier)</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">Affectée <span *ngIf="statsCour.length!=0 && statsCour[0].totalNTraite>1">s</span> : 
+                                                    {{statsCour.length==0 ? '0' : statsCour[0].totalNTraite}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #DA0000">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Rejetée<span *ngIf="statsCour.length!=0 && statsCour[0].totalRejet>1">s</span>
+                                                    {{statsCour.length==0 ? '0' : statsCour[0].totalRejet}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #F0C100">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">
+                                                    Suspendues<span *ngIf="statsCour.length!=0 && statsCour[0].totalInterrompu>1">s</span> : 
+                                                    {{statsCour.length==0 ? '0' : statsCour[0].totalInterrompu}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{statsCour.length==0 ? '0' : statsCour[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr *ngIf="isDecisionel">
+                    <div class="row">
+                        <h4>Requetes (Reçues)</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">Affectée <span *ngIf="stats.length!=0 && stats[0].totalNTraite>1">s</span> : 
+                                                    {{stats.length==0 ? '0' : stats[0].totalNTraite}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #DA0000">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Rejetée<span *ngIf="stats.length!=0 && stats[0].totalRejet>1">s</span>
+                                                    {{stats.length==0 ? '0' : stats[0].totalRejet}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #F0C100">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">
+                                                    Suspendues<span *ngIf="stats.length!=0 && stats[0].totalInterrompu>1">s</span> : 
+                                                    {{stats.length==0 ? '0' : stats[0].totalInterrompu}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{stats.length==0 ? '0' : stats[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="row">
+                        <h4>Plaintes </h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">Affectée<span *ngIf="stats1.length!=0 && stats1[0].totalNTraite>1">s</span> : 
+                                                    {{stats1.length==0 ? '0' : stats1[0].totalNTraite}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #DA0000">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Rejetée<span *ngIf="stats1.length!=0 && stats1[0].totalRejet>1">s</span>
+                                                    {{stats1.length==0 ? '0' : stats1[0].totalRejet}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #F0C100">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">
+                                                    Suspendues<span *ngIf="stats1.length!=0 && stats1[0].totalInterrompu>1">s</span> : 
+                                                    {{stats1.length==0 ? '0' : stats1[0].totalInterrompu}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-3">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> En cours de traitement : {{stats1.length==0 ? '0' : stats1[0].totalEnCours}} </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4>Demandes d'informations</h4>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title"> Affectée<span *ngIf="stats2.length!=0 && stats2[0].totalNTraite>1">s</span> :
+                                                    {{stats2.length==0 ? '0' : stats2[0].totalNTraite}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                        <div class="card-body">
+                                            <div class="">
+                                                <div class="title">En cours de traitement dans les délais : {{stats2.length==0 ? '0' : stats2[0].totalEnCours}}</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <div  *ngIf="!isAdmin" class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <h4>Requetes</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="card  text-white  card-banner bg-success">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats.length==0 ? '0' : stats[0].totalNTraite}}</i>
+                                        <div class="">
+                                            <div class="title"> affectée<span *ngIf="stats.length!=0 && stats[0].totalNTraite>1">s</span><br>
+                                                </div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-white  card-banner bg-success">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats.length==0 ? '0' : stats[0].totalTraite}}</i>
+                                        <div class="">
+                                            <div class="title"> traitées <span *ngIf="stats.length!=0 && stats[0].totalTraite>1">s</span>
+                                                </div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-white  card-banner bg-danger">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats.length==0 ? '0' : stats[0].totalTraiteHorsDelai}}</i>
+                                        <div class="">
+                                            <div class="title">
+                                                traitées <span *ngIf="stats.length!=0 && stats[0].totalTraiteHorsDelai>1">s</span>
+                                                <br> mais hors délai</div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-white  card-banner bg-success">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats.length==0 ? '0' : stats[0].totalEnCours}}</i>
+                                        <div class="">
+                                            <div class="title"> en cours <br> de traitement dans les délais</div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-white  card-banner bg-warning">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats.length==0 ? '0' : stats[0].totalInterrompu}}</i>
+                                        <div class="">
+                                            <div class="title">
+                                                suspendues<span *ngIf="stats.length!=0 && stats[0].totalInterrompu>1">s</span><br>&nbsp;</div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-white  card-banner bg-danger">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats.length==0 ? '0' : stats[0].totalEnCoursHorsDelai}}</i>
+                                        <div class="">
+                                            <div class="title">
+                                                en cours de traitement <br> mais hors délai</div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <h4>Plaintes </h4>
+                        <div class="row">
+                            <!-- <div class="col-md-6">
+                                <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats1.length==0 ? '0' : stats1[0].totalNTraite}}</i>
+                                        <div class="">
+                                            <div class="title"> affectée<span *ngIf="stats1.length!=0 && stats1[0].totalNTraite>1">s</span><br>
+                                                </div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div> -->
+                            <div class="col-md-6">
+                                <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats1.length==0 ? '0' :stats1[0].totalTraite}}</i>
+                                        <div class="">
+                                            <div class="title"> traitées<span *ngIf="stats1.length!=0 && stats1[0].totalTraite>1">s</span>
+                                                </div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <a class="card  text-dark  card-banner" style="border: 2px solid #DA0000">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats1.length==0 ? '0' : stats1[0].totalRejet}}</i>
+                                        <div class="">
+                                            <div class="title"> rejetée<span *ngIf="stats1.length!=0 && stats1[0].totalRejet>1">s</span><br><br></div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div> -->
+                            <div class="col-md-6">
+                                <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats1.length==0 ? '0' : stats1[0].totalEnCours}}</i>
+                                        <div class="">
+                                            <div class="title"> en cours
+                                                <br> de traitement</div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-dark  card-banner" style="border: 2px solid #F0C100">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats1.length==0 ? '0' : stats1[0].totalInterrompu}}</i>
+                                        <div class="">
+                                            <div class="title">
+                                                En attente <span *ngIf="stats1.length!=0 && stats1[0].totalInterrompu>1">s</span><br>&nbsp;</div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                        <h4>Demandes d'informations</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a class="card  text-dark  card-banner" style="border: 2px solid #00A66C">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats2.length==0 ? '0' : stats2[0].totalNTraite}}</i>
+                                        <div class="">
+                                            <div class="title"> affectée<span *ngIf="stats2.length!=0 && stats2[0].totalNTraite>1">s</span><br>
+                                                </div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats2.length==0 ? '0' : stats2[0].totalTraite}}</i>
+                                        <div class="">
+                                            <div class="title"> traitées<span *ngIf="stats2.length!=0 && stats2[0].totalTraite>1">s</span>
+                                                </div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col-md-6">
+                                <a class="card  text-dark  card-banner " style="border: 2px solid #00A66C">
+                                    <div class="card-body">
+                                        <i class="icon fa">{{stats2.length==0 ? '0' : stats2[0].totalEnCours}}</i>
+                                        <div class="">
+                                            <div class="title"> en cours
+                                                <br> de traitement dans les délais</div>
+                                            <div class="value"></div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <hr> -->
+                <!-- Accès rapide Cas saisie -->
+                
+
+                <!--end::Body-->
+            </div>
+        </div>
+
+    </div>
+
+</div>

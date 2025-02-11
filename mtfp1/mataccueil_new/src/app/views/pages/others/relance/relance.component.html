@@ -1,0 +1,71 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800 text-uppercase">Les relances effectuées</h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{data.length}} élement(s)</span>
+                </li>
+                <li class="nav-item">
+                  
+                </li>
+                <li class="nav-item">
+  
+  
+                </li>
+  
+              </ul>
+              <div>
+  
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+  
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                 
+                  <tr>
+                    <th >Date</th>
+                    <th >Structure</th>
+                    <th >Message</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data ; index as i">
+                    <td>{{el.date_envoi  | date:'dd/MM/yyy hh:mm:ss'}} </td>
+                    <td >{{el.structure.libelle}}</td>
+                    <td>{{el.message}}</td>
+                    
+                    </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                  </tr>
+                </tbody>
+              </table>
+            
+            </div>
+            <!--end::Table-->
+          </div>
+  
+  
+        </div>
+  
+       
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

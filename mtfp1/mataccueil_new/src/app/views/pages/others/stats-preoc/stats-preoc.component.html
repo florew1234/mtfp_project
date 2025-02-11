@@ -1,0 +1,198 @@
+
+
+<!-- Container Fluid-->
+<div *ngIf="inter_face==''" class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h3 mb-0 text-gray-800 text-uppercase">Statistique global</h3>
+
+  </div>
+  <div class="row d-flex">
+    <div class="col-md-12">
+      <div class="card my-2">
+        <!-- Body -->
+        
+        <div class="card-body  pb-0">
+        <h3> Statistique sur les E-services </h3>
+          <!--begin::Table-->
+          <div class="table-responsive">
+            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <th>E-Services</th>
+                  <th>Structure</th>
+                  <th >Totale</th>
+                  <th >En instance</th>
+                  <th >En attente</th>
+                  <th >Rejeté</th>
+                  <th >Traité</th>
+                  <th >Validé</th>
+                  <th >Signé</th>
+                  <th >Terminé</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let el of statEservice; index as i">
+                      <td>{{el.name}} </td>
+                      <td class="text-center" title={{el.structure}}>{{el.sigle}}</td>
+                      <td class="text-center">{{el.total}} </td>
+                      <td class="text-center {{serv_ntr == '' ? '' : 'stats_col'}}">{{el.news}} </td>
+                      <td class="text-center {{serv_susp == '' ? '' : 'stats_col'}}">{{el.pending}} </td>
+                      <td class="text-center {{serv_rej == '' ? '' : 'stats_col'}}"> {{el.rejected}} </td>
+                      <td class="text-center">{{el.treated}} </td>
+                      <td class="text-center">{{el.validated}} </td>
+                      <td class="text-center">{{el.signed}} </td>
+                      <td class="text-center">{{el.finished}} </td> 
+                  </tr>
+                  <tr *ngIf="statEservice.length==0">
+                      <td colspan="11" class="text-center bg-gray-100">Aucun éléments</td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+        
+        <!-- <div class="card-body  pb-0">
+        <h3>Statistique sur les courriers </h3>
+          <div class="table-responsive">
+            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <th>Type de courrier</th>
+                  <th >Totale</th>
+                  <th >Traité</th>
+                  <th >Non Traité</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td>Courrier interne</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Courrier externe</td>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+              </tbody>
+
+            </table>
+          </div>
+
+        </div> -->
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+<!---Container Fluid-->
+
+
+<!-- Connectivité  -->
+<!-- Container Fluid-->
+<div *ngIf="inter_face=='conn'" class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h3 mb-0 text-gray-800 text-uppercase">Statistique des connectivités</h3>
+
+  </div>
+  <div class="row d-flex">
+    <div class="col-md-12">
+      <div class="card my-2">
+        <br>
+        <!-- Body -->
+        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+          <li class="nav-item">
+              <span class="mr-2">{{statConnetivite.length}} élément(s)</span>
+          </li>
+          <li class="nav-item">
+              <form>
+                  <div class="form-group form-inline">
+                      <input class="form-control form-control-sm " placeholder="Rechercher..." type="text"
+                          [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                  </div>
+              </form>
+          </li>
+
+      </ul>
+        <div class="card-body  pb-0">
+        <h3> Traçabilité des dernières connections de tous les acteurs </h3>
+          <!--begin::Table-->
+          <div class="table-responsive">
+            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <th>Acteur </th>
+                  <th>Direction / Poste</th>
+                  <th >Connecté il y a</th>
+                  <th >Connecté le</th>
+                  <th >Déconnecté le</th>
+                  <th >Trace</th>
+                  <th >Nbre instance et Relance</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let el of statConnetivite | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                      <td>{{el.nomprenoms}} </td>
+                      <td>{{el.structure?.sous_structure?.sigle== null ? '' : el.structure.sous_structure.sigle+' / '}} {{el.structure?.libelle}} </td>
+                      <td>{{el.user_agent?.last_connect?.last_connect == null ? '-' : el.user_agent?.last_connect?.last_connect}} </td>
+                      <td>{{el.user_agent?.last_connect?.last_login == null ? '-' : el.user_agent?.last_connect?.last_login  | date:'dd/MM/yyy hh:mm'}} </td>
+                      <td>{{el.user_agent?.last_connect?.last_logout == null ? '-' : el.user_agent?.last_connect?.last_logout  | date:'dd/MM/yyy hh:mm'}} </td>
+                      <td>{{el.user_agent?.last_connect?.activity == null ? '-' : el.user_agent?.last_connect?.activity }} </td> 
+                      <td class="text-center">
+                        <button class="btn-sm btn-primary" (click)="openAddModal(contentU,el.user_agent?.id,el.structure?.id,el.user_agent?.idprofil)">Consulter</button>
+                      </td>
+                  </tr>
+                  <tr *ngIf="statConnetivite.length==0">
+                      <td colspan="8" class="text-center bg-gray-100">Aucun éléments</td>
+                  </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+              <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                  [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+              </ngb-pagination>
+              <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                  <option selected disabled>Filtrer</option>
+                  <option [ngValue]="10">10 éléments par page</option>
+                  <option [ngValue]="30">30 éléments par page</option>
+                  <option [ngValue]="50">50 éléments par page</option>
+              </select>
+          </div>
+          </div>
+
+        </div>
+        
+      </div>
+
+
+    </div>
+  </div>
+
+  <ng-template #contentU let-modal>
+
+    <div class="modal-header bg-mat-primary">
+      <h4 class="modal-title text-white" id="modal-basic-title">Nombre d'instance et de relance </h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">X</button>
+    </div>
+    <div class="modal-body">
+      <table class="table">
+        <thead>
+          <th> Nombre d'instance</th>
+          <th> Nombre de relance </th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{nbreInstance}}</td>
+            <td>{{nbreRelance}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+</div>
+<!---Container Fluid-->

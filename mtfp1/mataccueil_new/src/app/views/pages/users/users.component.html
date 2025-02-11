@@ -1,0 +1,346 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">PARAMETRES / UTILISATEURS</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+
+                    <div class="card-toolbar d-flex justify-content-between">
+                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                            <li class="nav-item">
+                                <span class="mr-2">{{data.length}} élement(s)</span>
+                            </li>
+                            <li class="nav-item">
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <input class="form-control form-control-sm " placeholder="Rechercher...." type="text"
+                                            [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+
+
+                            </li>
+
+                        </ul>
+                        <div>
+                            <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)">
+                                Ajouter un utilisateur</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <!--begin::Table-->
+                    <div class="table-responsive">
+
+                        <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <td class="left text-left" colspan="9">
+                                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                                            Modifier
+                                        </button>
+                    
+                                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
+                                        <button *ngIf="is_active!=null && !is_active" (click)="setStatus(1)" type="button" class="btn btn-outline-success btn-sm btn-label waves-effect waves-light me-3">
+                                            Activer</button>
+                                           <button  *ngIf="is_active!=null &&  is_active" (click)="setStatus(0)" type="button" class="btn btn-outline-danger btn-sm btn-label waves-effect waves-light me-3">
+                                            Désactiver</button>
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <th></th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Nom et Prénoms</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Profil</th>
+                                    <th scope="col">Date d'enregistrement</th>
+                                    <th scope="col">Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                    <td>
+                                        <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)">
+                                    </td>
+                                    <td>
+                                        {{i+1}}
+                                    </td>
+                                    <td>
+                                        {{el.agent_user==null ? ' ' : el.agent_user.nomprenoms}}
+                                    </td>
+                                    <td>
+                                        {{el.email}}
+                                    </td>
+                                    <td>
+                                        {{el.profil_user==null ? ' ' : el.profil_user.LibelleProfil}}
+                                    </td>
+                                    <td>
+                                        {{el.created_at  | date:'dd/MM/yyy hh:mm:ss'}}
+                                    </td>
+                                    <td>
+                                        <span *ngIf="el.is_active" class="badge badge-success">Actif</span>
+                                        <span *ngIf="!el.is_active" class="badge badge-danger">Bloqué</span>
+
+                                    </td>
+                                   
+                                </tr>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                            </ngb-pagination>
+
+                            <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                <option selected disabled>Filtrer</option>
+                                <option [ngValue]="3">3 elements par page</option>
+                                <option [ngValue]="5">5 elements par par page</option>
+                                <option [ngValue]="10">10 elements par par page</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+
+
+                <ng-template #content let-modal>
+                    <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter un utilisateur</h5>
+                            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Sélectionner l'acteur * </label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #acteur="ngModel" maxlength="250" name="idagent"
+                                        ngModel>
+                                        <option [value]="e.id" *ngFor="let e of acteurs">{{e.nomprenoms}}</option>
+                                    </select>
+                                    <span *ngIf="acteur.invalid && (acteur.dirty || acteur.touched)" class="text-danger">
+                                        <small *ngIf="acteur.errors?.required">
+                                            Acteur est requis
+                                        </small>
+                                        <small *ngIf="acteur.errors.maxlength">
+                                            Acteur ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Activé (e) *</label>
+                                <div class="col-md-6">
+                                    <input type="checkbox" value="false" name="statut" ngModel>
+                                </div>
+                            </div>
+
+
+
+                            <div class="form-group row">
+                                <label class="col-md-4">Profil *</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #idprofil="ngModel" maxlength="250"
+                                        name="profil" ngModel>
+                                        <option [value]="e.id" *ngFor="let e of profils">{{e.LibelleProfil}}</option>
+                                    </select>
+                                    <span *ngIf="idprofil.invalid && (idprofil.dirty || idprofil.touched)" class="text-danger">
+                                        <small *ngIf="idprofil.errors?.required">
+                                            Profil est requis
+                                        </small>
+                                        <small *ngIf="idprofil.errors.maxlength">
+                                            Profil ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Email</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control form-control-sm" #email="ngModel" maxlength="250"
+                                        required name="email" ngModel>
+                                    <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                        <small *ngIf="email.errors?.required">
+                                            email est requis
+                                        </small>
+                                        <small *ngIf="email.errors.maxlength">
+                                            email ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Mot de passe *</label>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control form-control-sm" #password="ngModel"
+                                        maxlength="250" required name="password" ngModel>
+                                    <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                                        <small *ngIf="password.errors?.required">
+                                            Mot de passe est requis
+                                        </small>
+                                        <small *ngIf="password.errors.maxlength">
+                                            Mot de passe ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Confirmer le mot de passe *</label>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control form-control-sm" #conf_password="ngModel"
+                                        maxlength="250" required name="conf_password" ngModel>
+                                    <span *ngIf="conf_password.invalid && (conf_password.dirty || conf_password.touched)"
+                                        class="text-danger">
+                                        <small *ngIf="password.errors?.required">
+                                            Mot de passe est requis
+                                        </small>
+                                        <small *ngIf="conf_password.errors.maxlength">
+                                            Mot de passe ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #contentU let-modal>
+                    <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h4 class="modal-title text-white" id="modal-basic-title">Modifier un utilisateur</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                    <label class="col-md-4">Sélectionner l'acteur * </label>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" #acteur="ngModel" maxlength="250" name="idagent"
+                                            [(ngModel)]="selected_data.idagent">
+                                            <option [value]="e.id" *ngFor="let e of acteurs">{{e.nomprenoms}}</option>
+                                        </select>
+                                        <span *ngIf="acteur.invalid && (acteur.dirty || acteur.touched)" class="text-danger">
+                                            <small *ngIf="acteur.errors?.required">
+                                                Acteur est requis
+                                            </small>
+                                            <small *ngIf="acteur.errors.maxlength">
+                                                Acteur ,pas plus de 250 caractères.
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4">Activé (e) *</label>
+                                    <div class="col-md-6">
+                                        <input type="checkbox" value="false" name="statut" [(ngModel)]="selected_data.statut">
+                                    </div>
+                                </div>
+    
+    
+    
+                                <div class="form-group row">
+                                    <label class="col-md-4">Profil *</label>
+                                    <div class="col-md-6">
+                                        <select class="form-control form-control-sm" #idprofil="ngModel" maxlength="250"
+                                            name="profil" [(ngModel)]="selected_data.idprofil">
+                                            <option [value]="e.id" *ngFor="let e of profils">{{e.LibelleProfil}}</option>
+                                        </select>
+                                        <span *ngIf="idprofil.invalid && (idprofil.dirty || idprofil.touched)" class="text-danger">
+                                            <small *ngIf="idprofil.errors?.required">
+                                                Profil est requis
+                                            </small>
+                                            <small *ngIf="idprofil.errors.maxlength">
+                                                Profil ,pas plus de 250 caractères.
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4">Email</label>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control form-control-sm" #email="ngModel" maxlength="250"
+                                            required name="email" [(ngModel)]="selected_data.email">
+                                        <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                            <small *ngIf="email.errors?.required">
+                                                email est requis
+                                            </small>
+                                            <small *ngIf="email.errors.maxlength">
+                                                email ,pas plus de 250 caractères.
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4">Mot de passe *</label>
+                                    <div class="col-md-6">
+                                        <input type="password" class="form-control form-control-sm" #password="ngModel"
+                                            maxlength="250"  name="password" ngModel>
+                                        <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                                            <small *ngIf="password.errors?.required">
+                                                Mot de passe est requis
+                                            </small>
+                                            <small *ngIf="password.errors.maxlength">
+                                                Mot de passe ,pas plus de 250 caractères.
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-4">Confirmer le mot de passe *</label>
+                                    <div class="col-md-6">
+                                        <input type="password" class="form-control form-control-sm" #conf_password="ngModel"
+                                            maxlength="250"  name="conf_password" ngModel>
+                                        <span *ngIf="conf_password.invalid && (conf_password.dirty || conf_password.touched)"
+                                            class="text-danger">
+                                            <small *ngIf="password.errors?.required">
+                                                Mot de passe est requis
+                                            </small>
+                                            <small *ngIf="conf_password.errors.maxlength">
+                                                Mot de passe ,pas plus de 250 caractères.
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

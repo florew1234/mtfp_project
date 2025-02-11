@@ -1,0 +1,288 @@
+
+<div  class="fixed-sn deep-purple-skin">
+  <!-- Sidebar navigation -->
+  <ul id="slide-out" class="side-nav fixed sn-bg-2 custom-scrollbar"  style="overflow: auto;">
+    <!-- Logo -->
+    <li class="mb-4">
+        <div class="logo-wrapper waves-light">
+            <a href="#"><img src="assets/img/logo-mtfpas-1.png" class="img-fluid flex-center"></a>
+        </div>
+    </li>
+    <!--/. Logo -->
+    <!--Social-->
+    <!-- <li>
+        <ul class="social">
+            <li><a class="icons-sm fb-ic"><i class="fa fa-facebook"> </i></a></li>
+            <li><a class="icons-sm pin-ic"><i class="fa fa-pinterest"> </i></a></li>
+            <li><a class="icons-sm gplus-ic"><i class="fa fa-google-plus"> </i></a></li>
+            <li><a class="icons-sm tw-ic"><i class="fa fa-twitter"> </i></a></li>
+        </ul>
+    </li> -->
+    <!--/Social-->
+    <!--Search Form-->
+    <!-- <li>
+        <form class="search-form" role="search">
+            <div class="form-group waves-light">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+        </form>
+    </li> -->
+    <!--/.Search Form-->
+    <!-- Side navigation links -->
+    <li>
+        <ul class="collapsible collapsible-accordion">
+            <li *ngIf="user.profil_user.superadmin!=1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/dashboard">
+                <i class="fas fa-home mr-3"></i>Accueil
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.superadmin==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listsuggestions">
+                <i class="fas fa-address-book mr-3"></i>Suggestions
+              </a>
+            </li>
+            
+            <li *ngIf="user.profil_user.parametre==1"><a routerLinkActive="mm-active"  class="collapsible-header waves-effect arrow-r"><i class="fa fa-chevron-right"></i> Paramètres<i class="fa fa-angle-down rotate-icon"></i></a>
+                <div class="collapsible-body">
+                    <ul>
+                      <li> <a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/liststructure">Structures</a></li>
+                      <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/listacteur">Acteurs</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/users-main">Utilisateurs</a></li>
+                        <li> <a routerLinkActive="mm-active"  class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/users">Utilisateurs</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/listthematique">Thématique</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/listservices">Gestion des prestations</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/listprofils">Profils</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/listetapes">Etapes</a></li>
+                        <li><a routerLinkActive="mm-active"  class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==0" routerLink="/listnature">Nature requetes</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/institutions">Entités administratives</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/configrelance">Relances</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==0" routerLink="/events">Evènements déclencheurs</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/attributcom">Attribution communes </a></li>
+                        <!-- <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/listcreneaux">Rdv créneaux</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/listdaterdv">Date Rdv</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/rdvparam">Autre Paramètres de
+                            Rdv</a></li> -->
+                            <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/e-services">E Services</a></li>
+                            <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/type-structures">Type structure</a></li>
+                            <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/nature-contracts">Nature contrat</a></li>
+                            <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.superadmin==1" routerLink="/ccsps">Centre communaux</a></li>
+                            <li><a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.admin_sectoriel==1" routerLink="/settings">Paramètre générale</a></li>
+
+                    </ul>
+                </div>
+            </li>
+            
+            <li *ngIf="user.profil_user.ratio==1">
+              <a class="collapsible-header waves-effect arrow-r" routerLinkActive="mm-active" ><i class="fa fa-chevron-right"></i> Ratio des prestations<i class="fa fa-angle-down rotate-icon"></i></a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/ratioplainteprestation">Plaintes</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/ratiorequeteprestation">Requêtes</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/ratiodemandeinfosprestation">Demande infos</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li *ngIf="user.profil_user.ratio==1">
+              <a class="collapsible-header waves-effect arrow-r" routerLinkActive="mm-active" ><i class="fa fa-chevron-right"></i> Ratio des structures<i class="fa fa-angle-down rotate-icon"></i></a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/ratioplaintestructure">Plaintes</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/ratiorequetestructure">Requêtes</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/ratiodemandeinfosstructure">Demande infos</a></li>
+                    </ul>
+                </div>
+            </li>
+
+            <!-- <li *ngIf="user.profil_user.superadmin!=1 && user.profil_user.admin_sectoriel!=1 && (user.profil_user.direction==1 || user.profil_user.saisie_adjoint==1 || user.profil_user.saisie==1 || user.profil_user.pointfocal==1)"> -->
+            <li *ngIf="user.profil_user.superadmin!=1 && user.profil_user.admin_sectoriel!=1 && (user.profil_user.saisie_adjoint==1 || user.profil_user.saisie==1 || user.profil_user.pointfocal==1)">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listservices">
+                <i class="fas fa-link mr-3"></i>Prestations par structure
+              </a>
+            </li>
+
+            <!-- <li *ngIf="user.profil_user.superadmin!=1 && user.profil_user.admin_sectoriel!=1 && (user.profil_user.direction==1 || user.profil_user.saisie_adjoint==1 || user.profil_user.saisie==1 || user.profil_user.pointfocal==1)">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listservicesatraiter">
+                <i class="fas fa-link mr-3"></i>
+                <span *ngIf="user.profil_user.direction==1">Prestations à publier</span>
+                <span *ngIf="user.profil_user.pointfocal==1">Prestations soumises</span>
+              </a>
+            </li> -->
+            <li *ngIf="user.profil_user.pointfocal==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/allservices">
+                <i class="fas fa-link mr-3"></i>Toutes les prestations
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.decisionnel_suivi==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/liststatprestationbystructure">
+                <i class="fas fa-link mr-3"></i>Statistiques
+              </a>
+            </li>
+            <!-- <li *ngIf="user.profil_user.ratio==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/relances">
+                <i class="fas fa-link mr-3"></i>Relances
+              </a>
+            </li> -->
+            <!-- <li *ngIf="user.profil_user.saisie==1 || user.profil_user.saisie_adjoint==1 || user.profil_user.pointfocalcom==1 || user.profil_user.pointfocal==1 || user.profil_user.service==1 || user.profil_user.direction==1 "> -->
+            <li *ngIf="user.profil_user.saisie==1 || user.profil_user.saisie_adjoint==1 || user.profil_user.pointfocalcom==1 || user.profil_user.pointfocal==1 || user.profil_user.service==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listusager">
+                <i class="fas fa-link mr-3"></i>Gestion des usagers
+              </a>
+            </li>
+            <!-- <li *ngIf="user.profil_user.direction==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequetestructures/requetes">
+                <i class="fas fa-link mr-3"></i>Requêtes à traiter 
+              </a>
+            </li> -->
+            <li *ngIf="user.profil_user.service==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteservice/requetes">
+                <i class="fas fa-link mr-3"></i>Requêtes à traiter 
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.division==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequetedivision/requetes">
+                <i class="fas fa-link mr-3"></i>Requêtes à traiter 
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.direction==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequetestructures/plaintes">
+                <i class="fas fa-link mr-3"></i>Plaintes à traiter
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.service==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteservice/plaintes">
+                <i class="fas fa-link mr-3"></i>Plaintes à traiter
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.division==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequetedivision/plaintes">
+                <i class="fas fa-link mr-3"></i>Plaintes à traiter
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.direction==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequetestructures/infos">
+                <i class="fas fa-link mr-3"></i>Demandes infos à traiter 
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.service==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteservice/infos">
+                <i class="fas fa-link mr-3"></i>Demandes infos à traiter 
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.division==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequetedivision/infos">
+                <i class="fas fa-link mr-3"></i>Demandes infos à traiter 
+              </a>
+            </li>
+            <!-- <li *ngIf="user.profil_user.saisie==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteusager/requetes">
+                <i class="fas fa-link mr-3"></i>Requêtes à traiter
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.saisie==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteusager/plaintes">
+                <i class="fas fa-link mr-3"></i>Plaintes à traiter
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.saisie==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteusager/infos">
+                <i class="fas fa-link mr-3"></i>Demandes infos à traiter
+              </a>
+            </li> -->
+            <li *ngIf="user.profil_user.saisie_adjoint==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteajdoint/requetes">
+                <i class="fas fa-link mr-3"></i>Requêtes à traiter
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.saisie_adjoint==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteajdoint/plaintes">
+                <i class="fas fa-link mr-3"></i>Plaintes à traiter
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.saisie_adjoint==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteajdoint/infos">
+                <i class="fas fa-link mr-3"></i>Demandes infos à traiter
+              </a>
+            </li>
+            <!-- <li *ngIf="user.profil_user.saisie==1 || user.profil_user.direction==1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrdvs">
+                <i class="fas fa-link mr-3"></i>Gestion des rdv
+              </a>
+            </li> -->
+            <li  *ngIf="user.profil_user.parametre==1 && user.profil_user.admin_sectoriel==0">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/listrequeteupdate">
+                <i class="fas fa-link mr-3"></i>Modifier une préoccupation
+              </a>
+            </li>
+            <li  *ngIf="user.profil_user.admin_sectoriel==0 && (user.profil_user.superadmin!=1  || user.profil_user.direction!=1)">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/comment">
+                <i class="fas fa-link mr-3"></i>Gestion des rapports
+              </a>
+            </li>
+            <li *ngIf="user.profil_user.superadmin!=1">
+              <a class="collapsible-header waves-effect arrow-r"><i class="fa fa-chevron-right"></i> Historique<i class="fa fa-angle-down rotate-icon"></i></a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/listrequeteparcours/requetes">Requêtes</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/listrequeteparcours/plaintes">Plaintes</a></li>
+                        <li > <a routerLinkActive="mm-active" class="waves-effect" routerLink="/listrequeteparcours/infos">Demandes infos</a></li>
+                        <li *ngIf="user.profil_user.saisie==1 || user.profil_user.sgm==1 || user.profil_user.dc==1 || user.profil_user.ministre==1 || user.profil_user.direction==1"><a routerLinkActive="mm-active" class="waves-effect" routerLink="/listrequetepointreponse">Point réponses</a></li>
+                          <!-- 149 : sru@gouv.bj -->
+                        <li *ngIf="user.id=='149' || user.profil_user.pointfocalcom==1" ><a routerLinkActive="mm-active" class="waves-effect" routerLink="/listregistre">Régistre de visite</a> </li>
+                        <li ><a routerLinkActive="mm-active" class="waves-effect" routerLink="/statglob/all/all">Statistique e-service</a></li>
+                        <li ><a routerLinkActive="mm-active" class="waves-effect" routerLink="/statglob/conn/all">Journal de connexion</a></li>
+                        <!-- <li *ngIf="user.profil_user.saisie==1 || user.profil_user.sgm==1 || user.profil_user.dc==1 || user.profil_user.ministre==1 || user.profil_user.direction==1"><a routerLinkActive="mm-active" class="waves-effect" routerLink="/listrequetepointpreoccupation">Point préoccupations</a></li> -->
+                    </ul>
+                </div>
+            </li>
+            
+            <li *ngIf="user.profil_user.saisie==1 || user.profil_user.sgm==1 || user.profil_user.dc==1 || user.profil_user.ministre==1 || user.profil_user.direction==1">
+              <a class="collapsible-header waves-effect arrow-r" routerLinkActive="mm-active"><i class="fa fa-chevron-right"></i> Statistiques<i class="fa fa-angle-down rotate-icon"></i></a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" *ngIf="user.profil_user.saisie==1 || user.profil_user.sgm==1 || user.profil_user.dc==1 || user.profil_user.ministre==1 || user.profil_user.direction==1"
+                          routerLink="/liststatprestation">Prestations</a></li>
+                        <li> <a routerLinkActive="mm-active"  class="waves-effect" routerLink="/liststattheme/requetes">Thématiques</a></li>
+                        <!-- <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/liststattheme/plaintes">Plaintes / Thématiques</a></li> -->
+                        <!-- <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/liststattheme/infos">Demandes infos / Thématiques</a></li> -->
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/liststatstructure/requetes">Structures</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/listauxdigit">Taux digitalisation</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/avanced-statistics">Avancées</a></li>
+                        <!-- <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/liststatstructure/plaintes">Plaintes / Structures</a></li> -->
+                        <!-- <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/liststatstructure/infos">Demandes infos / Structures</a></li> -->
+                    </ul>
+                </div>
+            </li>
+            
+            <li *ngIf="user.profil_user.sgm==1 || user.profil_user.dc==1 || user.profil_user.ministre==1  || user.profil_user.direction==1"> 
+              <a class="collapsible-header waves-effect arrow-r" routerLinkActive="mm-active" ><i class="fa fa-chevron-right"></i> Graphiques<i class="fa fa-angle-down rotate-icon"></i></a>
+                <div class="collapsible-body">
+                    <ul>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiquetype/requetes">Thématiques</a></li>
+                        <!-- <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiquetype/infos">Demandes infos/Thématiques</a></li> -->
+                        <!-- <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiquetype/plaintes">Plaintes/Thématiques</a></li> -->
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiquestructures/requetes">Structures</a></li>
+                        <!-- <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiquestructures/plaintes">Plaintes/Structure</a></li> -->
+                        <!-- <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiquestructures/infos">Demandes infos/Structure</a></li> -->
+                        <!-- <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiqueevolution/requetes">Evolution Requêtes</a></li>
+                        <li> <a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiqueevolution/plaintes">Evolution Plaintes</a></li>
+                        <li><a routerLinkActive="mm-active" class="waves-effect" routerLink="/grahiqueevolution/infos">Evolution Demandes infos</a></li> -->
+                    </ul>
+                </div>
+            </li>
+            <li *ngIf="user.profil_user.saisie!=1">
+              <a class="collapsible-header waves-effect" routerLinkActive="mm-active" (click)="apercuGuide()" >
+                <i class="fas fa-link mr-3"></i>Documentation
+              </a>
+              <!-- <a class="collapsible-header waves-effect" routerLinkActive="mm-active" routerLink="/docs">
+                <i class="fas fa-link mr-3"></i>Documentation
+              </a> -->
+            </li>
+        </ul>
+    </li>
+    <!--/. Side navigation links -->
+    <div class="sidenav-bg mask-strong"></div>
+  </ul>
+  <!--/. Sidebar navigation -->
+ 
+
+</div>

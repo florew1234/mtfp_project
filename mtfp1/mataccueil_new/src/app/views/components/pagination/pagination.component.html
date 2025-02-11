@@ -1,0 +1,19 @@
+<div class="bg-warning">
+    <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+        <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item first-item">
+            <a routerLink [queryParams]="{ page: 1 }" class="page-link">First</a>
+        </li>
+        <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item previous-item">
+            <a routerLink [queryParams]="{ page: pager.current_page - 1 }" class="page-link">Previous</a>
+        </li>
+        <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.current_page === page}" class="page-item number-item">
+            <a routerLink [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+        </li>
+        <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+            <a routerLink [queryParams]="{ page: pager.current_page + 1 }" class="page-link">Next</a>
+        </li>
+        <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item last-item">
+            <a routerLink [queryParams]="{ page: pager.last_page }" class="page-link">Last</a>
+        </li>
+    </ul>
+</div>

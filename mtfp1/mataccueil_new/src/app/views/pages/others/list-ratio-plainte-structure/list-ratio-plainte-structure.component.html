@@ -1,0 +1,162 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h3 class="h3 mb-0 text-gray-800 text-uppercase">RATIO DE PERFORMANCES DES PLAINTES PAR STRUCTURE</h3>
+    
+        </div>
+        <div class="row d-flex">
+            <div class="col-md-12">
+                <div class="card my-2">
+                    <!-- Header -->
+                    <div class="card-header p-4 border-0 pt-5">
+                        <h4>STRUCTURES AYANT DES PLAINTES TRAITEES</h4>
+    
+                        <div class="card-toolbar d-flex justify-content-between">
+                            <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                                <li class="nav-item">
+                                    <span class="mr-2">{{data.length}} élement(s)</span>
+                                </li>
+                            </ul>
+                            <div>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="card-body pt-3 pb-0">
+    
+                        <!--begin::Table-->
+                        <div class="table-responsive">
+    
+                            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                                <thead>
+    
+                                    <tr>
+    
+                                        <th>Libelle</th>
+                                        <th>Ratio</th>
+                                        <th>Efficacité / Efficience</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+    
+                                        <td>{{el.libelle}}</td>
+                                        <td>{{el.ratio}} </td>
+                                        <td>
+                                            <span class="btn bg-mat-primary text-white" *ngIf="el.ratio<1">Efficience</span>
+    
+    
+    
+                                            <span class="btn btn-success" *ngIf="el.ratio==1" style="border-color : green !important; background-color : green !important; box-shadow: 0 1px 1px green !important;">Efficace</span>
+    
+    
+    
+                                            <span class="btn btn-danger" *ngIf="el.ratio>1">Non efficace</span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="data.length==0">
+                                        <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between p-2">
+                                <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                    [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                                </ngb-pagination>
+    
+                                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                    <option selected disabled>Filtrer</option>
+                                    <option [ngValue]="3">3 elements par page</option>
+                                    <option [ngValue]="5">5 elements par par page</option>
+                                    <option [ngValue]="10">10 elements par par page</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--end::Table-->
+                    </div>
+    
+    
+                </div>
+    
+                <div class="card my-2">
+                    <!-- Header -->
+                    <div class="card-header p-4 border-0 pt-5">
+                        <h4>STRUCTURES AYANT DES PLAINTES EN COURS DE TRAITEMENT</h4>
+    
+                        <div class="card-toolbar d-flex justify-content-between">
+                            <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                                <li class="nav-item">
+                                    <span class="mr-2">{{data.length}} élement(s)</span>
+                                </li>
+                            </ul>
+                            <div>
+    
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Body -->
+                    <div class="card-body pt-3 pb-0">
+    
+                        <!--begin::Table-->
+                        <div class="table-responsive">
+    
+                            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                                <thead>
+    
+                                    <tr>
+    
+                                        <th>Libelle</th>
+                                        <th>Ratio</th>
+                                        <th>Délaie de réponse moy</th>
+                                        <th>Efficacité / Efficience</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let el of data2 | slice: (page2-1) * pageSize2 : (page2-1) * pageSize2 + pageSize2; index as i">
+    
+                                        <td>{{el.libelle}}</td>
+                                        <td>{{el.ratio}} </td>
+                                        <td>{{el.delay}} </td>
+                                        <td>
+                                            <span class="btn bg-mat-primary text-white" *ngIf="el.ratio<1">Efficience</span>
+    
+    
+    
+                                            <span class="btn btn-success" *ngIf="el.ratio==1" style="border-color : green !important; background-color : green !important; box-shadow: 0 1px 1px green !important;">Efficace</span>
+    
+    
+    
+                                            <span class="btn btn-danger" *ngIf="el.ratio>1">Non efficace</span>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="data2.length==0">
+                                        <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="d-flex justify-content-between p-2">
+                                <ngb-pagination class="" [collectionSize]="collectionSize2" [(page)]="page2" [maxSize]="5"
+                                    [pageSize]="pageSize2" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                                </ngb-pagination>
+    
+                                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize2">
+                                    <option selected disabled>Filtrer</option>
+                                    <option [ngValue]="3">3 elements par page</option>
+                                    <option [ngValue]="5">5 elements par par page</option>
+                                    <option [ngValue]="10">10 elements par par page</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--end::Table-->
+                    </div>
+    
+    
+                </div>
+    
+    
+            </div>
+        </div>
+    
+    </div>
+    <!---Container Fluid-->

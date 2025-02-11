@@ -1,0 +1,374 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h3 mb-0 text-gray-800 text-uppercase">GESTION DES PREOCCUPATIONS</h3>
+
+  </div>
+  <div class="row d-flex">
+    <div class="col-md-12">
+      <div class="card my-2">
+        <!-- Header -->
+        <div class="card-header p-4 border-0 pt-5">
+          <h4>Liste des préoccupations non traitées</h4>
+          <div class="card-toolbar d-flex justify-content-between">
+            <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+              <li class="nav-item">
+                <span class="mr-2">{{pager.total}} élément(s) </span>
+              </li>
+
+              <li class="nav-item">
+                <form>
+                  <div class="form-group form-inline">
+                    <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...."
+                      type="text" [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                  </div>
+                </form>
+              </li>
+              <li class="nav-item">
+
+
+              </li>
+
+            </ul>
+            <div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="card-body pt-3 pb-0">
+
+          <!--begin::Table-->
+          <div class="table-responsive">
+
+            <table  class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <td class="left text-left" colspan="9">
+                    
+                    <button title="Modifier la requête" (click)="openAddModal(typeRequete)" class="btn mx-1 btn-xs btn-success edit">
+                        Modifier
+                    </button>
+                    
+                    <button title="Transferer la requête à une autre entité" (click)="openAddModal(tranfertEntite)" class="btn mx-1 btn-xs btn-info edit">
+                      Transfert externe
+                   </button>
+                   <button title="Transferer la requête à une autre structure" (click)="openAddModal(tranfertStructure)" class="btn mx-1 btn-xs btn-info edit">
+                      Transfert interne
+                   </button>
+                  
+                  </td>
+                </tr>
+                <tr>
+                  <th></th>
+                  <th width="8%">Date enreg.</th>
+                  <th width="7%">Type</th>
+                  <th>Structure en charge</th>
+                  <th width="7%" class="no-display">Canal</th>
+                  <th width="15%">Prestation</th>
+                  <th>Objet</th>
+                  <th>Préoccupation</th>
+                  <!-- <th>Notification </th> -->
+                  <th width="15%">Usager</th>
+                  <th width="15%">Source </th>
+                  <th width="15%">Parcours</th>
+                </tr>
+              </thead>
+              <!-- *ngIf="last_step_giwu(el.parcours)==true" -->
+              <tbody>
+                <tr  *ngFor="let el of data ; index as i;">
+                  <td>
+                    <input type="radio" [value]="el" ngModel name="getrequete" (change)="checked($event,el)">
+                  </td>
+                  <td>{{el.created_at  | date:'dd/MM/yyy hh:mm:ss'}}</td>
+                  <td>
+                      <span *ngIf="el.plainte==0">Requête</span>
+                      <span *ngIf="el.plainte==1">Plainte</span>
+                      <span *ngIf="el.plainte==2">Demande d'information</span>
+                  </td>
+                  <td>
+                      {{el.lastaffectation?.entite_admin?.sigle }} / {{el.lastaffectation?.structure?.sigle }}
+                  </td>
+                  <td class="no-display">{{el.nature==null ? '' : el.nature.libelle}} </td>
+                  <td>{{el.service==null ? '' : el.service.libelle}} </td>
+                  <td *ngIf="el.usager==null? '' : el.usager.id=='91586'">
+                    <dl>
+                      <dt>Matricule</dt>
+                      <dd>{{el.matricule}}</dd>
+                    </dl>
+                    <dl>
+                      <dt>Année de départ</dt>
+                      <dd>{{el.out_year}}</dd>
+                    </dl>
+                    <dl>
+                      <dt>Ministère/Inst. </dt>
+                      <dd>{{el.entity_name}}</dd>
+                    </dl>
+                  </td>
+                  <td >{{el.objet}}</td>
+                  <!-- <td *ngIf="el.usager==null?'': el.usager.id!='91586'">{{el.objet}}</td> structure-->
+                  <td> {{el.msgrequest}} </td>
+                  <!-- <td> {{el.reponseStructure}} </td> -->
+                  <!-- <td *ngIf="el.usager==null?'91586'=='91586': el.usager.id=='91586'">{{el.usager==null? '': el.identity+" "+el.contact+" "+el.email}}-</td> -->
+                  <td>{{el.usager==null ? el.contact+" "+el.email : el.usager.nom}} {{el.usager==null ? '' : el.usager.prenoms}}{{(el.matricule=='' || el.matricule== null) ? '' : " / Matricule : "+el.matricule}}</td>
+                  <td>{{el.interfaceRequete}}</td>
+  
+                  <td>
+                    <div *ngFor="let parc of el.parcours; let i=index">
+                      {{i+1}}. {{ show_step(parc.idEtape)==null ? '' : show_step(parc.idEtape).LibelleEtape }}
+                    </div>
+                  </td>
+  
+                </tr>
+                <tr *ngIf="data.length==0">
+                  <td colspan="10" class="text-center bg-gray-100">Aucun élément</td>
+                </tr>
+
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-end p-2">
+
+                <div *ngIf="pager!=Null">
+                  <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item first-item">
+                      <a routerLink="/listrequeteupdate" [queryParams]="{ page: 1 }" class="page-link">Début</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item previous-item">
+                      <a routerLink="/listrequeteupdate" [queryParams]="{ page: pager.current_page - 1 }"
+                        class="page-link">Précédent</a>
+                    </li>
+  
+                    <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.current_page === page}" class="page-item number-item">
+                      <a routerLink="/listrequeteupdate" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+                    </li>
+  
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrequeteupdate" [queryParams]="{ page: pager.current_page + 1 }"
+                        class="page-link">Suivant</a>
+                    </li>
+                    <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                      <a routerLink="/listrequeteupdate" [queryParams]="{ page: pager.last_page }"
+                        class="page-link">Fin</a>
+                    </li>
+                    <li class="page-item last-item disabled">
+                      <a class="page-link">{{pager.last_page}} page(s)</a>
+                    </li>
+                  </ul>
+                </div>
+  
+              </div>
+          </div>
+          <!--end::Table-->
+        </div>
+
+
+        <ng-template #typeRequete let-modal>
+          <form #frmrequeteModifier="ngForm" (ngSubmit)="Modifier_Requete(frmrequeteModifier.value)" class="form-horizontal"
+            novalidate="">
+
+            <div class="modal-header bg-mat-primary">
+              <h5 class="modal-title text-white" id="modal-basic-title">Modifier la requête</h5>
+              <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style="color:red">{{errormessage}}</div>
+              <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;background:#f8f8f8;">
+                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px; ">Usager : {{usager_full_name}}</h4>
+
+              </fieldset>
+              <fieldset class="divusager" style="border:1px solid #ddd;padding:2px;background:#fbfbfb;">
+                <div class="row form-group">
+                  <label for="idPrestation" class="col-md-4 ">Prestation </label>
+                  <div class="col-md-8">
+                    <select readonly="" name="idPrestation" id="idPrestation" class="form-control form-control-sm"
+                      [(ngModel)]="selected_data.service==null?'':selected_data.service.id">
+                      <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <label for="objet" class="col-md-4 ">Objet </label>
+                  <div class="col-md-8">
+                    <input type="text" readonly="" class="form-control form-control-sm has-error" id="objet" name="objet"
+                      placeholder="" value="{{selected_data.objet}}" [(ngModel)]="selected_data.objet" required>
+                  </div>
+                </div>
+
+
+                <div class="row form-group">
+                  <label for="msgrequest" class="col-md-2 ">Message </label>
+                  <div class="col-md-10">
+                    <textarea class="form-control form-control-sm has-error" readonly="" id="msgrequest" name="msgrequest"
+                      placeholder="Message de la requête" [(ngModel)]="selected_data.msgrequest" required></textarea>
+                  </div>
+                </div>
+              </fieldset>
+              <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;">
+
+                <div class="row form-group">
+                  <label for="texteArchive" class="col-md-2 ">Type de préoccupation</label>
+                  <div class="col-md-10">
+                      <select name="plainte" id="plainte" class="form-control form-control-sm"
+                          required [(ngModel)]="selected_data.plainte">
+                          <option disabled selected>Choisir</option>
+                          <option value="0">Requête</option>
+                          <option value="1">Plainte</option>
+                          <option value="2">Demande d'information</option>
+                      </select>
+                  </div>
+                </div>
+                
+              </fieldset>
+
+            </div>
+            <div class="modal-footer">
+
+              <button  type="submit" class="btn btn-success" id="btn-save"><i class="fas fa-save"></i>&nbsp; Modifier</button>
+            </div>
+          </form>
+
+        </ng-template>
+
+        <ng-template #tranfertEntite let-modal>
+          <form #frmrequeteusagertranfert="ngForm" (ngSubmit)="transferPreocuppation(frmrequeteusagertranfert.value)" class="form-horizontal"
+            novalidate="">
+
+            <div class="modal-header bg-mat-primary">
+              <h5 class="modal-title text-white" id="modal-basic-title">Transferer cette Préoccupation à une autre entité (Structure destinatrice)</h5>
+              <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style="color:red">{{errormessage}}</div>
+              <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;background:#f8f8f8;">
+                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px; ">Usager : {{usager_full_name}}</h4>
+
+              </fieldset>
+              <fieldset class="divusager" style="border:1px solid #ddd;padding:2px;background:#fbfbfb;">
+              
+                <div class="row form-group">
+                  <label for="objet" class="col-md-2 ">Objet </label>
+                  <div class="col-md-10">
+                    <input type="text" readonly="" class="form-control form-control-sm has-error" id="objet" name="objet"
+                      placeholder="" value="{{selected_data.objet}}" [(ngModel)]="selected_data.objet" required>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="form-group row mt-3">
+                <label for="idEntite" class="col-sm-4">Structure destinatrice</label>
+                <div class="col-sm-8">
+                    <select name="idEntiteReceive" id="idEntite" class="form-control form-control-sm" ngModel
+                    required (change)="onEntiteChange($event)">
+                        <option [value]="fc.id" *ngFor="let fc of institutions">{{fc.libelle}}</option>
+                    </select>
+
+                </div>
+              </div>
+              <div  class="form-group row" style="margin-top: 30px;">
+                <label class="col-sm-4" >Structure </label>
+
+                <div class="col-sm-8" style="padding-left:0px;">
+                    <select name="idStructure" id="idStructure" class="form-control form-control-sm"
+                          ngModel required (change)="onStructureChange($event)"> 
+                       
+                        <option [value]="fc.id" *ngFor="let fc of structures">{{fc.libelle}}</option>
+
+                    </select>
+                </div>
+              </div>
+              <div class="row form-group">
+                <label for="idPrestation" class="col-md-2 ">Prestation </label>
+                <div class="col-md-10">
+                  <select name="idPrestation" id="idPrestation" class="form-control form-control-sm"
+                  required ngModel>
+                    <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" class="btn btn-secondary"><i
+                    class="fas fa-save"></i>&nbsp; Transmettre</button>
+
+              </div>
+            </div>
+          </form>
+
+        </ng-template>
+
+        <ng-template #tranfertStructure let-modal>
+          <form #frmrequeteusagertranfertstructure="ngForm" (ngSubmit)="transfertInternePreocuppation(frmrequeteusagertranfertstructure.value)" class="form-horizontal"
+            novalidate="">
+
+            <div class="modal-header bg-mat-primary">
+              <h5 class="modal-title text-white" id="modal-basic-title">Transferer cette Préoccupation à une autre structure</h5>
+              <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style="color:red">{{errormessage}}</div>
+              <fieldset class="divusager" style="border:1px solid #ddd;padding:10px;background:#f8f8f8;">
+                <h4 style="font-size:14px;font-weight: bold;border-bottom:1px solid #eee;padding-bottom: 10px; ">Usager : {{usager_full_name}}</h4>
+
+              </fieldset>
+              <fieldset class="divusager" style="border:1px solid #ddd;padding:2px;background:#fbfbfb;">
+              
+                <div class="row form-group">
+                  <label for="objet" class="col-md-2 ">Objet </label>
+                  <div class="col-md-10">
+                    <input type="text" readonly="" class="form-control form-control-sm has-error" id="objet" name="objet"
+                      placeholder="" value="{{selected_data.objet}}" [(ngModel)]="selected_data.objet" required>
+                  </div>
+                </div>
+              </fieldset>
+            
+              <div  class="form-group row" style="margin-top: 30px;">
+                <label class="col-sm-4" >Structure </label>
+
+                <div class="col-sm-8" style="padding-left:0px;">
+                    <select name="idStructure"  class="form-control form-control-sm"
+                          ngModel required (change)="onStructureChange($event)"> 
+                          <option value="" selected>Sélectionnez une structure</option>
+                        <option [value]="fc.id" *ngFor="let fc of structures">{{fc.libelle}}</option>
+
+                    </select>
+                </div>
+              </div>
+              <div class="row form-group">
+                <label for="idPrestation" class="col-md-2 ">Prestation </label>
+                <div class="col-md-10">
+                  <select name="idPrestation"  class="form-control form-control-sm"
+                  required ngModel>
+                    <option value="" selected>Sélectionnez une prestation</option>
+                    <option [value]="fc.id" *ngFor="let fc of services">{{fc.libelle}}</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <div>
+                <button type="submit" class="btn btn-secondary"><i
+                    class="fas fa-save"></i>&nbsp; Transmettre</button>
+
+              </div>
+            </div>
+          </form>
+
+        </ng-template>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<!---Container Fluid-->

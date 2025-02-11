@@ -1,0 +1,86 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+      <h3 class="h3 mb-0 text-gray-800 text-uppercase">TAUX DE DIGITALISATION </h3>
+  
+    </div>
+    <div class="row d-flex">
+      <div class="col-md-12">
+        
+        <div class="card my-2">
+          <!-- Header -->
+          <div class="card-header p-4 border-0 pt-5">
+          <h4>Liste des structures </h4>
+            <div class="card-toolbar d-flex justify-content-between">
+              <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                <li class="nav-item">
+                  <span class="mr-2">{{data.length}} élément(s)</span>
+                </li>
+                <li class="nav-item">
+                  <form class="mx-1"> 
+                    <div class="form-group form-inline">
+                      <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher..." type="text" [(ngModel)]="searchText"
+                        name="searchText" (keyup)="search()" />
+                    </div>
+                  </form>
+                </li>
+                <li class="nav-item">
+                  <div>
+                    <button  type="button" class="btn btn-danger mx-1" id="btn-save" (click)="print()" >Imprimer</button>
+                  </div>
+                </li>
+  
+              </ul>
+              <div>
+  
+              </div>
+            </div>
+          </div>
+          <!-- Body -->
+          <div class="card-body pt-3 pb-0">
+           
+            <!--begin::Table-->
+            <div class="table-responsive">
+  
+              <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                <thead>
+                  <tr>
+                    <th>Structure</th>
+                    <th class="text-center">Totale prestation</th>
+                    <th class="text-center">Sollicité</th>
+                    <th class="text-center">Taux de digitalisation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                    <td>{{el.libelle}}</td>
+                    <td class="text-center">{{el.total}}</td>
+                    <td class="text-center">{{el.totalOnline}}</td>
+                    <td class="text-center">{{el.taux}}</td>
+                  </tr>
+                  <tr *ngIf="data.length==0">
+                    <td colspan="11" class="text-center bg-gray-100">Aucun éléments</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                </ngb-pagination>
+
+                <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                  <option selected disabled>Filtrer</option>
+                  <option [ngValue]="5">5 éléments par page</option>
+                  <option [ngValue]="10">10 éléments par page</option>
+                  <option [ngValue]="20">20 éléments par page</option>
+                </select>
+              </div>
+            </div>
+            <!--end::Table-->
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  
+  </div>
+  <!---Container Fluid-->

@@ -1,0 +1,111 @@
+.owl-dots.ng-star-inserted{
+    display: none !important;
+}
+
+#administration-travail  .card_eservices :hover{
+    color:white !important;
+    background-color: rgb(146, 172, 245) !important;
+}
+
+#administration-travail .card_eservices :hover  i ,#administration-travail .card_eservices .hover  i {
+    color: white !important;
+}
+#administration-travail .card_eservices :hover  a ,#administration-travail .card_eservices .hover  a {
+    color: white !important;
+}
+
+.card_eservices{
+    color: #344051;
+    background-color: #fff;
+}
+
+/* fonction-publique */
+
+#fonction-publique  .card_eservices :hover{
+    color:white !important;
+    background-color: rgb(137, 221, 182) !important;
+}
+
+#fonction-publique .card_eservices :hover  i ,#administration-travail .card_eservices .hover  i {
+    color: white !important;
+}
+#fonction-publique .card_eservices :hover  a ,#administration-travail .card_eservices .hover  a {
+    color: white !important;
+}
+  
+
+/* administration-centrale */
+
+#administration-centrale  .card_eservices :hover{
+    color:white !important;
+    background-color: rgb(220, 221, 137) !important;
+}
+
+#administration-centrale .card_eservices :hover  i ,#administration-travail .card_eservices .hover  i {
+    color: white !important;
+}
+#administration-centrale .card_eservices :hover  a ,#administration-travail .card_eservices .hover  a {
+    color: white !important;
+}
+
+/* administration-centrale */
+
+#telechargement  .card_eservices :hover{
+    color:white !important;
+    background-color: rgb(221, 158, 137) !important;
+}
+
+#telechargement .card_eservices :hover  i ,#administration-travail .card_eservices .hover  i {
+    color: white !important;
+}
+#telechargement .card_eservices :hover  a ,#administration-travail .card_eservices .hover  a {
+    color: white !important;
+}
+  
+
+
+section.services-container .service-card-title-icon {
+    margin-right: 24px;
+    background: #eef2f8;
+    text-align: center;
+    color: #0a3764;
+    border-radius: 45px;
+}
+.service-card-title-icon {
+    min-width: 60px;
+    width: 60px;
+    height: 60px;
+    line-height: 52px;
+    border-radius: 45px;
+    background: #eef2f8;
+    text-align: center;
+    color: #0a3764;
+}
+
+
+#services .row .card_service:hover {
+    box-shadow: 0px 16px 42px rgba(153,167,179,0.4);
+    background-color: var(--my-color-var);
+    color: #fff !important;
+}
+
+#services .row .card_service .card_service_title:hover {
+       /* color: #fff !important;*/
+}
+
+#services .row .card_service {
+    overflow: hidden;
+    display: flex;
+    box-shadow: 0px 4px 4px rgba(153,153,153,0.25);
+    font-family: "Montserrat","HelveticaNeue",Helvetica,Arial,sans-serif;
+    font-weight: 600;
+    position: relative;
+    font-size: 15px;
+    color: #344051;
+    padding: 24px 12px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    align-items: center;
+    cursor: pointer;
+}

@@ -1,0 +1,74 @@
+<section class="o-banner">
+    <div class="card text-white rounded-0">
+  
+        <img src="assets/bg-new.jpeg" class="card-img" height="120" alt="...">
+        <div class="card-img-overlay">
+  
+            <div class="text container">
+                <h2 class="card-title text-center">ESPACE POINT FOCAL COMMUNAL</h2>
+                <!-- <h5 class="text-center">Enregistrement des demandes informations et des plaintes</h5> -->
+                <h5 class="text-center">Enregistrement des visites et des préoccupations des usagers du centre communal</h5>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p></p>
+            </div>
+        </div>
+    </div>
+  
+</section>
+<div class="container my-4" >
+
+<div class="row ">
+    <div class="col-12 col-sm-12 col-md-4"></div>
+    <div class="col-12 col-sm-12 col-md-4">
+        <div id="loginBlock">
+            <!-- <form #loginFor="ngForm" (ngSubmit)="loginSend(loginFor.value)"> -->
+            <form #loginFor="ngForm" (ngSubmit)="loginSend(loginFor.value)">
+                <div class="card">
+                    <div class="card-header blueColor py-2">
+                        <div class="d-flex justify-content-center">
+                            <img src="assets/auth-person.svg" height="30" class="mx-2" alt="">
+                            <h6 class="text-center text-white mt-2">
+                            <strong class="mt-2">Se connecter</strong></h6>
+                        </div>
+
+                    </div>      
+                    <div class="card-body">
+                        <div class="form-group ">
+                            <label for="">Email </label>
+                            <input type="email" class="form-control" name="email" #login="ngModel" ngModel>
+                            <span *ngIf="login.invalid && (login.dirty || login.touched)" class="text-danger">
+                                <small *ngIf="login.errors?.required" id="typeLabelHelp" class="form-text">Identifiant
+                                    requis</small>
+                            </span>
+                        </div>
+
+                        <div class="form-group ">
+                            <div class="d-flex justify-content-between">
+                                <label for="">Mot de passe </label>
+                                <!-- <div >
+                                    <a routerLink="/forgot-password" class="text-secondary text-right"><small>Mot
+                                            de passe oublié ?</small></a>
+                                </div> -->
+                            </div>
+                            <input type="password" class="form-control" name="password" #password="ngModel" ngModel>
+                            <span *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                                <small *ngIf="password.errors?.required" id="typeLabelHelp" class="form-text">Mot
+                                    de passe requis</small>
+                            </span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+
+                            <button class="btn btn-warning btn-block" [disabled]="loginFor.invalid || loading">Se
+                                connecter</button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-12 col-sm-12 col-md-4"></div> 
+</div>
+
+</div>
+

@@ -1,0 +1,179 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">DATES DE RDV</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+
+                    <div class="card-toolbar d-flex justify-content-between">
+                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                            <li class="nav-item">
+                                <span class="mr-2">{{data.length}} élement(s)</span>
+                            </li>
+                            <li class="nav-item">
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <input class="form-control form-control-sm " placeholder="Rechercher...." type="text"
+                                            [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                                    </div>
+                                </form>
+                            </li>
+                            <li class="nav-item">
+
+
+                            </li>
+
+                        </ul>
+                        <div>
+                            <button class="btn btn-sm bg-mat-primary text-white" (click)="openAddModal(content)">
+                                Ajouter une date</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <!--begin::Table-->
+                    <div class="table-responsive">
+
+                        <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <td class="left text-left" colspan="9">
+                                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                                            Modifier
+                                        </button>
+                    
+                                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
+                                    </td>
+                                </tr>  
+                                <tr>
+                                    <th></th>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Date Rdv</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let el of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                    <td>
+                                            <input type="radio" [value]="el" ngModel name="get" (change)="checked($event,el)">
+                                    </td>
+                                    <td>
+                                        {{i+1}}
+                                    </td>
+                                    <td>
+                                        {{el.dateChoisi}}
+                                    </td>
+                                   
+                                </tr>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="6" class="text-center bg-gray-100">Aucun elements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                            </ngb-pagination>
+
+                            <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                <option selected disabled>Filtrer</option>
+                                <option [ngValue]="3">3 elements par page</option>
+                                <option [ngValue]="5">5 elements par par page</option>
+                                <option [ngValue]="10">10 elements par par page</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+
+
+                <ng-template #content let-modal>
+                    <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une date</h5>
+                            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Date Prochain RDV</label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control form-control-sm" #dateChoisi="ngModel"
+                                        maxlength="250" required name="dateChoisi" ngModel>
+                                    <span *ngIf="dateChoisi.invalid && (dateChoisi.dirty || dateChoisi.touched)" class="text-danger">
+                                        <small *ngIf="dateChoisi.errors?.required">
+                                            Date Prochain RDV est requis
+                                        </small>
+                                        <small *ngIf="dateChoisi.errors.maxlength">
+                                            Date Prochain RDV ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #contentU let-modal>
+                    <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h4 class="modal-title text-white" id="modal-basic-title">Modifier une date</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Date Prochain RDV</label>
+                                <div class="col-md-6">
+                                    <input type="date" class="form-control form-control-sm" #dateChoisi="ngModel" maxlength="250"
+                                        required name="dateChoisi" [(ngModel)]="selected_data.dateChoisi">
+                                    <span *ngIf="dateChoisi.invalid && (dateChoisi.dirty || dateChoisi.touched)" class="text-danger">
+                                        <small *ngIf="dateChoisi.errors?.required">
+                                            Date Prochain RDV est requis
+                                        </small>
+                                        <small *ngIf="dateChoisi.errors.maxlength">
+                                            Date Prochain RDV ,pas plus de 250 caractères.
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

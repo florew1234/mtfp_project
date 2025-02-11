@@ -1,0 +1,209 @@
+<section class="o-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+        <div class="card-img-overlay">
+
+            <div class="text container">
+                <h2 class="card-title text-center">JE DENONCE</h2>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p></p>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+
+            <p class="">
+                Faites une dénonciation à L'Inspection Générale des Services et Emplois Publics en remplissant le
+                formulaire ci-dessous ou appelez-nous au numéro +229 21 33 60 00 :
+            </p>
+            <div class="card" style="border: 2px solid #0A3764">
+                <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à renseigner</strong></h2>
+                <div class="card-body">
+                    <form #usagerDenonciationform="ngForm" (ngSubmit)="save(usagerDenonciationform.value)" method="post">
+                        <div class="form-group row">
+                            <div class="col-md-6 ">
+                                <div class="row">
+                                    <label for="nom" class="col-sm-12 col-form-label">Nom * </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" ngModel name="nom" id="nom" #nom="ngModel" class="form-control"
+                                            placeholder="" required="">
+                                        <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="text-danger">
+                                            <small *ngIf="nom.errors?.required" class="form-text text-danger">Ce champs
+                                                est
+                                                requis
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label for="prenoms" class="col-sm-12 col-form-label">Prénoms * </label>
+                                    <div class="col-sm-12">
+                                        <input type="text" ngModel name="prenoms" #prenoms="ngModel" id="prenoms" class="form-control"
+                                            placeholder="" required="">
+                                        <span *ngIf="prenoms.invalid && (prenoms.dirty || prenoms.touched)" class="text-danger">
+                                            <small *ngIf="prenoms.errors?.required" class="form-text text-danger">Ce
+                                                champs est
+                                                requis
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group row mt-2">
+
+                            <div class="col-md-6 ">
+                                <div class="row">
+                                    <label for="email" class="col-sm-12 col-form-label">Email *</label>
+                                    <div class="col-sm-12">
+                                        <input type="email" ngModel name="email" id="email" #email="ngModel" class="form-control"
+                                            placeholder="" required="">
+                                        <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                            <small *ngIf="email.errors?.required" class="form-text text-danger">Ce
+                                                champs est
+                                                requis
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label for="objet" class="col-sm-12 col-form-label">Téléphone *</label>
+                                    <div class="col-sm-12">
+                                        <input type="text" ngModel name="phone" #phone="ngModel" id="phone" class="form-control"
+                                            placeholder="" required="">
+                                        <span *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-danger">
+                                            <small *ngIf="phone.errors?.required" class="form-text text-danger">Ce
+                                                champs est
+                                                requis
+                                            </small>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2">
+                            <div class="col-md-12">
+                                <label class=" col-form-label" for="entity_name">Ministère ou institution de provenance
+                                    *</label>
+                                <div class="">
+                                    <select type="text" [(ngModel)]="select_entity" class="form-control" id="entity" name="entity" #entity="ngModel"
+                                        >
+                                        <option value="private-admin">Administration privée</option>
+                                        <option [value]="el.libelle" *ngFor="let el of institutions">{{el.libelle}}</option>
+
+                                    </select>
+                                    <span *ngIf="entity.invalid && (entity.dirty || entity.touched)" class="text-danger">
+                                        <small *ngIf="entity.errors?.required" class="form-text text-danger">Ce champs
+                                            est
+                                            requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2" id="bloc_hide" *ngIf="select_entity=='private-admin'">
+                            <label for="objet" class="col-sm-12 col-form-label">Precision adminsitration privée</label>
+                            <div class="col-sm-12">
+                                <input type="text" ngModel name="precision_entity" #precision_entity="ngModel" id="precision_entity"
+                                    class="form-control" placeholder="">
+                                <span *ngIf="precision_entity.invalid && (precision_entity.dirty || precision_entity.touched)"
+                                    class="text-danger">
+                                    <small *ngIf="precision_entity.errors?.required" class="form-text text-danger">Ce
+                                        champs est
+                                        requis
+                                    </small>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row mt-2">
+                            <div class="col-md-12">
+                                <label for="resume" class=" col-form-label">Faits dénoncés *:</label>
+                                <div>
+                                    <textarea class="form-control" ngModel name="resume" #resume="ngModel" id="resume"
+                                        rows="3" required=""></textarea>
+                                    <span *ngIf="resume.invalid && (resume.dirty || resume.touched)" class="text-danger">
+                                        <small *ngIf="resume.errors?.required" class="form-text text-danger">Ce champs
+                                            est
+                                            requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group row mt-2">
+                            <div class="col-md-12">
+                                <label for="file" class="col-form-label">Pièce jointe :</label>
+                                <div>
+                                    <input class="form-control" ngModel name="pj" id="pj" (change)="onFileChange($event)"
+                                        accept=".pdf" type="file">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox"  class="form-check-input" ngModel  name="confidfor" required id="confidfor">
+                            <label  class="form-check-label" for="confidfor">Je donne librement mon consentement pour la collecte de mes données personnelles</label>
+                        </div>
+
+                        <div class="envoyer mt-2">
+                            <input type="submit" class="btn btn-success" name="send" value="Envoyer" [disabled]="usagerDenonciationform.invalid || loading">
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">DENONCIATION</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>
+                Emetteur : {{recup_data.lastname}} {{recup_data.firstname}}
+            </p>
+            <p>
+                Email : {{recup_data.email}}
+            </p>
+            <p>
+                Contact(s) : {{recup_data.phone}} 
+            </p>
+   
+            <p>
+                Ministère ou institution de provenance / Administration privée : {{ recup_data.entity=='private-admin' ? recup_data.precision_entity : recup_data.entity}}
+             </p>
+           
+            <p>
+                Faits dénoncés  : {{recup_data.resume}}
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="validate()">Envoyer</button>
+        </div>
+    </ng-template>
+
+
+</div>

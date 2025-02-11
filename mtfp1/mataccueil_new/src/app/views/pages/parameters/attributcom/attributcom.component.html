@@ -1,0 +1,209 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h3 class="h3 mb-0 text-gray-800">ATTRIBUTION DES COMMUNES AUX ACTEURS</h3>
+
+    </div>
+    <div class="row d-flex">
+        <div class="col-md-12">
+            <div class="card my-2">
+                <!-- Header -->
+                <div class="card-header p-4 border-0 pt-5">
+
+                    <div class="card-toolbar d-flex justify-content-between">
+                        <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+                            <li class="nav-item">
+                                <span class="mr-2">{{data.length}} élement(s)</span>
+                            </li>
+                            <!-- <li class="nav-item mr-2"> Rechercher
+                                <form>
+                                    <div class="form-group form-inline">
+                                        <input class="form-control form-control-sm form-control-sm " placeholder="Rechercher...."
+                                            type="text" [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                                    </div>
+                                </form>
+                            </li> -->
+                            <li class="nav-item">
+                                Liste des acteurs du centre de service
+                                <div class="form-group form-inline"> 
+                                    <select class="form-control " name="listUsers" [(ngModel)]="selected_iduser" (change)="search()" id="">
+                                        <option value="" selected >Sélectionnez un élément </option>
+                                      <option [value]="el.id" *ngFor="let el of listUsers">{{el.nomprenoms}}</option>
+                                    </select>
+                                </div>
+                            </li>
+                        </ul>
+                        <div>
+                            <button class="btn btn-sm bg-mat-primary text-white" [disabled]="user.profil_user.decisionnel_suivi==1"
+                                (click)="openAddModal(content)">
+                                Ajouter une attribution </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Body -->
+                <div class="card-body pt-3 pb-0">
+
+                    <!--begin::Table-->
+                    <div class="table-responsive">
+
+                        <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+                            <thead>
+                                <tr>
+                                    <td class="left text-left" colspan="9">
+                                        <button (click)="openEditModal(contentU)" class=" mx-1 btn btn-sm bg-mat-primary text-white">
+                                            Modifier
+                                        </button>
+                                        <button (click)="archive()" class="btn mx-1 btn-sm btn-danger">
+                                            Supprimer
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>ID</th>
+                                    <th>Commune - Département</th>
+                                    <th>Agent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let s of data | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; index as i">
+                                    <td>
+                                        <input type="radio" [value]="s" ngModel name="get" (change)="checked($event,s)">
+                                    </td>
+                                    <td>{{s.id}} </td>
+                                    <td>{{s.commune==null ? '--' : s.commune.libellecom+" - "+s.commune.departement.libelle}} </td>
+                                    <td>{{s.acteur_att==null ? '--' : s.acteur_att.nomprenoms}} </td>
+                                </tr>
+                                <tr *ngIf="data.length==0">
+                                    <td colspan="12" class="text-center bg-gray-100">Aucun elements</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination class="" [collectionSize]="collectionSize" [(page)]="page" [maxSize]="5"
+                                [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true">
+                            </ngb-pagination>
+
+                            <select class="custom-select custom-select-sm float-right" style="width: auto" [(ngModel)]="pageSize">
+                                <option selected disabled>Filtrer</option>
+                                <option [ngValue]="3">3 elements par page</option>
+                                <option [ngValue]="5">5 elements par par page</option>
+                                <option [ngValue]="10">10 elements par par page</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--end::Table-->
+                </div>
+
+
+                <ng-template #content let-modal>
+                    <form #newForm="ngForm" (ngSubmit)="create(newForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h5 class="modal-title text-white" id="modal-basic-title">Ajouter une attribution</h5>
+                            <button type="button" class="close text-white" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Département :</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #idDepart="ngModel" 
+                                        name="idDepart" ngModel  (change)="onDepartChange($event)">
+                                        <option disabled selected>Choisir</option>
+                                        <option [value]="d.id" *ngFor="let d of departement">{{d.libelle}}</option>
+                                    </select>
+                                    <span *ngIf="idDepart.invalid && (idDepart.dirty || idDepart.touched)" class="text-danger">
+                                        <small *ngIf="idDepart.errors?.required">
+                                            Département est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4">Commune :</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #idComm="ngModel" 
+                                        name="idComm" ngModel>
+                                        <option disabled selected>Choisir</option>
+                                        <option [value]="c.id" *ngFor="let c of commune">{{c.libellecom}}</option>
+                                    </select>
+                                    <span *ngIf="idComm.invalid && (idComm.dirty || idComm.touched)" class="text-danger">
+                                        <small *ngIf="idComm.errors?.required">
+                                            Commune est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!newForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+                <ng-template #contentU let-modal>
+                    <form #updateForm="ngForm" (ngSubmit)="edit(updateForm.value)">
+                        <div class="modal-header bg-mat-primary">
+                            <h4 class="modal-title text-white" id="modal-basic-title">Modifier un service</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                X
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div *ngIf="error" class="alert alert-danger my-1 alert-rounded">
+                                {{error}}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span
+                                        aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Département :</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #idDepart="ngModel" 
+                                        name="idDepart" [(ngModel)]="idDepa"  (change)="onDepartChange($event)">
+                                        <option disabled selected>Choisir</option>
+                                        <option [value]="d.id" *ngFor="let d of departement">{{d.libelle}}</option>
+                                    </select>
+                                    <span *ngIf="idDepart.invalid && (idDepart.dirty || idDepart.touched)" class="text-danger">
+                                        <small *ngIf="idDepart.errors?.required">
+                                            Département est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-md-4">Commune :</label>
+                                <div class="col-md-6">
+                                    <select class="form-control form-control-sm" #idComm="ngModel" 
+                                        name="idComm" [(ngModel)]="selected_data.id_com">
+                                        <option disabled selected>Choisir</option>
+                                        <option [value]="c.id" *ngFor="let c of commune">{{c.libellecom}}</option>
+                                    </select>
+                                    <span *ngIf="idComm.invalid && (idComm.dirty || idComm.touched)" class="text-danger">
+                                        <small *ngIf="idComm.errors?.required">
+                                            Commune est requis
+                                        </small>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-dark" [disabled]="!updateForm.form.valid" type="submit">Sauvegarder</button>
+                        </div>
+                    </form>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!---Container Fluid-->

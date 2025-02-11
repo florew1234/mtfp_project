@@ -1,0 +1,112 @@
+<section class="o-banner">
+  <div class="card text-white ">
+
+    <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+    <div class="card-img-overlay">
+
+      <div class="text container">
+        <h2 class="card-title text-center"> A VOTRE ECOUTE</h2>
+        <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+        <p class="text-center"></p>
+      </div>
+
+
+    </div>
+  </div>
+
+</section>
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+
+      <p class="">
+        Déposer vos questions et suggestions ici :
+
+      </p>
+      <div class="card" style="border: 2px solid #0A3764">
+        <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à renseigner</strong></h2>
+        <div class="card-body">
+          <form #usagerQuetionform="ngForm" (ngSubmit)="save(usagerQuetionform.value)" method="post">
+
+            <div class="form-group row ">
+              <label for="nom" class="col-sm-4 col-form-label">Nom * :</label>
+              <div class="col-sm-8">
+                <input type="text" name="nom" #nom="ngModel" ngModel id="nom" class="form-control" placeholder=""
+                  required="">
+                <span *ngIf="nom.invalid && (nom.dirty || nom.touched)" class="text-danger">
+                  <small *ngIf="nom.errors?.required" class="form-text text-danger">Ce champs est requis
+                    requis</small>
+                </span>
+              </div>
+            </div>
+
+            <div class="form-group row mt-2">
+              <label for="prenoms" class="col-sm-4 col-form-label">Prénoms * :</label>
+              <div class="col-sm-8">
+                <input type="text" name="prenoms" #prenoms="ngModel" ngModel id="prenoms" class="form-control"
+                  placeholder="" required="">
+                <span *ngIf="prenoms.invalid && (prenoms.dirty || prenoms.touched)" class="text-danger">
+                  <small *ngIf="prenoms.errors?.required" class="form-text text-danger">Ce champs est requis
+                    requis</small>
+                </span>
+              </div>
+            </div>
+
+
+            <div class="form-group row mt-2">
+              <label for="email" class="col-sm-4 col-form-label">Email *:</label>
+              <div class="col-sm-8">
+                <input type="email" name="email" #email="ngModel" ngModel id="email" class="form-control" placeholder=""
+                  required="">
+                <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                  <small *ngIf="email.errors?.required" class="form-text text-danger">Ce champs est requis
+                    requis</small>
+                </span>
+              </div>
+            </div>
+
+
+            <div class="form-group row mt-2">
+              <label for="objet" class="col-sm-4 col-form-label">Objet *:</label>
+              <div class="col-sm-8">
+                <input type="text" name="objet" #objet="ngModel" ngModel id="objet" class="form-control" placeholder=""
+                  required="">
+                <span *ngIf="objet.invalid && (objet.dirty || objet.touched)" class="text-danger">
+                  <small *ngIf="objet.errors?.required" class="form-text text-danger">Ce champs est requis
+                    requis</small>
+                </span>
+              </div>
+
+            </div>
+
+            <div class="form-group row mt-2">
+              <label for="questions" class="col-sm-4 col-form-label">Questions / Suggestions *:</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" #questions="ngModel" ngModel name="questions" id="questions" rows="3"
+                  required=""></textarea>
+                <span *ngIf="questions.invalid && (questions.dirty || questions.touched)" class="text-danger">
+                  <small *ngIf="questions.errors?.required" class="form-text text-danger">Ce champs est requis
+                    requis</small>
+                </span>
+              </div>
+
+            </div>
+
+
+            <div class="envoyer mt-2">
+              <input type="submit" class="btn btn-success" name="send" value="Envoyer" [disabled]="usagerQuetionform.invalid || loading">
+            </div>
+
+          </form>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</div>

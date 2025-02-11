@@ -1,0 +1,232 @@
+<!-- Container Fluid-->
+<div class="container-fluid" id="container-wrapper">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h3 class="h3 mb-0 text-gray-800 text-uppercase">REGISTRE DE VISITE</h3>
+
+  </div>
+  <div class="row d-flex">
+    <div class="col-md-12">
+      <div class="card my-2">
+        <div class="card-body">
+          <form #filterForm="ngForm" (ngSubmit)="filter(filterForm.value)">
+            <div class="row">
+              <div  class="form-group col-md-4">
+               <div>
+                  <label for="" class=" ">Liste des communes qui vous ont été affectées:</label>
+               </div>
+               <div>
+                  <select class="form-control " name="listComm" [(ngModel)]="selected_idcom" (change)="onUserChange($event)" id="">
+                    <option value="" selected >Sélectionnez un élément </option>
+                  <option [value]="el.id" *ngFor="let el of listComm">{{el.libellecom}} - {{el.libelle}}</option>
+                </select>
+               </div>
+              </div>
+              <div  class="form-group col-md-2">
+               <div> <label for="" class=" ">Acteur :</label> </div>
+               <div>
+                  <select class="form-control " name="listuser" id="" [(ngModel)]="selected_iduse">
+                    <option value="" selected >Sélectionnez un élément </option>
+                  <option [value]="el.id" *ngFor="let el of listuser">{{el.nomprenoms}}</option>
+                </select>
+               </div>
+              </div>
+              <div class="form-group col-md-2">
+                <div>    <label class="" for="">Satisfait : </label> </div>
+                <div>
+                    <select class="form-control form-group" name="statut" [(ngModel)]="selected_Status" id="">
+                        <option value="">Tout </option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                      </select>
+                </div>
+              </div>
+              <div class="form-group col-md-2">
+                <div>
+                    <label clas="" for="">Du : </label>
+                </div>
+                <div>
+                    <input class="form-control form-group" type="date" name="startDate" [(ngModel)]="select_date_start"
+                    id="">
+                </div>
+              </div>
+              <div class="form-group col-md-2">
+                <div>
+                    <label clas="" for="">Au : </label>
+                </div>
+                <div>
+                    <input class="form-control" type="date" name="endDate" [(ngModel)]="select_date_end"
+                    id="">
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <button class="btn btn-primary mx-1 " type="submit">Filtrer</button>
+                <button (click)="print()" class="btn mx-1 btn-danger">Imprimer</button>
+                <button (click)="printstat()" class="btn mx-1 btn-danger">Statistiques</button>
+                <button (click)="reset()" class="btn btn-default mx-1" type="button">Annuler</button>
+                <button (click)="apercuImage()" class="btn mx-1 btn-success offset-4">Aperçu du régistre physique</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="card my-2">
+        <!-- Header -->
+        <div class="card-header p-4 border-0 pt-5">
+          <div class="card-toolbar d-flex justify-content-between">
+            <ul class="nav nav-pills ml-2 nav-pills-sm nav-dark-75">
+              <li class="nav-item">
+                <span class="mr-2">{{pager.total}} élement(s)</span>
+              </li>
+              <li class="nav-item">
+                <form>
+                  <div class="form-group form-inline">
+                    <input class="form-control form-control-sm form-control form-control-sm-sm " placeholder="Rechercher...."
+                      type="text" [(ngModel)]="searchText" name="searchText" (keyup)="search()" />
+                  </div>
+                </form>
+              </li>
+              <li class="nav-item">
+
+
+              </li>
+
+            </ul>
+            <div>
+
+            </div>
+          </div>
+        </div>
+        <!-- Body -->
+        <div class="card-body  pb-0">
+
+          <!--begin::Table-->
+          <div class="table-responsive">
+
+            <table class="table table-striped datatable  table-head-custom table-vertical-center" id="kt_datatable">
+              <thead>
+                <tr>
+                  <td class="left text-left" colspan="9">
+
+                  </td>
+                </tr>
+                <tr>
+                  <th width="7%">Date Enreg.</th>
+                  <th width="15%">Nature visite</th>
+                  <th width="15%">Matricule / Téléphone</th>
+                  <th width="15%">Nom et prénom(s)</th>
+                  <th width="5%">Sigle Ministère</th>
+                  <th width="5%">Préoccupation</th>
+                  <th width="15%">Satisfait (Oui / Non)</th>
+                  <th width="15%">Motif</th>
+                  <th >Acteurs </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let elrv of data; index as i">
+                    <td>{{elrv.created_at | date:'dd/MM/yyy hh:mm:ss'}} </td>
+                    <td>
+                        <span *ngIf="elrv.plainte==0">Requête</span>
+                        <span *ngIf="elrv.plainte==1">Plainte</span>
+                        <span *ngIf="elrv.plainte==2">Demande d'information</span>
+                    </td>
+                    <td>{{elrv.matri_telep}} </td>
+                    <td>{{elrv.nom_prenom}} </td>
+                    <td>{{elrv.entite==null ? '--' : elrv.entite.sigle}} </td>
+                    <td>{{elrv.contenu_visite}} </td>
+                    <td class="text-center">
+                        <span  class="badge badge-success" *ngIf="elrv.satisfait=='oui'">Oui</span>
+                        <span class="badge badge-danger" *ngIf="elrv.satisfait=='non'">Non</span>
+                    </td>
+                    <td>{{elrv.observ_visite}} </td>
+                    <td>{{elrv.creator.agent_user==null ? '-' : elrv.creator.agent_user.nomprenoms}} </td>
+                </tr>
+                <tr *ngIf="data.length==0">
+                  <td colspan="9" class="text-center bg-gray-100">Aucun elements</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="d-flex justify-content-end p-2">
+
+              <div *ngIf="pager!=Null">
+                <ul *ngIf="pager.pages && pager.pages.length" class="pagination">
+                  <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item first-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: 1 }" class="page-link">Début</a>
+                  </li>
+
+                  <li [ngClass]="{disabled:pager.current_page === 1}" class="page-item previous-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: pager.current_page - 1 }"
+                      class="page-link">Précédent</a>
+                  </li>
+
+                  <li *ngFor="let page of pager.pages" [ngClass]="{active:pager.current_page === page}" class="page-item number-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: page }" class="page-link">{{page}}</a>
+                  </li>
+
+                  <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: pager.current_page + 1 }"
+                      class="page-link">Suivant</a>
+                  </li>
+                  <li [ngClass]="{disabled:pager.current_page === pager.last_page}" class="page-item next-item">
+                    <a routerLink="/listrequeteparcours/{{key_type_req}}" [queryParams]="{ page: pager.last_page }"
+                      class="page-link">Fin</a>
+                  </li>
+                  <li class="page-item last-item disabled">
+                    <a class="page-link">{{pager.last_page}} page(s)</a>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+
+          <ng-template #contentU let-modal>
+
+            <div class="modal-header bg-mat-primary">
+              <h4 class="modal-title text-white" id="modal-basic-title">Parcours</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                X
+              </button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <th></th>
+                  <th>
+                    Date
+                  </th>
+                  <th>
+                    Etape
+                  </th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let parc of list_parcours; let i=index">
+                    <td>
+                      {{i+1}}
+                    </td>
+                    <td>
+                      {{parc.dateArrivee }}
+                    </td>
+                    <td>
+                      {{ show_step(parc.idEtape)==null ? '' : show_step(parc.idEtape).LibelleEtape }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+
+          </ng-template>
+          <!--end::Table-->
+        </div>
+
+
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+<!---Container Fluid-->

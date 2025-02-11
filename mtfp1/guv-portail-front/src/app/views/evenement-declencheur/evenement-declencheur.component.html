@@ -1,0 +1,41 @@
+<section class="o-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+        <div class="card-img-overlay">
+
+            <div class="text container">
+                <h2 class="card-title text-center"> EVENEMENTS DECLENCHEURS</h2>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p></p>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-group" id="accordion">
+                <div class="card card-default" *ngFor="let el of data; let i=index">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{i+1}}">
+                                {{el.question}}</a>
+                        </h5>
+                    </div>
+
+                    <div id="collapse{{i+1}}" class="panel-collapse collapse">
+                        <div class="card-body" [innerHTML]="el.reponses"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>

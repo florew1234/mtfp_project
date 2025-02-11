@@ -1,0 +1,173 @@
+<section class="o-banner">
+    <div class="card text-white ">
+
+        <img src="assets/bg-new.jpeg" class="card-img" height="420" alt="...">
+        <div class="card-img-overlay">
+
+            <div class="text container">
+                <h2 class="card-title text-center"> JE DEPOSE UNE RECLAMATION</h2>
+                <!--button type="button" class="tbtn">LIRE LA SUITE</button-->
+                <p class="text-center"></p>
+            </div>
+
+
+        </div>
+    </div>
+
+</section>
+
+
+<div class="container my-5">
+    <div class="row">
+        <div class="col-md-10 mx-auto">
+            <p class="">
+                Le MTFP vous remercie pour la confiance. Vous avez une préoccupation ! Remplir  le formulaire ci-dessous en vue d'un traitement rapide
+                de votre requête.
+            </p>
+            <div class="card" style="border: 2px solid #0A3764">
+                <h2 class="my-3 font-weight-bold text-center"><strong>Formulaire électronique à renseigner</strong></h2>
+                <div class="card-body">
+
+                    <form #usagerReclamationform="ngForm" (ngSubmit)="save(usagerReclamationform.value)" method="post">
+
+                        <div class="row mt-2">
+                            <div class="form-group col-md-6">
+                                <label for="lastname">Nom *</label>
+                                <input type="text" class="form-control" #lastname="ngModel" ngModel id="lastname" name="lastname"
+                                    required>
+                                <span *ngIf="lastname.invalid && (lastname.dirty || lastname.touched)" class="text-danger">
+                                    <small *ngIf="lastname.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                        requis</small>
+                                </span>
+                            </div>
+                            <div class="form-group  col-md-6">
+                                <label for="firstname">Prénoms *</label>
+                                <input type="text" class="form-control" #firstname="ngModel" ngModel id="firstname"
+                                    name="firstname" required>
+                                <span *ngIf="firstname.invalid && (firstname.dirty || firstname.touched)" class="text-danger">
+                                    <small *ngIf="firstname.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                        requis</small>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="form-group  col-md-6">
+                                <label for="email">Email *</label>
+                                <input type="email" class="form-control" #email="ngModel" required ngModel id="email"
+                                    name="email">
+                                <span *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                    <small *ngIf="email.errors?.required" class="form-text text-danger">Ce champs est
+                                        requis
+                                        requis</small>
+                                </span>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="prestation">Prestation *</label>
+                                <select onclick="e.preventDefault()" name="idPrestation" #prestation="ngModel" ngModel
+                                    id="prestation" class="form-control" required>
+                                    <option [value]="el.id" *ngFor="let el of prestations">{{el.libelle}}</option>
+                                </select>
+                                <span *ngIf="prestation.invalid && (prestation.dirty || prestation.touched)" class="text-danger">
+                                    <small *ngIf="prestation.errors?.required" class="form-text text-danger">Ce champs
+                                        est requis
+                                        requis</small>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="phone">Contact personnel *</label>
+                                    <input type="tel" class="form-control" #phone="ngModel" ngModel id="phone" name="contact"
+                                        required>
+                                    <span *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text-danger">
+                                        <small *ngIf="phone.errors?.required" class="form-text text-danger">Ce champs
+                                            est requis
+                                            requis</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="other_phone">Contact d'un proche</label>
+                                    <input type="tel" class="form-control" ngModel id="other_phone" name="contact_proche">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="other_phone">Objet *</label>
+                                    <input type="text" class="form-control" #objet="ngModel" ngModel id="objet" name="objet"
+                                        required>
+                                    <span *ngIf="objet.invalid && (objet.dirty || objet.touched)" class="text-danger">
+                                        <small *ngIf="objet.errors?.required" class="form-text text-danger">Ce champs
+                                            est requis
+                                            requis</small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label for="msgrequest">Préoccupations *</label>
+                            <textarea name="msgrequest" id="msgrequest" #msgrequest="ngModel" ngModel class="form-control"
+                                required cols="30" rows="7"></textarea>
+                            <span *ngIf="msgrequest.invalid && (msgrequest.dirty || msgrequest.touched)" class="text-danger">
+                                <small *ngIf="msgrequest.errors?.required" class="form-text text-danger">Ce champs est
+                                    requis
+                                    requis</small>
+                            </span>
+                        </div>
+                        <div class="form-group form-check">
+                            <input type="checkbox"  class="form-check-input" ngModel  name="confidfor" required id="confidfor">
+                            <label  class="form-check-label" for="confidfor">Je donne librement mon consentement pour la collecte de mes données personnelles</label>
+                        </div>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button type="submit" class="btn btn-success" [disabled]="usagerReclamationform.invalid || loading">Enregistrer</button>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    <ng-template #content let-c="close" let-d="dismiss">
+        <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">DEMANDE DE RECLAMATION</h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>
+                Demandeur : {{recup_data.lastname}} {{recup_data.firstname}}
+            </p>
+            <p>
+                Email : {{recup_data.email}}
+            </p>
+            <p>
+                Contact(s) : {{recup_data.contact}} ; {{recup_data.contact_proche}}
+            </p>
+            <p>
+                Prestation souhaitée : {{showPrestation(recup_data.idPrestation)}}
+            </p>
+            <p>
+                Objet : {{recup_data.objet}}
+            </p>
+            <p>
+                Préoccupation : {{recup_data.msgrequest}}
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="validate()">Envoyer</button>
+        </div>
+    </ng-template>
+
+
+</div>
